@@ -1,6 +1,10 @@
 
 # Local DataUSA.io
 
+Clone the [datausa-site repo](https://github.com/DataUSA/datausa-site)  
+
+Run the following within your local datausa-site folder.  
+
 Setup the environment:
 
 	python3 -m venv .env
