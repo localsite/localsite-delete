@@ -19,6 +19,11 @@ Windows:
 
 	\.env\Scripts\activate.bat
 
+Optional, upgrade pip and postgresql
+
+	pip install --upgrade pip
+	brew upgrade postgresql
+
 Install dependencies
 
 	pip install -r requirements.txt
@@ -47,15 +52,17 @@ Error:
 Database: postgresql://undefined:*********@undefined:5432/undefined  
 Can't authenticate to database.  
 
-To Do: FIgure out how to hit the API rather than local postgresql database.  
+To Do: Figure out how to hit the API rather than local postgresql database.  
 
-<!--
-Also does not work
 
-	python -m http.server 8888
 
-View at [http://localhost:8888/](http://localhost:8888/)  
--->
+---
+
+Tried installing [datausa-api](https://github.com/DataUSA/datausa-api)  
+
+If you install Python using brew, the relevant headers are already installed for you.
+In other words, you don't need python-devel.
+
 <br><br>
 
 
