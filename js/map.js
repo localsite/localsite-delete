@@ -992,7 +992,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.editLink = "https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing";
     dp1.googleDocID = "1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs";
     dp1.sheetName = "Automotive";
-    dp1.listInfo = "<br><br><a href='https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing'>Make updates and additions</a> by posting comments in our Google Sheet.";
+    dp1.listInfo = "<br><br>Our primary data source is the \“Employer Profile\” section of the Georgia Labor Market <a href='https://explorer.gdol.ga.gov/'>Explorer</a>. Post comments in our <a href='https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing'>Google Sheet</a> to submit updates.";
     dp1.valueColumn = "ev industry";
     dp1.valueColumnLabel = "EV Industry";
     dp1.markerType = "google";
