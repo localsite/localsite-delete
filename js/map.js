@@ -1725,18 +1725,13 @@ function showList(dp,map) {
         output += "<div style='padding-bottom:8px'>" + element[dp.description] + "</div>";
       } else if (element.description) {
         output += "<div style='padding-bottom:8px'>" + element.description + "</div>";
+      } else if (element["business description"]) {
+        output += "<div style='padding-bottom:8px'>" + element["business description"] + "</div>";
       }
 
       // Lower
       output += "<div style='font-size:0.95em;line-height:1.5em'>";
 
-      if (element[dp.valueColumn]) {
-        if (dp.valueColumnLabel) {
-          output += "<b>" + dp.valueColumnLabel + ":</b> " + element[dp.valueColumn] + "<br>";
-        } else if (element[dp.valueColumn] != element.name) {
-          output += element[dp.valueColumn] + "<br>";
-        }
-      }
       if (element.items) {
         output += "<b>Items:</b> " + element.items + "<br>";
       }
@@ -1765,7 +1760,9 @@ function showList(dp,map) {
           }
         }
       }
-      if (!(element[dp.latColumn] && element[dp.lonColumn])) {
+      if (element.county) {
+        output += '<b>Location:</b> ' + element.county + " County<br>";
+      } else if (!(element[dp.latColumn] && element[dp.lonColumn])) {
         if (!element[dp.lonColumn]) {
           output += "<span style='color:red'>Needs latitude and longitude</span><br>";
         } else {
@@ -1799,6 +1796,33 @@ function showList(dp,map) {
         output += element.availability + "<br>";
       }
 
+      if (element.phone || element.phone_afterhours) {
+        if (element.phone) {
+          output += "<b>Phone:</b> " + element.phone + " ";
+        }
+        if (element.phone_afterhours) {
+         output += element.phone_afterhours;
+        }
+        output += "<br>";
+      }
+
+      if (element.schedule) {
+        output += "<b>Hours:</b> " + element.schedule + "<br>";
+      }
+      if (element["jobs range"]) {
+        output += "<b>Employees:</b> " + element["jobs range"] + "<br>";
+      } else if (element["jobs 2021"]) {
+        output += "<b>Employees:</b> " + element["jobs 2021"] + "<br>";
+      }
+
+      if (element[dp.valueColumn]) {
+        if (dp.valueColumnLabel) {
+          output += "<b>" + dp.valueColumnLabel + ":</b> " + element[dp.valueColumn] + "<br>";
+        } else if (element[dp.valueColumn] != element.name) {
+          output += element[dp.valueColumn] + "<br>";
+        }
+      }
+
       if (element.mapframe) {
           output += "<a href='#show=360&m=" + element.mapframe + "'>Birdseye View<br>";
       }
@@ -1814,19 +1838,6 @@ function showList(dp,map) {
           output += "&nbsp;| &nbsp;"
         }
         output += "<a href='" + dp.editLink + "' target='edit" + param["show"] + "'>Make Updates</a><br>";
-      }
-      if (element.phone || element.phone_afterhours) {
-        if (element.phone) {
-          output += element.phone + " ";
-        }
-        if (element.phone_afterhours) {
-         output += element.phone_afterhours;
-        }
-        output += "<br>";
-      }
-
-      if (element.schedule) {
-        output += "<b>Hours:</b> " + element.schedule + "<br>";
       }
 
       //alert(dp.listLocation)
