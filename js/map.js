@@ -572,6 +572,10 @@ function addIcons(dp,map,map2) {
     var output = "<b>" + name + "</b><br>";
     if (element.description) {
       output += element.description + "<br>";
+    } else if (element.description) {
+      output += element.description + "<br>";
+    } else if (element["business description"]) {
+      output += element["business description"] + "<br>";
     }
     if (element[dp.addressColumn]) {
       output +=  element[dp.addressColumn] + "<br>";
@@ -987,8 +991,11 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.valueColumnLabel = "Category";
     dp1.latColumn = "latitude";
     dp1.lonColumn = "longitude";
-  } else if (show == "vehicles") {
+  } else if (show == "vehicles" || show == "ev") {
     dp1.listTitle = "Motor Vehicles and Motor Vehicle Equipment Manufacturing";
+    if (show == "ev") {
+      dp1.listTitle = "Electric Vehicle Manufacturing";
+    }
     dp1.editLink = "https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing";
     dp1.googleDocID = "1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs";
     dp1.sheetName = "Automotive";
@@ -996,6 +1003,8 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.valueColumn = "ev industry";
     dp1.valueColumnLabel = "EV Industry";
     dp1.markerType = "google";
+    dp1.search = {"EV Industry": "ev industry", "In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+    
   } else if (show == "vax" || show == "vac") { // Phase out vac
     dp1.listTitle = "Vaccine Locations";
     //dp1.dataset = "https://docs.google.com/spreadsheets/d/1odIH33Y71QGplQhjJpkYhZCfN5gYCA6zXALTctSavwE/gviz/tq?tqx=out:csv&sheet=Sheet1"; // MapBox sample
