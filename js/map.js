@@ -992,7 +992,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.latColumn = "latitude";
     dp1.lonColumn = "longitude";
   } else if (show == "vehicles" || show == "ev") {
-    dp1.listTitle = "Motor Vehicles and Motor Vehicle Equipment Manufacturing";
+    dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
     if (show == "ev") {
       dp1.listTitle = "Electric Vehicle Manufacturing";
     }
