@@ -1399,9 +1399,8 @@ function showList(dp,map) {
     
     let search = [];
     if (param["search"]) {
-      search = param["search"].split(",");
+      search = param["search"].replace(/\+/g," ").toLowerCase().split(",");
     }
-
     let checkCols = "";
     let checked = "";
     $.each(dp.search, function( key, value ) {
@@ -1411,10 +1410,12 @@ function showList(dp,map) {
       } else if(jQuery.inArray(value, search) !== -1) {
         checked = "checked";
       }
-
       checkCols += '<div><input type="checkbox" class="selected_col" name="in" id="' + value + '" ' + checked + '><label for="' + value + '" class="filterCheckboxTitle"> ' + key + '</label></div>';
     });
     $("#selected_col_checkboxes").html(checkCols);
+    // Populate from hash
+    //alert("populate")
+
 
     // BUGBUG - When toggling the activeLayer is added, this will need to be cleared to prevent multiple calls to loadMap1
      
