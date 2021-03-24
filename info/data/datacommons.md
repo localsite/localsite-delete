@@ -30,7 +30,7 @@ Fix the dependency tree, follow these steps in the exact order. (Skip step 1 if 
 
 <!-- 
 
-Wasn't need, was using VSCode
+Wasn't needed, was using VSCode
 
 Optional, Run the following within your local **tools/covid19-dashboard** folder.  
 
@@ -58,31 +58,34 @@ Install dependencies
 
 -->
 
+Run:
+
+	npm audit fix --force
+
 Install dependencies (generates node_modules folder)
 
 	npm install
 
-If prompted, run:
-
-	npm audit fix --force
-
 
 Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
-<!--
-Build the app - this will created the index.js file
+
+Build the app (you can skip this command. npm start does the same but also launches a browser)
 
 	npm run build 
--->
 
 
-Launch site. Allow up to 30 minutes. A browser will automatically launch at http://localhost:3000/  
+Launch site. A browser will automatically launch at http://localhost:3000/  
+Launches in a minute, but you may need to allow abiout 20 minutes.
 
 	npm start
 
 
+You'll briefly see the DataCommons.org header when refreshing, then a "Failed to compile" occurs with a long list starting with the following:  
 
-
-You'll briefly see the DataCommons.org header when refreshing, then an error with the babel dependency occurs.
+	src/App.tsx
+	  Line 25:9:    Replace `GeoIdToDataType,·GeoIdToPlaceInfoType,·KeyToTimeSeriesType` with `⏎··GeoIdToDataType,⏎··GeoIdToPlaceInfoType,⏎··KeyToTimeSeriesType,⏎`                    prettier/prettier
+	  Line 38:3:    Delete `⏎`                                                                                                                                                         prettier/prettier
+	  Line 66:27:   The 'URLSearchParams' is not supported until Node.js 10.0.0. The configured version range is '>=8.0.0'                                                             node/no-unsupported-features/node-builtins
 
 <!--
 Chaning to the following did not allow browser to launch  
