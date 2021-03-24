@@ -2,12 +2,11 @@
 
 Clone the [DataCommons tools fork](https://github.com/modelearth/tools) to experiment on your local computer, or clone directly from [datacommonsorg/tools](https://github.com/datacommonsorg/tools)  
 
-We're still testing the following...  
+You may need to [update node.js](https://nodejs.org/en/download/current/).  
 
-You may need to update node.js.  Download here: https://nodejs.org/en/download/current/
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
-Run the following within your local tools/covid19-dashboard folder.  
+Run the following within your local **tools/covid19-dashboard** folder.  
 
 Setup the environment:
 
@@ -45,12 +44,23 @@ Build the app - this will created the index.js file
 	npm run build 
 -->
 
-In package.json and package-lock.json, change to:
+In package.json and package-lock.json, change eslint from existing to:
 
 	"eslint": "^7.13.0"
-    "@babel/eslint-parser": "^7.13.0",
-    "@babel/eslint-plugin": "^7.13.0",
 
 Launch site
 
 	npm start
+
+
+Allow up to 30 minutes. A browser will automatically launch at http://localhost:3000/  
+
+You'll briefly see the DataCommons.org header when refreshing, then an error with the babel dependency occurs.
+
+<!--
+Chaning to the following did not allow browser to launch  
+
+    "@babel/eslint-parser": "^7.13.0",
+    "@babel/eslint-plugin": "^7.13.0",
+
+-->
