@@ -38,11 +38,15 @@ If prompted, run:
 
 	npm audit fix --force
 
+
+Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
 <!--
 Build the app - this will created the index.js file
 
 	npm run build 
 -->
+
+To prevent initial error:  
 
 In package.json and package-lock.json, change eslint from existing to:
 
