@@ -2,7 +2,9 @@
 
 Clone the [DataCommons tools fork](https://github.com/modelearth/tools) to experiment on your local computer, or clone directly from [datacommonsorg/tools](https://github.com/datacommonsorg/tools)  
 
-You may need to [update node.js](https://nodejs.org/en/download/current/).  
+You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
+
+	node -v  
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
@@ -48,7 +50,7 @@ Build the app - this will created the index.js file
 
 To prevent initial error:  
 
-In package.json and package-lock.json, change eslint from existing to:
+In package.json and package-lock.json, change eslint from ^6.6.0 to:
 
 	"eslint": "^7.13.0"
 
