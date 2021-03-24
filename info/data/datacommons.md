@@ -8,7 +8,31 @@ You may need to [update node.js](https://nodejs.org/en/download/current/) if you
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
-Run the following within your local **tools/covid19-dashboard** folder.  
+Control \` to open terminal.    
+
+	cd covid19-dashboard
+
+To prevent initial error:  
+
+<!--
+In package.json AND package-lock.json, change eslint from ^6.6.0 to:
+
+	"eslint": "^7.13.0"
+-->
+
+Fix the dependency tree, follow these steps in the exact order. (Skip step 1 if you don't have a .lock file yet. Also skip step 2 if you don't have a node_modules folder yet.):
+
+  1. Delete package-lock.json (not package.json!) in your project folder.
+  2. Delete node_modules in your project folder.
+  3. Remove "eslint" from dependencies and/or devDependencies in the package.json file in your project folder.
+  4. Run npm install, depending on the package manager you use.
+
+
+<!-- 
+
+Wasn't need, was using VSCode
+
+Optional, Run the following within your local **tools/covid19-dashboard** folder.  
 
 Setup the environment:
 
@@ -32,6 +56,8 @@ Install dependencies
 
 	pip install -r requirements.txt
 
+-->
+
 Install dependencies (generates node_modules folder)
 
 	npm install
@@ -48,18 +74,13 @@ Build the app - this will created the index.js file
 	npm run build 
 -->
 
-To prevent initial error:  
 
-In package.json and package-lock.json, change eslint from ^6.6.0 to:
-
-	"eslint": "^7.13.0"
-
-Launch site
+Launch site. Allow up to 30 minutes. A browser will automatically launch at http://localhost:3000/  
 
 	npm start
 
 
-Allow up to 30 minutes. A browser will automatically launch at http://localhost:3000/  
+
 
 You'll briefly see the DataCommons.org header when refreshing, then an error with the babel dependency occurs.
 
