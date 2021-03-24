@@ -12,6 +12,16 @@ Control \` to open terminal.
 
 	cd covid19-dashboard
 
+
+Run
+
+	gcloud auth application-default login
+
+Choose your Google account <!-- map.g 00 --> and you should be directed to a page saying "You are now authenticated with the Google Cloud SDK!"  
+
+Note, the step above does not fix the "Failed to compile" errow below.  Maybe we need to make additional Google Cloud settings, perhaps for a specific project?  GCP Project datcom-tools-staging is mentioned on the readme.  
+
+
 To prevent initial error:  
 
 <!--
