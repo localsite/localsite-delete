@@ -69,7 +69,7 @@ Install dependencies (generates node_modules folder)
 
 Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
 
-Build the app (you can skip this command. npm start does the same but also launches a browser)
+Build the app (You can skip this step. npm start does the same but also launches a browser.)
 
 	npm run build 
 
