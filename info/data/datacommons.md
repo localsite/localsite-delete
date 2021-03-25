@@ -8,7 +8,7 @@ You may need to [update node.js](https://nodejs.org/en/download/current/) if you
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
-Control \` to open terminal.    
+Control \` to open terminal in VS Code.    
 
 	cd covid19-dashboard
 
@@ -17,9 +17,14 @@ Run
 
 	gcloud auth application-default login
 
+Add a quota project (haven't tried yet)  
+
+	gcloud auth application-default set-quota-project
+
 Choose your Google account <!-- map.g 00 --> and you should be directed to a page saying "You are now authenticated with the Google Cloud SDK!"  
 
-Note, the step above does not fix the "Failed to compile" errow below.  Maybe we need to make additional Google Cloud settings, perhaps for a specific project?  GCP Project datcom-tools-staging is mentioned on the readme.  
+Note, the step above does not fix the "Failed to compile" errow below.  Maybe we need to make additional Google Cloud settings, perhaps for a specific project?  
+GCP Project datcom-tools-staging is mentioned on the readme.  
 
 
 To prevent initial error:  
@@ -30,19 +35,19 @@ In package.json AND package-lock.json, change eslint from ^6.6.0 to:
 	"eslint": "^7.13.0"
 -->
 
+<!--
 Fix the dependency tree, follow these steps in the exact order. (Skip step 1 if you don't have a .lock file yet. Also skip step 2 if you don't have a node_modules folder yet.):
 
   1. Delete package-lock.json (not package.json!) in your project folder.
   2. Delete node_modules in your project folder.
   3. Remove "eslint" from dependencies and/or devDependencies in the package.json file in your project folder.
   4. Run npm install, depending on the package manager you use.
+-->
 
+## Create a Virtual Environment (optional)
 
-<!-- 
-
-Wasn't needed, was using VSCode
-
-Optional, Run the following within your local **tools/covid19-dashboard** folder.  
+Optional, run the following within your local **tools/covid19-dashboard** folder.  
+Wasn't needed, specifically when using VSCode, you can skip to "Install and Start" below.  
 
 Setup the environment:
 
@@ -58,7 +63,7 @@ Windows:
 
 	\.env\Scripts\activate.bat
 
-Optional, upgrade pip and postgresql
+Optional, upgrade pip  
 
 	pip install --upgrade pip
 
@@ -66,11 +71,21 @@ Install dependencies
 
 	pip install -r requirements.txt
 
--->
+
+## Install and Start
 
 Run:
+<!-- You’d need to have the google cloud sdk installed, as well as app engine (via “gcloud components install app-engine-python”). Maybe already had those. -->
+
+	./run_locally.sh
+
+Open new terminal  
+
+<!--
+Carolyn Au says this should no longer be necessary  
 
 	npm audit fix --force
+-->
 
 Install dependencies (generates node_modules folder)
 
@@ -79,7 +94,7 @@ Install dependencies (generates node_modules folder)
 
 Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
 
-Build the app (You can skip this step. npm start does the same but also launches a browser.)
+Build the app (You can skip this step. npm start does the same and also launches a browser.)
 
 	npm run build 
 
