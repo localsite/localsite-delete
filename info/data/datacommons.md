@@ -1,12 +1,19 @@
 # Install DataCommons.org Tools
 
-Clone the [DataCommons tools fork](https://github.com/modelearth/tools) to experiment on your local computer, or clone directly from [datacommonsorg/tools](https://github.com/datacommonsorg/tools)  
+
+Note: First get your gcloud connection working by starting with a clone of the [DataCommonsoOrg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).   folder and follow the "lite" steps halfway down the page.  
+
+Clone the [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
 You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
 
 	node -v  
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
+
+Also install chromedriver<!-- from developer guide -->
+
+	npm install chromedriver
 
 Open terminal. (Type CTRL+\` if you're using VS Code.)  
 
@@ -17,11 +24,11 @@ Run the following and choose your Google account <!-- map.g 00 -->. You should b
 
 	gcloud auth application-default login
 
-Or see if you are logged in  
+Or see if you are logged in:   
 
 	gcloud auth list
 
-If not, you can run  
+If not, you can run:  
 
 	gcloud auth login 'your_email@domain.com'
 
@@ -137,6 +144,11 @@ Launch site. A browser will automatically launch at http://localhost:3000/
 
 	npm start
 
+Check http://localhost:8080/ if you do not see data visualizations at port 3000.  
+
+If your not seeing data yet, try running the `./run_server.sh lite` command and other preliminary steps in the 
+the [Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  The website will also occupy pot 8080, so CTRL-C it before running the covid19 site.  
+
 Note that the development build is not optimized.
 To create a production build, use: 
 
@@ -158,12 +170,6 @@ Chaning to the following did not allow browser to launch
 
 -->
 
-The site header should be visible.  
-
-Additional steps from [Developer Guide](https://github.com/modelearth/website/blob/master/docs/developer_guide.md)
-
-	npm install chromedriver
-
 ## Also See
 
 <!--[Contributing Data]()  -->
@@ -175,4 +181,5 @@ If you don't have DataCommons GCP permissions, run
 
 	<!-- git submodule foreach git pull origin master -->
 	./run_server.sh lite
+
 
