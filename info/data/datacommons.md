@@ -8,7 +8,7 @@ You may need to [update node.js](https://nodejs.org/en/download/current/) if you
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
-Control \` to open terminal in VS Code.    
+Open terminal. (Type control \` if you're using VS Code.)  
 
 	cd covid19-dashboard
 
@@ -124,5 +124,5 @@ Chaning to the following did not allow browser to launch
 -->
 
 The site header should be visible.  
-We're currently figuring out how to pull the data from Google Cloud.  
+We're currently figuring out how to pull the data from Google Cloud using a QUOTA_PROJECT_ID.  
 
