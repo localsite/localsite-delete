@@ -8,7 +8,7 @@ You may need to [update node.js](https://nodejs.org/en/download/current/) if you
 
 <!-- node install says: Make sure that /usr/local/bin is in your $PATH. -->
 
-Open terminal. (Type control \` if you're using VS Code.)  
+Open terminal. (Type CTRL+\` if you're using VS Code.)  
 
 	cd covid19-dashboard
 
@@ -17,11 +17,11 @@ Run the following and choose your Google account <!-- map.g 00 -->. You should b
 
 	gcloud auth application-default login
 
-See if you are logged in  
+Or see if you are logged in  
 
 	gcloud auth list
 
-You may neet to run  
+If not, you can run  
 
 	gcloud auth login 'your_email@domain.com'
 
@@ -29,26 +29,25 @@ If that does not work, this will open a browser window (delete this after confir
 
 	gcloud auth login `ACCOUNT`
 
-Add a quota project (haven't tried yet)  
-
-	gcloud auth application-default set-quota-project QUOTA_PROJECT_ID [optional flags]
-
-
-Returned:  
-
-API [cloudresourcemanager.googleapis.com] not enabled on project 
-[404342046192]. Would you like to enable and retry (this will take a 
-few minutes)? (y/N)?
-
-Use the resulting link to enable the Service Usage API.  
-
+Get the ID from one of your projects. The ID appears after the project name in the [GCP Dashboard](https://console.cloud.google.com/home/dashboard). This is referred to as the QUOTA_PROJECT_ID.  
 
 [Steps](https://cloud.google.com/resource-manager/docs/creating-managing-projects) for creating a project and getting your QUOTA\_PROJECT\_ID  
 
+Add a quota project  
+
+	gcloud auth application-default set-quota-project QUOTA_PROJECT_ID [optional flags]
+
+This may return:  API [cloudresourcemanager.googleapis.com] not enabled on project 
+[404342046192]. Would you like to enable and retry (this will take a 
+few minutes)? (y/N)?  Enter y.
+
+You may be provided with a link to enable the Service Usage API. If so, enable it. 
+
+<!--
 Might not be needed:  
 Go to [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=1) and click "Create Service Account"  
+-->
 
-Assuming: The QUOTA\_PROJECT\_ID is the ID that appears after the project name in the [GCP Dashboard](https://console.cloud.google.com/home/dashboard)  
 <!--
 	Note: Georgia Directory is listed under Resouces Pending Deletion
 -->
@@ -57,7 +56,7 @@ To get info about set-quota-project:
 
 	gcloud auth application-default set-quota-project --help
 
-Control-C returns you to terminal. To view addition gcloud commands:
+CTRL+C returns you to terminal. To view addition gcloud commands:
 
 	 gcloud help
 
@@ -116,12 +115,12 @@ You need to have the google cloud sdk installed and the app engine.  To confirm 
 
 	gcloud components list
 
-Run:
+Run the server locally:
 <!-- You’d need to have the google cloud sdk installed, as well as app engine (via “gcloud components install app-engine-python”). Maybe already had those. -->
 
 	./run_locally.sh
 
-Open new terminal  
+Open a new terminal (the server will continue running in your previous terminal)  
 
 <!--
 Carolyn Au says this should no longer be necessary  
@@ -134,12 +133,7 @@ Install dependencies (generates node_modules folder)
 	npm install
 
 
-<!--
-Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
--->
-
 Launch site. A browser will automatically launch at http://localhost:3000/  
-<!--Launches in a minute. One time when we had an error, it took abiout 20 minutes.-->
 
 	npm start
 
@@ -165,9 +159,20 @@ Chaning to the following did not allow browser to launch
 -->
 
 The site header should be visible.  
-We're currently figuring out how to pull the data from Google Cloud using a QUOTA_PROJECT_ID.  
+
+Additional steps from [Developer Guide](https://github.com/modelearth/website/blob/master/docs/developer_guide.md)
+
+	npm install chromedriver
 
 ## Also See
 
-[Contributing Data]()  
-[Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md)  
+<!--[Contributing Data]()  -->
+[Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) - scroll to Develop with Flask (simple/lite)  
+
+### From the page above
+
+If you don't have DataCommons GCP permissions, run
+
+	<!-- git submodule foreach git pull origin master -->
+	./run_server.sh lite
+
