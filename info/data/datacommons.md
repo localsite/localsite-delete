@@ -13,15 +13,53 @@ Open terminal. (Type control \` if you're using VS Code.)
 	cd covid19-dashboard
 
 
-Run
+Run the following and choose your Google account <!-- map.g 00 -->. You should be directed to a page saying "You are now authenticated with the Google Cloud SDK!"  
 
 	gcloud auth application-default login
 
+See if you are logged in  
+
+	gcloud auth list
+
+You may neet to run  
+
+	gcloud auth login 'your_email@domain.com'
+
+If that does not work, this will open a browser window (delete this after confirming above works)
+
+	gcloud auth login `ACCOUNT`
+
 Add a quota project (haven't tried yet)  
 
-	gcloud auth application-default set-quota-project
+	gcloud auth application-default set-quota-project QUOTA_PROJECT_ID [optional flags]
 
-Choose your Google account <!-- map.g 00 --> and you should be directed to a page saying "You are now authenticated with the Google Cloud SDK!"  
+
+Returned:  
+
+API [cloudresourcemanager.googleapis.com] not enabled on project 
+[404342046192]. Would you like to enable and retry (this will take a 
+few minutes)? (y/N)?
+
+Use the resulting link to enable the Service Usage API.  
+
+
+[Steps](https://cloud.google.com/resource-manager/docs/creating-managing-projects) for creating a project and getting your QUOTA\_PROJECT\_ID  
+
+Might not be needed:  
+Go to [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=1) and click "Create Service Account"  
+
+Assuming: The QUOTA\_PROJECT\_ID is the ID that appears after the project name in the [GCP Dashboard](https://console.cloud.google.com/home/dashboard)  
+<!--
+	Note: Georgia Directory is listed under Resouces Pending Deletion
+-->
+
+To get info about set-quota-project:  
+
+	gcloud auth application-default set-quota-project --help
+
+Control-C returns you to terminal. To view addition gcloud commands:
+
+	 gcloud help
 
 <!--
 Note, the step above does not fix the "Failed to compile" errow below.  Maybe we need to make additional Google Cloud settings, perhaps for a specific project?  
@@ -74,6 +112,10 @@ Install dependencies
 
 ## Install and Start
 
+You need to have the google cloud sdk installed and the app engine.  To confirm you have app-engine-python installed, run the following (If needed, install by running “gcloud components install app-engine-python”). Update to the latest Cloud SDK by running "gcloud components update" (also updates other components and adds )  
+
+	gcloud components list
+
 Run:
 <!-- You’d need to have the google cloud sdk installed, as well as app engine (via “gcloud components install app-engine-python”). Maybe already had those. -->
 
@@ -94,11 +136,6 @@ Install dependencies (generates node_modules folder)
 
 <!--
 Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
-
-Build the app (You can skip this step. npm start does the same and also launches a browser.)
-
-	npm run build 
-
 -->
 
 Launch site. A browser will automatically launch at http://localhost:3000/  
@@ -106,6 +143,10 @@ Launch site. A browser will automatically launch at http://localhost:3000/
 
 	npm start
 
+Note that the development build is not optimized.
+To create a production build, use: 
+
+	npm run build.
 
 <!--
 You'll briefly see the DataCommons.org header when refreshing, then a "Failed to compile" occurs with a long list starting with the following:  
@@ -126,3 +167,7 @@ Chaning to the following did not allow browser to launch
 The site header should be visible.  
 We're currently figuring out how to pull the data from Google Cloud using a QUOTA_PROJECT_ID.  
 
+## Also See
+
+[Contributing Data]()  
+[Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md)  
