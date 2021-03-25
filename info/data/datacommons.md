@@ -23,13 +23,13 @@ Add a quota project (haven't tried yet)
 
 Choose your Google account <!-- map.g 00 --> and you should be directed to a page saying "You are now authenticated with the Google Cloud SDK!"  
 
+<!--
 Note, the step above does not fix the "Failed to compile" errow below.  Maybe we need to make additional Google Cloud settings, perhaps for a specific project?  
 GCP Project datcom-tools-staging is mentioned on the readme.  
 
 
 To prevent initial error:  
 
-<!--
 In package.json AND package-lock.json, change eslint from ^6.6.0 to:
 
 	"eslint": "^7.13.0"
