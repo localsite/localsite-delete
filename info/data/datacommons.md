@@ -92,19 +92,22 @@ Install dependencies (generates node_modules folder)
 	npm install
 
 
+<!--
 Note: The dashboar.yaml file contains handlers for a build folder. How do we execute it? The .eslintignore file also omits build/  
 
 Build the app (You can skip this step. npm start does the same and also launches a browser.)
 
 	npm run build 
 
+-->
 
 Launch site. A browser will automatically launch at http://localhost:3000/  
-Launches in a minute, but you may need to allow abiout 20 minutes.
+<!--Launches in a minute. One time when we had an error, it took abiout 20 minutes.-->
 
 	npm start
 
 
+<!--
 You'll briefly see the DataCommons.org header when refreshing, then a "Failed to compile" occurs with a long list starting with the following:  
 
 	src/App.tsx
@@ -112,10 +115,14 @@ You'll briefly see the DataCommons.org header when refreshing, then a "Failed to
 	  Line 38:3:    Delete `⏎`                                                                                                                                                         prettier/prettier
 	  Line 66:27:   The 'URLSearchParams' is not supported until Node.js 10.0.0. The configured version range is '>=8.0.0'                                                             node/no-unsupported-features/node-builtins
 
-<!--
+
 Chaning to the following did not allow browser to launch  
 
     "@babel/eslint-parser": "^7.13.0",
     "@babel/eslint-plugin": "^7.13.0",
 
 -->
+
+The site header should be visible.  
+We're currently figuring out how to pull the data from Google Cloud.  
+
