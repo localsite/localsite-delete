@@ -204,13 +204,13 @@ To deploy the application, usr the deploy_gcloud.sh script found in covid19-dash
 
 If you only wish to deploy the default application and not use the covid-19 script, you can deploy using the following commands:  
 
-# Change variable if deploying to different project.
+### Change variable if deploying to different project.
 	export GOOGLE_CLOUD_PROJECT="datcom-tools-staging"
 
-# Set the project on gcloud.
+### Set the project on gcloud.
 	gcloud config set project $GOOGLE_CLOUD_PROJECT
 
-# Deploy to App Engine.
+### Deploy to App Engine.
 	gcloud app deploy app.yaml
 
 
