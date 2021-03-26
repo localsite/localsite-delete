@@ -1,6 +1,6 @@
 # Install DataCommons.org Tools
 
-First get your gcloud connection working by Follow the "lite" steps halfway down on the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) repo readme page.  Clone the "website" repo and run commands within the local folder.  
+First get your gcloud connection working by following the "lite" steps halfway down on the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) repo readme page.  Clone the "website" repo and run commands within the local folder.  
 
 You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
 
