@@ -121,7 +121,11 @@ You need to have the google cloud sdk installed and the app engine.  To confirm 
 
 	gcloud components list
 
-Run the server locally:
+You'll need to initiat a server from the "website" repo first. (Looking for an alternative to this, maybe "tools" should be a submodule of "website")
+
+	./run_server.sh lite
+
+Start the server locally:
 <!-- You’d need to have the google cloud sdk installed, as well as app engine (via “gcloud components install app-engine-python”). Maybe already had those. -->
 
 	./run_locally.sh
@@ -141,9 +145,10 @@ Install dependencies (generates node_modules folder)
 
 Launch site. A browser will automatically launch at http://localhost:3000/  
 
+
 	npm start
 
-Check http://localhost:8080/ if you do not see data visualizations at port 3000.  
+However, you may need to go to http://localhost:8080/ if you do not see data visualizations at port 3000. (This assumes you've already run `./run_server.sh lite` in the "website" repo.)  
 
 If your not seeing data yet, try running the `./run_server.sh lite` command and other preliminary steps in the 
 the [Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  The website will also occupy pot 8080, so CTRL-C it before running the covid19 site.  
