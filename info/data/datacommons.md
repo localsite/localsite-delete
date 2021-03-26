@@ -1,6 +1,5 @@
 # Install DataCommons.org Tools
 
-
 Note: We recommend first getting your gcloud connection working using a clone of the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  Follow the "lite" steps halfway down the page.  
 
 To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
@@ -175,11 +174,18 @@ Chaning to the following did not allow browser to launch
 <!--[Contributing Data]()  -->
 [Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) - scroll to Develop with Flask (simple/lite)  
 
-### From the page above
+### From the developer guide
+
+After cloning website repo, run:  
+
+	git submodule foreach git pull origin master
 
 If you don't have DataCommons GCP permissions, run
 
-	<!-- git submodule foreach git pull origin master -->
 	./run_server.sh lite
+
+The covid19-dashboard site worked here at port 8080, but not yer able to reproduce sequence of steps.  
+
+http://localhost:8080/dashboard/?dashboardId=socialWellness
 
 
