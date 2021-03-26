@@ -20,6 +20,7 @@ Update to the latest Cloud SDK by running `gcloud components update` (which also
 
 You'll need to initiate a server from the "website" repo first. (Looking for an alternative to this, maybe "tools" should be a submodule of "website" so all the routes continue working.)
 
+	git submodule foreach git pull origin master
 	./run_server.sh lite
 
 
