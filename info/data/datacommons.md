@@ -1,6 +1,6 @@
 # Install DataCommons.org Tools
 
-Note: We recommend first getting your gcloud connection working using a clone of the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  Follow the "lite" steps halfway down the page.  
+First get your gcloud connection working using a clone of the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  Follow the "lite" steps halfway down the page.  
 
 To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
@@ -192,5 +192,21 @@ If you don't have DataCommons GCP permissions, run
 The covid19-dashboard site worked here at port 8080, but we're not yet able to reproduce sequence of steps made in website repo that help get the covid19 data pull working.  
 
 http://localhost:8080/dashboard/?dashboardId=socialWellness
+
+# Deploy to gcloud
+
+To deploy the application, usr the deploy_gcloud.sh script found in covid19-dashboard.  
+
+If you only wish to deploy the default application and not use the covid-19 script, you can deploy using the following commands:  
+
+# Change variable if deploying to different project.
+	export GOOGLE_CLOUD_PROJECT="datcom-tools-staging"
+
+# Set the project on gcloud.
+	gcloud config set project $GOOGLE_CLOUD_PROJECT
+
+# Deploy to App Engine.
+	gcloud app deploy app.yaml
+
 
 
