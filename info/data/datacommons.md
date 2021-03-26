@@ -1,9 +1,9 @@
 # Install DataCommons.org Tools
 
 
-Note: First get your gcloud connection working by starting with a clone of the [DataCommonsoOrg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).   folder and follow the "lite" steps halfway down the page.  
+Note: We recommend first getting your gcloud connection working using a clone of the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  Follow the "lite" steps halfway down the page.  
 
-Clone the [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
+To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
 You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
 
