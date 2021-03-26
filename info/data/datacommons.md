@@ -1,8 +1,6 @@
 # Install DataCommons.org Tools
 
-First get your gcloud connection working using a clone of the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md).  Follow the "lite" steps halfway down the page.  
-
-To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
+First get your gcloud connection working by Follow the "lite" steps halfway down on the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) repo readme page.  Clone the "website" repo and run commands within the local folder.  
 
 You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
 
@@ -13,6 +11,21 @@ You may need to [update node.js](https://nodejs.org/en/download/current/) if you
 Also install chromedriver<!-- from developer guide -->
 
 	npm install chromedriver
+
+You'll need to have the Google cloud sdk installed and the app engine.  To confirm you have app-engine-python installed, run the following (If needed, install by running `gcloud components install app-engine-python`).  
+
+	gcloud components list
+
+Update to the latest Cloud SDK by running `gcloud components update` (which also updates other components).  
+
+You'll need to initiate a server from the "website" repo first. (Looking for an alternative to this, maybe "tools" should be a submodule of "website" so all the routes continue working.)
+
+	./run_server.sh lite
+
+
+## Tools repo install - covid19-dashboard sample
+
+To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
 Open terminal. (Type CTRL+\` if you're using VS Code.)  
 
@@ -116,14 +129,6 @@ Install dependencies
 
 
 ## Install and Start
-
-You need to have the google cloud sdk installed and the app engine.  To confirm you have app-engine-python installed, run the following (If needed, install by running “gcloud components install app-engine-python”). Update to the latest Cloud SDK by running "gcloud components update" (also updates other components and adds )  
-
-	gcloud components list
-
-You'll need to initiat a server from the "website" repo first. (Looking for an alternative to this, maybe "tools" should be a submodule of "website")
-
-	./run_server.sh lite
 
 Start the server locally:
 <!-- You’d need to have the google cloud sdk installed, as well as app engine (via “gcloud components install app-engine-python”). Maybe already had those. -->
