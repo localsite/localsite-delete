@@ -184,7 +184,7 @@ If you don't have DataCommons GCP permissions, run
 
 	./run_server.sh lite
 
-The covid19-dashboard site worked here at port 8080, but not yer able to reproduce sequence of steps.  
+The covid19-dashboard site worked here at port 8080, but we're not yet able to reproduce sequence of steps made in website repo that help get the covid19 data pull working.  
 
 http://localhost:8080/dashboard/?dashboardId=socialWellness
 
