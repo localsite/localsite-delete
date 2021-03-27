@@ -32,13 +32,12 @@ Also lacks CHARM.  Far from comprehensive.
 
 <h2>Contribute to Updates</h2>
 
-<h3>Google Sheets</h3>
-View location data and post comments to submit changes.  
+Post comments in our Google Sheet to submit changes.  
 
-<a href="https://drive.google.com/drive/u/5/folders/15ubXRHLHtwDF92zyH7ledoO1SsJ3FS4f" target="google-recycling">Georgia Recycling Processors</a> - 
-<a href="../../#show=recycling-processors">map</a>
+<a href="https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing" target="google-recycling">Google Sheet Tabs</a><br> 
+<a href="../../#show=recycling">Recycling Processor Map</a><br>
 <hr>
-<a href="../../neighborhood/" target="_blank">About Maps from Google Sheets</a>
+<a href="../../neighborhood/" target="_parent">About Maps from Google Sheets</a>
 <!--
 Google Sheets resides in Georgia Maps Google account > Georgia Recycling folder
 Owned by maps.georgia.org@gmail.com

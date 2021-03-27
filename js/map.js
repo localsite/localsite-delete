@@ -987,6 +987,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
     dp1.sheetName = "recycling_processors";
     dp1.nameColumn = "company";
+    dp1.listInfo = "<br><br>Post comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a> to submit updates. Learn about <a href='https://georgiadata.github.io/explore/#recycling'>recycling data sources</a>.";
     dp1.valueColumn = "materials_category";
     dp1.valueColumnLabel = "Category";
     dp1.latColumn = "latitude";

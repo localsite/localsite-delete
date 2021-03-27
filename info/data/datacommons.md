@@ -1,6 +1,6 @@
 
 Help us pull Commute Time from the Google Data Commons API.  
-And add and Walkability data from one of the free API's available.  
+And add Walkability data from one of the free API's available.  
 
 
 # Install DataCommons.org Tools
