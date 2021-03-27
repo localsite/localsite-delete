@@ -4,7 +4,17 @@ Help us pull Commute Time and Walkability data from the Google Data Commons API.
 
 # Install DataCommons.org Tools
 
-First get your gcloud connection working by following the "lite" steps halfway down on the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) repo readme page.  Clone the "website" repo and run commands within the local folder.  
+### Start with the "website" repo developer guide - Lite steps
+
+To view the "tools" repo samples locally, you'll need to initiate a server from the "website" repo first. (Looking for an alternative to this, or maybe "tools" should be a submodule of "website" so all the routes continue working for both "website" and "tools".)  
+
+[Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) - scroll to Develop with Flask (simple/lite)  
+
+First get your gcloud connection working by following the "lite" steps halfway down on the [datacommonsorg/website](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) repo readme page.  Clone the "website" repo and run commands within your local "website" folder.  
+
+After cloning website repo, run to load submodule "mixer":  
+
+	git submodule foreach git pull origin master
 
 You may need to [update node.js](https://nodejs.org/en/download/current/) if you are older than 10.0.0. Run to check:
 
@@ -22,13 +32,15 @@ You'll need to have the Google cloud sdk installed and the app engine.  To confi
 
 Update to the latest Cloud SDK by running `gcloud components update` (which also updates other components).  
 
-You'll need to initiate a server from the "website" repo first. (Looking for an alternative to this, maybe "tools" should be a submodule of "website" so all the routes continue working.)
+Launch the lite server. This may also provide steps to activate your DataCommons GCP permissions.  
 
-	git submodule foreach git pull origin master
 	./run_server.sh lite
 
 
-## Tools repo install - covid19-dashboard sample
+
+## Tools repo install
+
+### covid19-dashboard sample
 
 To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
@@ -184,24 +196,9 @@ Chaning to the following did not allow browser to launch
 
 -->
 
-## Also See
-
-<!--[Contributing Data]()  -->
-[Developer Guide](https://github.com/datacommonsorg/website/blob/master/docs/developer_guide.md) - scroll to Develop with Flask (simple/lite)  
-
-### From the developer guide
-
-After cloning website repo, run:  
-
-	git submodule foreach git pull origin master
-
-If you don't have DataCommons GCP permissions, run
-
-	./run_server.sh lite
-
-The covid19-dashboard site worked here at port 8080, but we're not yet able to reproduce sequence of steps made in website repo that help get the covid19 data pull working.  
-
+The covid19-dashboard site the worked here at port 8080  
 http://localhost:8080/dashboard/?dashboardId=socialWellness
+
 
 # Deploy to gcloud
 
