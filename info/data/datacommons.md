@@ -32,12 +32,16 @@ You'll need to have the Google cloud sdk installed and the app engine.  To confi
 	gcloud components list
 
 Update to the latest Cloud SDK by running `gcloud components update` (which also updates other components).  
+<!-- SDK Auth success takes you here: https://cloud.google.com/sdk/auth_success -->
+
+You might need to set a default gcp project locally by running `gcloud config set project <PROJECT_ID>` 
 
 Launch the lite server. This may also provide steps to activate your DataCommons GCP permissions.  
 
 	./run_server.sh lite
 
 
+For machine learning projects, use the full install with [Minikube](https://minikube.sigs.k8s.io/docs/start/) plus [Skaffold](https://skaffold.dev/docs/install/) and [Run GPU workloads on minikube](https://cloud.google.com/blog/products/containers-kubernetes/easier-kubernetes-development-from-your-laptop?utm_source=newsletter&utm_medium=email&utm_campaign=2019-january-gcp-newsletter-en)  
 
 ## Install "tools" repo
 
@@ -81,7 +85,7 @@ few minutes)? (y/N)?  Enter y.
 You may be provided with a link to enable the Service Usage API. If so, enable it. 
 
 <!--
-Might not be needed:  
+Might not be needed - deleted this:  
 Go to [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts?authuser=1) and click "Create Service Account"  
 -->
 
@@ -212,6 +216,8 @@ If you only wish to deploy the default application and not use the covid-19 scri
 
 ### Set the project on gcloud.
 	gcloud config set project $GOOGLE_CLOUD_PROJECT
+
+$GOOGLE_CLOUD_PROJECT is the project ID, same as QUOTA\_PROJECT\_ID
 
 ### Deploy to App Engine.
 	gcloud app deploy app.yaml
