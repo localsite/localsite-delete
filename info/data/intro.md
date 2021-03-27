@@ -1,6 +1,8 @@
 
 # Local DataUSA.io
 
+We have not yet figured out how to hit the DataUSA API rather than local postgresql database.
+
 Clone the [datausa-site repo](https://github.com/DataUSA/datausa-site)  
 
 Run the following within your local datausa-site folder.  
@@ -52,11 +54,7 @@ Error:
 Database: postgresql://undefined:*********@undefined:5432/undefined  
 Can't authenticate to database.  
 
-To Do: Figure out how to hit the API rather than local postgresql database.  
-
-
-
----
+Question: How would we hit the DataUSA API rather than a local postgresql database?  
 
 Tried installing [datausa-api](https://github.com/DataUSA/datausa-api)  
 
@@ -64,11 +62,15 @@ If you install Python using brew, the relevant headers are already installed for
 In other words, you don't need python-devel.
 
 <br><br>
+---
 
-
-# County Industry Data Prep  
+# County Industry Lists - Data Prep  
 
 The following documents how to generate a CSV file containing BLS data pulled from the [EPA's Flowsa API](https://datacommons.org).  
+
+You may also opt to pull from static json files generated for the [USEEIO widgets](../../../io/charts/).  
+
+The following verified that holes resided in Automotive Manufacturing at the county level.  To resolve, an Google Sheet could hold [auto manufacturing employment levels](../../info/#show=vehicles) exported from state DOL data.  And/or PUMA data may allow for comparison.
 
 ## BLS Data Preparation 
 

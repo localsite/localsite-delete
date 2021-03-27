@@ -1,5 +1,6 @@
 
-Help us pull Commute Time and Walkability data from the Google Data Commons API.  
+Help us pull Commute Time from the Google Data Commons API.  
+And add and Walkability data from one of the free API's available.  
 
 
 # Install DataCommons.org Tools
@@ -38,11 +39,11 @@ Launch the lite server. This may also provide steps to activate your DataCommons
 
 
 
-## Tools repo install
+## Install "tools" repo
 
-### covid19-dashboard sample
+### For covid19-dashboard sample
 
-To view and edit the tools repo sample locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
+To view and edit the tools repo locally, clone [datacommonsorg/tools](https://github.com/datacommonsorg/tools) repo or the [ModelEarth fork](https://github.com/modelearth/tools)  
 
 Open terminal. (Type CTRL+\` if you're using VS Code.)  
 
@@ -65,7 +66,7 @@ If that does not work, this will open a browser window (delete this after confir
 
 	gcloud auth login `ACCOUNT`
 
-Get the ID from one of your projects. The ID appears after the project name in the [GCP Dashboard](https://console.cloud.google.com/home/dashboard). This is referred to as the QUOTA_PROJECT_ID.  
+Get the ID from one of your projects. The ID appears after the project name in the [GCP Dashboard](https://console.cloud.google.com/home/dashboard). This is referred to as the QUOTA\_PROJECT\_ID.  
 
 [Steps](https://cloud.google.com/resource-manager/docs/creating-managing-projects) for creating a project and getting your QUOTA\_PROJECT\_ID  
 
