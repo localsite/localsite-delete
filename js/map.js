@@ -1007,7 +1007,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.valueColumnLabel = "Category";
     //dp1.latColumn = "latitude";
     //dp1.lonColumn = "longitude";
-    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+    dp1.search = {"In Location Name": "Name", "In Address": "Address", "In County Name": "County", "In Website URL": "Website"};
   } else if (show == "vehicles" || show == "ev") {
     dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
     if (show == "ev") {
