@@ -981,17 +981,33 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     //  https://model.earth/community-data/us/state/GA/VirtualTourSites.csv
     dp1.dataset =  dual_map.custom_data_root() + "360/GeorgiaPowerSites.csv";
 
-  } else if (show == "recycling") { // recycling-processors
-    dp1.listTitle = "Recycling Processors";
+  } else if (show == "recycling" || show == "transfer" || show == "recyclers" || show == "inert" || show == "landfills") { // recycling-processors
+    
     dp1.editLink = "https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing";
     dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
-    dp1.sheetName = "recycling_processors";
+    if (show == "transfer") {
+      dp1.listTitle = "Georgia Transfer Stations";
+      dp1.sheetName = "Transfer Stations";
+    } else if (show == "recyclers") {
+      dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
+      dp1.sheetName = "Manufacturer Recyclers";
+    } else if (show == "landfills") {
+      dp1.listTitle = "Georgia Landfills";
+      dp1.sheetName = "Landfills";
+    } else if (show == "inert") {
+      dp1.listTitle = "Georgia Inert Waste Landfills";
+      dp1.sheetName = "Inert Waste Landfills";
+    } else {
+      dp1.listTitle = "Georgia Recycling Processors";
+      dp1.sheetName = "Recycling Processors";
+    }
     dp1.nameColumn = "company";
-    dp1.listInfo = "<br><br>Post comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a> to submit updates. Learn about <a href='https://georgiadata.github.io/explore/#recycling'>recycling data sources</a>.";
+    dp1.listInfo = "<br><br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.<br>Learn about <a href='https://georgiadata.github.io/explore/#recycling'>recycling data sources</a>.";
     dp1.valueColumn = "materials_category";
     dp1.valueColumnLabel = "Category";
-    dp1.latColumn = "latitude";
-    dp1.lonColumn = "longitude";
+    //dp1.latColumn = "latitude";
+    //dp1.lonColumn = "longitude";
+    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
   } else if (show == "vehicles" || show == "ev") {
     dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
     if (show == "ev") {
