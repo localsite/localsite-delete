@@ -376,7 +376,7 @@ $(document).ready(function () {
    	}
    	$("#clearButton").click(function() {
    		clearFields();
-   		clearHash("cat,search,q,geo");
+   		clearHash("cat,search,q,geo,name");
    		dataObject.geos = null; // Loaded when geo is in hash on init, to avoid time to place hidden checkboxes.
    		//history.pushState("", document.title, window.location.pathname);
    		//loadHtmlTable(true); // New list
@@ -384,7 +384,7 @@ $(document).ready(function () {
    		let hash = getHash();
    		renderMapShapes("geomap", hash); // County select map
 
-   		loadMap1(); // BUGBUG - this hide map on /map page, perhaps dataset is not available during clear.
+   		loadMap1(); // BUGBUG - this hid map on /map page, perhaps dataset is not available during clear.
    		event.stopPropagation();
    	});
    	$("#botGo").click(function() {

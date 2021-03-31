@@ -172,7 +172,7 @@ function clearHash(toClear) {
   let hash = getHash(); // Include all existing
   let clearArray = toClear.split(/\s*,\s*/);
   for(var i = 0; i < clearArray.length; i++) {
-    delete hash[clearArray[i]]; 
+    delete hash[clearArray[i]];
   }
   var hashString = decodeURIComponent($.param(hash)); // decode to display commas in URL
   var pathname = window.location.pathname;

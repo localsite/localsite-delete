@@ -38,6 +38,8 @@ var mbAttr = '<a href="https://www.mapbox.com/">Mapbox</a>', mbUrl = 'https://ap
 //
 // options for scales:
 // "scaleThreshold", "scaleOrdinal", "scaleOrdinal" or "scaleQuantile"
+//
+// refreshWidgets() resides within map-filters.js. In the index.html pages, any hash change invokes loadMap1()
 //////////////////////////////////////////////////////////////////
 
 /////////// LOAD FROM HTML ///////////
@@ -651,12 +653,13 @@ function addIcons(dp,map,map2) {
 
     element.mapframe = getMapframe(element);
     if (element.mapframe) {
-        output += "<a href='#show=360&m=" + element.mapframe + "'>Birdseye View<br>";
+      output += "<a href='#show=360&m=" + element.mapframe + "'>Birdseye View<br>";
     }
     if (element.property_link) {
-        output += "<a href='" + element.property_link + "'>Property Details</a><br>";
+      output += "<a href='" + element.property_link + "'>Property Details</a><br>";
+    } else {
+      output += "<a href='#show=" + param["show"] + "&name=" + element["name"].replace(/\ /g,"_") + "''>View Details</a><br>";
     }
-
     // ADD POPUP BUBBLES TO MAP POINTS
     if (circle) {
       circle.bindPopup(output);
@@ -733,9 +736,7 @@ function addIcons(dp,map,map2) {
     $(".l-icon-material").show();
   });
 
-  $('.detail').click(
-    function() {
-
+  $('.detail').click(function() { // Provides close-up with map2
       $("#sidemapCard").show(); // map2 - show first to maximize time tiles have to see full size of map div.
 
       // Reduce the size of all circles - to do: when zoom is going in 
@@ -988,26 +989,35 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     if (show == "transfer") {
       dp1.listTitle = "Georgia Transfer Stations";
       dp1.sheetName = "Transfer Stations";
+      dp1.valueColumn = "waste type"; // Bug - need to support uppercase too.
+      dp1.valueColumnLabel = "Waste Type";
     } else if (show == "recyclers") {
       dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
       dp1.sheetName = "Manufacturer Recyclers";
+      dp1.valueColumn = "category"; // Bug - need to support uppercase too.
+      dp1.valueColumnLabel = "Recycles";
     } else if (show == "landfills") {
       dp1.listTitle = "Georgia Landfills";
       dp1.sheetName = "Landfills";
+      dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+      dp1.valueColumnLabel = "Sector";
     } else if (show == "inert") {
       dp1.listTitle = "Georgia Inert Waste Landfills";
       dp1.sheetName = "Inert Waste Landfills";
+      dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+      dp1.valueColumnLabel = "Sector";
     } else {
       dp1.listTitle = "Georgia Recycling Processors";
       dp1.sheetName = "Recycling Processors";
+      dp1.valueColumn = "category";
+      dp1.valueColumnLabel = "Materials Category";
     }
     dp1.nameColumn = "company";
-    dp1.listInfo = "<br><br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.<br>Learn about <a href='https://georgiadata.github.io/explore/#recycling'>recycling data sources</a>.";
-    dp1.valueColumn = "materials_category";
-    dp1.valueColumnLabel = "Category";
+    dp1.listInfo = "<br><br>View additional <a href='../map/recycling/ga/'>recycling datasets</a>.<br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.";
+    
     //dp1.latColumn = "latitude";
     //dp1.lonColumn = "longitude";
-    dp1.search = {"In Location Name": "Name", "In Address": "Address", "In County Name": "County", "In Website URL": "Website"};
+    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
   } else if (show == "vehicles" || show == "ev") {
     dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
     if (show == "ev") {
@@ -1217,8 +1227,6 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.addlisting = "https://www.ams.usda.gov/services/local-regional/food-directories-update";
     // community/farmfresh/ 
     dp1.listInfo = "Farmers markets and local farms providing fresh produce directly to consumers. <a style='white-space: nowrap' href='https://model.earth/community/farmfresh/ga/'>About Data</a> | <a href='https://www.ams.usda.gov/local-food-directories/farmersmarkets'>Update Listings</a>";
-  
-    
   }
 
   // Load the map using settings above
@@ -1248,7 +1256,10 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
 function initialHighlight(hash) {
   if (hash.name) {
     let locname = hash.name.replace(/_/g," ");
+
+    // console.log("Auto select the first location in list")
     $("#detaillist > [name='"+locname+"']" ).trigger("click");
+
     //$("#detaillist").scrollTop($("#detaillist").scrollTop() + $("#detaillist > [name='"+locname+"']" ).position().top);
 
     // https://stackoverflow.com/questions/2346011/how-do-i-scroll-to-an-element-within-an-overflowed-div?noredirect=1&lq=1
@@ -1261,9 +1272,8 @@ function initialHighlight(hash) {
 
   } else {
     if (!(param["show"] == "suppliers" || param["show"] == "ppe")) {
-      //setTimeout(function(){
-        $("#detaillist > div:first-of-type" ).trigger("click");
-      //}, 500);
+        // console.log("Auto select the first location in list")
+        //$("#detaillist > div:first-of-type" ).trigger("click");
     }
   }
 }
@@ -1407,6 +1417,7 @@ function showList(dp,map) {
   var iconColor, iconColorRGB;
   var colorScale = dp.scale;
   let count = 0;
+  let showCount = 0;
 
   var productMatchFound = 0;
   var dataMatchCount = 0;
@@ -1510,11 +1521,23 @@ function showList(dp,map) {
   }
 
   //console.log(dp.data); //TEMP
+  let hash = getHash(); 
 
   dp.data.forEach(function(elementRaw) {
     count++;
     foundMatch = 0;
     productMatchFound = 0;
+
+    let showIt = true;
+    if (hash["name"] && elementRaw["name"]) { // Match company name from URL to isolate as profile page.
+      //console.log("elementRaw[name] " + elementRaw["name"]);
+      if (hash["name"].replace(/\_/g," ") == elementRaw["name"]) {
+        //alert(hash["name"])
+        showCount++;
+      } else {
+        showIt = false; // Hide others to show profile below map with all.
+      }
+    } 
 
     /*
     if (keyword == allItemsPhrase) { // Use a div argument instead
@@ -1738,185 +1761,187 @@ function showList(dp,map) {
 
       // TO INVESTIGATE - elementRaw (not element) has to be used here for color scale.
 
-      // DETAILS LIST
-      // colorScale(element[dp.valueColumn])
-      //console.log("iconColor test here: " + iconColor)
-      //console.log("color test here: " + colorScale(elementRaw[dp.valueColumn]))
+      if (showIt) {
+        // DETAILS LIST
+        // colorScale(element[dp.valueColumn])
+        //console.log("iconColor test here: " + iconColor)
+        //console.log("color test here: " + colorScale(elementRaw[dp.valueColumn]))
 
-      if (element[dp.latColumn] && element[dp.lonColumn]) {
-        output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "' latitude='" + element[dp.latColumn] + "' longitude='" + element[dp.lonColumn] + "'>";
-      } else {
-        output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "'>";
-      }
-
-      output += "<div class='showItemMenu' style='float:right'>&mldr;</div>"; 
-      output += "<div style='padding-bottom:4px'><div style='width:15px;height:15px;margin-right:6px;margin-top:8px;background:" + colorScale(elementRaw[dp.valueColumn]) + ";float:left'></div>";
-
-      //output += "<div style='position:relative'><div style='float:left;min-width:28px;margin-top:2px'><input name='contact' type='checkbox' value='" + name + "'></div><div style='overflow:auto'><div>" + name + "</div>";
-                
-      //output += "<div style='overflow:auto'>";
-      
-      output += "<b style='font-size:20px; font-weight:400; color:#333;'>" + name + "</b></div>";
-      if (element[dp.description]) {
-        output += "<div style='padding-bottom:8px'>" + element[dp.description] + "</div>";
-      } else if (element.description) {
-        output += "<div style='padding-bottom:8px'>" + element.description + "</div>";
-      } else if (element["business description"]) {
-        output += "<div style='padding-bottom:8px'>" + element["business description"] + "</div>";
-      }
-
-      // Lower
-      output += "<div style='font-size:0.95em;line-height:1.5em'>";
-
-      if (element.items) {
-        output += "<b>Items:</b> " + element.items + "<br>";
-      }
-      
-      if (element[dp.addressColumn]) { 
-          output +=  element[dp.addressColumn] + "<br>"; 
-      } else if (element.address || element.city || element.state || element.zip) {
-        output += "<b>Location:</b> ";
-        if (element.address) {
-          output += element.address + "<br>";
+        if (element[dp.latColumn] && element[dp.lonColumn]) {
+          output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "' latitude='" + element[dp.latColumn] + "' longitude='" + element[dp.lonColumn] + "'>";
         } else {
-          if (element.city) {
-            output += element.city;
-          }
-          if (element.state || element.zip) {
-            output += ", ";
-          }
-          if (element.state) {
-            output += element.state + " ";
-          }
-          if (element.zip) {
-            output += element.zip;
-          }
-          if (element.city || element.state || element.zip) {
-            output += "<br>";
-          }
+          output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "'>";
         }
-      }
-      if (element.county) {
-        output += '<b>Location:</b> ' + element.county + " County<br>";
-      } else if (!(element[dp.latColumn] && element[dp.lonColumn])) {
-        if (!element[dp.lonColumn]) {
-          output += "<span style='color:red'>Needs latitude and longitude</span><br>";
-        } else {
-          output += "<span style='color:red'>Needs address or lat/lon values</span><br>";
-        }
-      }
-      if (element.website) {
-        if (element.website.length <= 50) {
-          output += "<b>Website:</b> <a href='" + element.website + "' target='_blank'>" + element.website.replace("https://","").replace("http://","").replace("www.","").replace(/\/$/, "") + "</a><br>";
-        } else {
-          // To Do: Display domain only
-          output += "<b>Website:</b> <a href='" + element.website + "' target='_blank'>" + element.website.replace("https://","").replace("http://","").replace("www.","").replace(/\/$/, "") + "</a><br>"; 
-        }
-      } else if (element.webpage) {
-        // Switch to calling Webpage, probably add linkify above.
-        output += '<b>Webpage:</b> ' + linkify(element.webpage + "<br>");
-      }
-      if (element.category1) {
-        output += "<b>Type:</b> " + element.category1 + "<br>";
-      }
-      if (element.district) {
-        output += "<b>District:</b> " + element.district + "<br>";
-      }
-      if (element.location) {
-        output += "<b>From Location Data:</b> " + element.location + "<br>";
-      }
-      if (element.comments) {
-        output += element.comments + "<br>";
-      }
-      if (element.availability) {
-        output += element.availability + "<br>";
-      }
 
-      if (element.phone || element.phone_afterhours) {
-        if (element.phone) {
-          output += "<b>Phone:</b> " + element.phone + " ";
-        }
-        if (element.phone_afterhours) {
-         output += element.phone_afterhours;
-        }
-        output += "<br>";
-      }
+        output += "<div class='showItemMenu' style='float:right'>&mldr;</div>"; 
+        output += "<div style='padding-bottom:4px'><div style='width:15px;height:15px;margin-right:6px;margin-top:8px;background:" + colorScale(elementRaw[dp.valueColumn]) + ";float:left'></div>";
 
-      if (element.schedule) {
-        output += "<b>Hours:</b> " + element.schedule + "<br>";
-      }
-      if (element["jobs range"]) {
-        output += "<b>Employees:</b> " + element["jobs range"] + "<br>";
-      } else if (element["jobs 2021"]) {
-        output += "<b>Employees:</b> " + element["jobs 2021"] + "<br>";
-      }
-
-      if (element[dp.valueColumn]) {
-        if (dp.valueColumnLabel) {
-          output += "<b>" + dp.valueColumnLabel + ":</b> " + element[dp.valueColumn] + "<br>";
-        } else if (element[dp.valueColumn] != element.name) {
-          output += element[dp.valueColumn] + "<br>";
+        //output += "<div style='position:relative'><div style='float:left;min-width:28px;margin-top:2px'><input name='contact' type='checkbox' value='" + name + "'></div><div style='overflow:auto'><div>" + name + "</div>";
+                  
+        //output += "<div style='overflow:auto'>";
+        
+        output += "<b style='font-size:20px; font-weight:400; color:#333;'>" + name + "</b></div>";
+        if (element[dp.description]) {
+          output += "<div style='padding-bottom:8px'>" + element[dp.description] + "</div>";
+        } else if (element.description) {
+          output += "<div style='padding-bottom:8px'>" + element.description + "</div>";
+        } else if (element["business description"]) {
+          output += "<div style='padding-bottom:8px'>" + element["business description"] + "</div>";
         }
-      }
 
-      if (element.mapframe) {
-          output += "<a href='#show=360&m=" + element.mapframe + "'>Birdseye View<br>";
-      }
-      if (element.property_link) {
-          output += "<a href='" + element.property_link + "'>Property Details</a><br>";
-      }
-      if (element.county) {
-          output += '<a href="' + theTitleLink + '">Google Map</a> ';
-      }
-      
-      if (dp.editLink) {
+        // Lower
+        output += "<div style='font-size:0.95em;line-height:1.5em'>";
+
+        if (element.items) {
+          output += "<b>Items:</b> " + element.items + "<br>";
+        }
+        
+        if (element[dp.addressColumn]) { 
+            output +=  element[dp.addressColumn] + "<br>"; 
+        } else if (element.address || element.city || element.state || element.zip) {
+          output += "<b>Location:</b> ";
+          if (element.address) {
+            output += element.address + "<br>";
+          } else {
+            if (element.city) {
+              output += element.city;
+            }
+            if (element.state || element.zip) {
+              output += ", ";
+            }
+            if (element.state) {
+              output += element.state + " ";
+            }
+            if (element.zip) {
+              output += element.zip;
+            }
+            if (element.city || element.state || element.zip) {
+              output += "<br>";
+            }
+          }
+        }
         if (element.county) {
-          output += "&nbsp;| &nbsp;"
+          output += '<b>Location:</b> ' + element.county + " County<br>";
+        } else if (!(element[dp.latColumn] && element[dp.lonColumn])) {
+          if (!element[dp.lonColumn]) {
+            output += "<span style='color:red'>Needs latitude and longitude</span><br>";
+          } else {
+            output += "<span style='color:red'>Needs address or lat/lon values</span><br>";
+          }
         }
-        output += "<a href='" + dp.editLink + "' target='edit" + param["show"] + "'>Make Updates</a><br>";
-      }
+        if (element.website) {
+          if (element.website.length <= 50) {
+            output += "<b>Website:</b> <a href='" + element.website + "' target='_blank'>" + element.website.replace("https://","").replace("http://","").replace("www.","").replace(/\/$/, "") + "</a><br>";
+          } else {
+            // To Do: Display domain only
+            output += "<b>Website:</b> <a href='" + element.website + "' target='_blank'>" + element.website.replace("https://","").replace("http://","").replace("www.","").replace(/\/$/, "") + "</a><br>"; 
+          }
+        } else if (element.webpage) {
+          // Switch to calling Webpage, probably add linkify above.
+          output += '<b>Webpage:</b> ' + linkify(element.webpage + "<br>");
+        }
+        if (element.category1) {
+          output += "<b>Type:</b> " + element.category1 + "<br>";
+        }
+        if (element.district) {
+          output += "<b>District:</b> " + element.district + "<br>";
+        }
+        if (element.location) {
+          output += "<b>From Location Data:</b> " + element.location + "<br>";
+        }
+        if (element.comments) {
+          output += element.comments + "<br>";
+        }
+        if (element.availability) {
+          output += element.availability + "<br>";
+        }
+        output += element.name + " View Details<br>";
 
-      //alert(dp.listLocation)
-      if (dp.listLocation != false) {
+        if (element.phone || element.phone_afterhours) {
+          if (element.phone) {
+            output += "<b>Phone:</b> " + element.phone + " ";
+          }
+          if (element.phone_afterhours) {
+           output += element.phone_afterhours;
+          }
+          output += "<br>";
+        }
+
+        if (element.schedule) {
+          output += "<b>Hours:</b> " + element.schedule + "<br>";
+        }
+        if (element["jobs range"]) {
+          output += "<b>Employees:</b> " + element["jobs range"] + "<br>";
+        } else if (element["jobs 2021"]) {
+          output += "<b>Employees:</b> " + element["jobs 2021"] + "<br>";
+        }
+
+        if (element[dp.valueColumn]) {
+          if (dp.valueColumnLabel) {
+            output += "<b>" + dp.valueColumnLabel + ":</b> " + element[dp.valueColumn] + "<br>";
+          } else if (element[dp.valueColumn] != element.name) {
+            output += element[dp.valueColumn] + "<br>";
+          }
+        }
+
+        if (element.mapframe) {
+            output += "<a href='#show=360&m=" + element.mapframe + "'>Birdseye View<br>";
+        }
+        if (element.property_link) {
+            output += "<a href='" + element.property_link + "'>Property Details</a><br>";
+        }
+        if (element.county) {
+            output += '<a href="' + theTitleLink + '">Google Map</a> ';
+        }
         
-        if (element[dp.latColumn]) {
-            output += "<a href='https://www.waze.com/ul?ll=" + element[dp.latColumn] + "%2C" + element[dp.lonColumn] + "&navigate=yes&zoom=17'>Waze Directions</a>";
+        if (dp.editLink) {
+          if (element.county) {
+            output += "&nbsp;| &nbsp;"
+          }
+          output += "<a href='" + dp.editLink + "' target='edit" + param["show"] + "'>Make Updates</a><br>";
         }
-      }
 
-      if (element.facebook) {
-        if (element.facebook.toLowerCase().indexOf('facebook.com') < 0) {
-          element.facebook = 'https://facebook.com/search/top/?q=' + element.facebook.replace(/'/g,'%27').replace(/ /g,'%20')
+        //alert(dp.listLocation)
+        if (dp.listLocation != false) {
+          
+          if (element[dp.latColumn]) {
+              output += "<a href='https://www.waze.com/ul?ll=" + element[dp.latColumn] + "%2C" + element[dp.lonColumn] + "&navigate=yes&zoom=17'>Waze Directions</a>";
+          }
         }
-        if (element[dp.latColumn] && dp.listLocation != false) {
-          output += " | ";
-        }
-        output += "<a href='" + element.facebook + "' target='_blank'>Facebook</a>";
-      }
-      if (element.twitter) {
-        if (element[dp.latColumn] || element.facebook) {
-          output += " | ";
-        }
-        output += "<a href='" + element.twitter + "' target='_blank'>Twitter</a>";
-      }
-      if ((element[dp.latColumn] && dp.listLocation != false) || element.facebook || element.twitter) {
-        output += "<br>";
-      }
 
-      if (element.county) {
-        //output += element.county + " County<br>";
-      }
+        if (element.facebook) {
+          if (element.facebook.toLowerCase().indexOf('facebook.com') < 0) {
+            element.facebook = 'https://facebook.com/search/top/?q=' + element.facebook.replace(/'/g,'%27').replace(/ /g,'%20')
+          }
+          if (element[dp.latColumn] && dp.listLocation != false) {
+            output += " | ";
+          }
+          output += "<a href='" + element.facebook + "' target='_blank'>Facebook</a>";
+        }
+        if (element.twitter) {
+          if (element[dp.latColumn] || element.facebook) {
+            output += " | ";
+          }
+          output += "<a href='" + element.twitter + "' target='_blank'>Twitter</a>";
+        }
+        if ((element[dp.latColumn] && dp.listLocation != false) || element.facebook || element.twitter) {
+          output += "<br>";
+        }
 
-      
-      if (element.distance) {
-          output += "<b>Distance:</b> " + element.distance + " miles<br>"; 
+        if (element.county) {
+          //output += element.county + " County<br>";
+        }
+
         
+        if (element.distance) {
+            output += "<b>Distance:</b> " + element.distance + " miles<br>"; 
+          
+        }
+        output += "</div>"; // End Lower
+        output += "</div>"; // End detail
+
+        $("#detaillist").append(output);
       }
-      output += "</div>"; // End Lower
-      output += "</div>"; // End detail
-
-      $("#detaillist").append(output);
-
     }
     
   });
@@ -1959,6 +1984,16 @@ function showList(dp,map) {
         searchFor += dataMatchCount + " matching results within " + count + " records. ";
       } else {
         searchFor += dataMatchCount + " matching results within " + count + " records. ";
+      }
+      // alert("showCount " + showCount); // 0 unless filtering for a profile
+      //if (showCount == 1 && count - dataMatchCount > 1) {
+      if (showCount != dataMatchCount && count != dataMatchCount) {
+        if (showCount >= 1) {
+          if (showCount > 1) {
+            searchFor += " Viewing " + showCount;
+          }
+          searchFor += " <a href='#show=" + param["show"] + "'>View All</a>";
+        }
       }
       if (dp.listInfo) {
         searchFor += dp.listInfo;
