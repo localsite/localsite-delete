@@ -657,7 +657,7 @@ function addIcons(dp,map,map2) {
     }
     if (element.property_link) {
       output += "<a href='" + element.property_link + "'>Property Details</a><br>";
-    } else {
+    } else if (element["name"]) {
       output += "<a href='#show=" + param["show"] + "&name=" + element["name"].replace(/\ /g,"_") + "''>View Details</a><br>";
     }
     // ADD POPUP BUBBLES TO MAP POINTS
