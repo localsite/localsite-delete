@@ -34,7 +34,7 @@ Also lacks CHARM.  Far from comprehensive.
 Post comments in our Recycling Google Sheet to submit changes.  
 
 <a href="https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing" target="google-recycling">Google Sheet Tabs</a><br> 
-<a href="../../#show=recycling">Recycling Processor Map</a><br>
+<a href="https://github.com/localsite/localsite/">GitHub Repo for Map Interface Updates</a><br>
 <hr>
 <a href="../../neighborhood/" target="_parent">About Maps from Google Sheets</a>
 <!--
