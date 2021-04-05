@@ -70,6 +70,11 @@ $(document).ready(function(){
 		if (param.header) headerFile = param.header;
 	 	$("#header").load(headerFile, function( response, status, xhr ) {
 
+	 		// Move headerOffset2 and filterEmbedHolder immediately after body tag start.
+	 		// Allows map embed to reside below intro text and additional navigation on page.
+	 		$("#filterEmbedHolder").insertAfter("#headeroffset");
+	 		$(".headerOffset2").insertAfter("#headeroffset");
+
 	 		// Make paths relative to current page
 	 		$("#header a[href]").each(function() {
 	 			if($(this).attr("href").toLowerCase().indexOf("http") < 0){
@@ -82,78 +87,78 @@ $(document).ready(function(){
 		  	  }
 		    })
 
- 		// Set here so path works at all levels.
+	 		// Set here so path works at all levels.
 
- 		// To do: fetch the existing background-image.
- 		if (param.startTitle == "Code for Atlanta" ||  location.host.indexOf('atlanta') >= 0) {
-  			param.titleArray = []
-  			param.headerLogo = "<img src='https://scienceatl.org/wp-content/uploads/2020/04/code.png' style='width:150px;'>";
-	 		document.title = "Code for Atlanta - " + document.title
-	 		changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
-	 	} else if (param.startTitle == "Georgia.org" || location.host.indexOf('georgia') >= 0) {
-	 		$(".siteTitleShort").text("Model Georgia");
-	 		param.titleArray = [];
-	 		//param.headerLogo = "<a href='https://georgia.org'><img src='" + modelpath + "../community/img/logo/georgia_usa_gray.png' style='width:130px;padding-top:4px'></a>";
-	 		param.headerLogo = "<a href='https://georgia.org'><img src='https://model.earth/community/img/logo/georgia_usa_gray.png' style='width:130px;padding-top:4px'></a>";
-	 		document.title = "Georgia.org - " + document.title
-	 		changeFavicon("https://www.georgia.org/sites/default/files/logo-georgia-peach-notext_0.png")
-	 		$('.georgia').css('display', 'inline');
-	 		$('.georgia-hide').css('display', 'none');
-	 	} else if (!Array.isArray(param.titleArray) && (param.startTitle == "Neighborhood.org" || location.host.indexOf('neighborhood.org') >= 0)) {
-	 		$(".siteTitleShort").text("Neighborhood Modeling");
-	 		param.titleArray = ["neighbor","hood"]
-  			param.headerLogo = "<img src='/localsite/img/logo/neighborhood-icon.png' style='width:40px;opacity:0.7'>"
-  			document.title = "Neighborhood.org - " + document.title
-  			changeFavicon("/localsite/img/logo/neighborhood-icon.png")
-  			$('.neighborhood').css('display', 'inline');
-	 	} else if (!Array.isArray(param.titleArray)) {
-	 		$(".siteTitleShort").text("Model Earth");
-	 		param.titleArray = ["model","earth"]
-  			//param.headerLogo = "<img src='/community/img/logo/favicon.png' style='width:26px;opacity:0.9;margin-right:0.8px'>"
-  			param.headerLogo = "<img src='/community/img/logo/model-earth.png' style='width:34px; margin-right:2px'>";
-  			document.title = "Model Earth - " + document.title
-  			//changeFavicon(modelpath + "../community/img/logo/favicon.png")
-  			changeFavicon(modelpath + "../community/img/logo/model-earth.png")
-  			$('.earth').css('display', 'inline'); 
-	 		console.log(".earth display")
-	 	}
-
-	 	if (param["show"] == "mockup") {
-	 		if(location.host.indexOf('georgia') >= 0) {
-	 			$('#headerLocTitle').html("West Central Georgia");
-		 		//$('#headerLocTitle').html("<span class='arrownext' style='margin:10px 10px 0 10px'></span><span style='float:left'> West Central Georgia</span>");
+	 		// To do: fetch the existing background-image.
+	 		if (param.startTitle == "Code for Atlanta" ||  location.host.indexOf('atlanta') >= 0) {
+	  			param.titleArray = []
+	  			param.headerLogo = "<img src='https://scienceatl.org/wp-content/uploads/2020/04/code.png' style='width:150px;'>";
+		 		document.title = "Code for Atlanta - " + document.title
+		 		changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
+		 	} else if (param.startTitle == "Georgia.org" || location.host.indexOf('georgia') >= 0) {
+		 		$(".siteTitleShort").text("Model Georgia");
+		 		param.titleArray = [];
+		 		//param.headerLogo = "<a href='https://georgia.org'><img src='" + modelpath + "../community/img/logo/georgia_usa_gray.png' style='width:130px;padding-top:4px'></a>";
+		 		param.headerLogo = "<a href='https://georgia.org'><img src='https://model.earth/community/img/logo/georgia_usa_gray.png' style='width:130px;padding-top:4px'></a>";
+		 		document.title = "Georgia.org - " + document.title
+		 		changeFavicon("https://www.georgia.org/sites/default/files/logo-georgia-peach-notext_0.png")
+		 		$('.georgia').css('display', 'inline');
+		 		$('.georgia-hide').css('display', 'none');
+		 	} else if (!Array.isArray(param.titleArray) && (param.startTitle == "Neighborhood.org" || location.host.indexOf('neighborhood.org') >= 0)) {
+		 		$(".siteTitleShort").text("Neighborhood Modeling");
+		 		param.titleArray = ["neighbor","hood"]
+	  			param.headerLogo = "<img src='/localsite/img/logo/neighborhood-icon.png' style='width:40px;opacity:0.7'>"
+	  			document.title = "Neighborhood.org - " + document.title
+	  			changeFavicon("/localsite/img/logo/neighborhood-icon.png")
+	  			$('.neighborhood').css('display', 'inline');
+		 	} else if (!Array.isArray(param.titleArray)) {
+		 		$(".siteTitleShort").text("Model Earth");
+		 		param.titleArray = ["model","earth"]
+	  			//param.headerLogo = "<img src='/community/img/logo/favicon.png' style='width:26px;opacity:0.9;margin-right:0.8px'>"
+	  			param.headerLogo = "<img src='/community/img/logo/model-earth.png' style='width:34px; margin-right:2px'>";
+	  			document.title = "Model Earth - " + document.title
+	  			//changeFavicon(modelpath + "../community/img/logo/favicon.png")
+	  			changeFavicon(modelpath + "../community/img/logo/model-earth.png")
+	  			$('.earth').css('display', 'inline'); 
+		 		console.log(".earth display")
 		 	}
-		 	// Hack, since called too early for header
-		 	$('.mock-up').css('display', 'block');
-	 	}
 
-	 	if(location.host.indexOf('neighborhood') >= 0) {
-	 		// Since deactivated above due to conflict with header logo in app.
-	 		$('.neighborhood').css('display', 'block');
-	 	}
-	 	if (param.titleArray) {
-	 		if (param.titleArray[1] == undefined) {
-	 			$('#headerSiteTitle').html("");
-	 		} else {
-		 		//let titleValue = "<span style='float:left'><a href='" + climbpath + "' style='text-decoration:none'>";
-		 		let titleValue = "<span style='float:left'><a href='/' style='text-decoration:none'>";
-		 		
-		 		titleValue += "<span style='color: #777;'>" + param.titleArray[0] + "</span>";
-		 		for (var i = 1; i < param.titleArray.length; i++) {
-		 			titleValue += "<span id='titleTwo' style='color:#bbb;margin-left:1px'>" + param.titleArray[i] + "</span>";
-		 		}
-		 		titleValue += "</a></span>";
-		 		$('#headerSiteTitle').html(titleValue);
-		 		let theState = $("#state_select").find(":selected").text();
-		 		if (theState) {
-		 			//$(".filterSelected").text(theState);
-		 		}
+		 	if (param["show"] == "mockup") {
+		 		if(location.host.indexOf('georgia') >= 0) {
+		 			$('#headerLocTitle').html("West Central Georgia");
+			 		//$('#headerLocTitle').html("<span class='arrownext' style='margin:10px 10px 0 10px'></span><span style='float:left'> West Central Georgia</span>");
+			 	}
+			 	// Hack, since called too early for header
+			 	$('.mock-up').css('display', 'block');
 		 	}
-	 	}
-	 	
+
+		 	if(location.host.indexOf('neighborhood') >= 0) {
+		 		// Since deactivated above due to conflict with header logo in app.
+		 		$('.neighborhood').css('display', 'block');
+		 	}
+		 	if (param.titleArray) {
+		 		if (param.titleArray[1] == undefined) {
+		 			$('#headerSiteTitle').html("");
+		 		} else {
+			 		//let titleValue = "<span style='float:left'><a href='" + climbpath + "' style='text-decoration:none'>";
+			 		let titleValue = "<span style='float:left'><a href='/' style='text-decoration:none'>";
+			 		
+			 		titleValue += "<span style='color: #777;'>" + param.titleArray[0] + "</span>";
+			 		for (var i = 1; i < param.titleArray.length; i++) {
+			 			titleValue += "<span id='titleTwo' style='color:#bbb;margin-left:1px'>" + param.titleArray[i] + "</span>";
+			 		}
+			 		titleValue += "</a></span>";
+			 		$('#headerSiteTitle').html(titleValue);
+			 		let theState = $("#state_select").find(":selected").text();
+			 		if (theState) {
+			 			//$(".filterSelected").text(theState);
+			 		}
+			 	}
+		 	}
+		 	
 
 
-		// WAS LIMITED TO HEADER
+			// WAS LIMITED TO HEADER
 
 			/*
 			if (param.favicon) {
