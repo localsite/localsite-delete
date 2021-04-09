@@ -35,6 +35,15 @@
 	margin-right: 6px;
 	float: left;
 }
+@media (max-width: 600px) {
+  .filterField {
+    float: none;
+    margin-right:0px;
+  }
+  #appSelectHolder {
+    clear: both;
+  }
+}
 .textInput {
 	font-size: 16px;
 	box-sizing: border-box;
@@ -52,6 +61,11 @@
     color: #121a0d;
     text-shadow: none;
     float: left;
+}
+@media (max-width: 600px) {
+  .filterClick {
+    width:100% !important;
+  }
 }
 .filterClickActive {
     border-bottom: 0px solid #fff;
@@ -98,6 +112,14 @@
 }
 .filterLabelMain {
     display: none;
+}
+@media (max-width: 600px) {
+  .filterLabelMain {
+    clear: both;
+    display: block;
+    float: left;
+    width: 100px;
+  }
 }
 .filterBubble {
     -webkit-transition: 0.3s ease-in-out;

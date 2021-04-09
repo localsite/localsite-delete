@@ -201,6 +201,15 @@ $(document).ready(function(){
 				//$("#itemMenu").appendTo($(this).parent().parent());
 				event.stopPropagation();
 			});
+
+			$(".hideAdvanced").click(function(event) {
+			//$(document).on("click", ".hideAdvanced", function(event) {
+				$(".fieldSelector").hide();
+				$("#filterLocations").hide();
+				$("#filterClickLocation").removeClass("filterClickActive");
+			});
+
+
 			$('.filterBubble').click(function(e){
 				console.log('filterBubble click')
 			    e.stopPropagation(); // To keep location filter open when clicking

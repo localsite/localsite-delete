@@ -833,6 +833,11 @@ content .js, pre code { /* Prevents .js from impacting js class within Drupal bo
     box-sizing: border-box;
     z-index: 9999;
 }
+@media (max-width: 600px) {
+	#menuHolder {
+		width:100%;
+	}
+}
 #menuTop {
   margin-left:20px;
 }

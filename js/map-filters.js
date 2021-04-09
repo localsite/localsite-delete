@@ -218,14 +218,6 @@ $(document).ready(function () {
     	$('#topPanelFooter').hide();
     	event.stopPropagation();
     });
-    //alert("load")
-	//$(".hideAdvanced").click(function(event) {
-	$(document).on("click", ".hideAdvanced", function(event) {
-		//alert(".hideAdvanced")
-		$(".fieldSelector").hide();
-		$("#filterLocations").hide();
-		$("#filterClickLocation").removeClass("filterClickActive");
-	});
 
 	$('#searchloc').click(function () {
     	event.stopPropagation();
@@ -536,6 +528,7 @@ function filterClickLocation() {
 	$("#searchLocation").focus(); // Not working
 	//document.getElementById("searchLocation").focus(); // Not working
 
+	$("#filterFieldsHolder").hide();
 	$("#bigThumbPanelHolder").hide();
 	$('#showApps').removeClass("active");
 
@@ -1427,6 +1420,7 @@ function getDirectLink(livedomain,directlink,rootfolder,layer) {
     } else {
         directlink = removeFrontFolder("/explore/#" + layer);
     }
+    
     if (livedomain && location.host.indexOf('localhost') < 0) {
     	return(livedomain + directlink);
     } else {
@@ -1530,7 +1524,9 @@ function initSiteObject(layerName) {
 
 	                $(document).on("click", "#showApps, .hideApps, #appMenu", function(event) {
 	          			console.log('#showApps click');
+
 	          			if ($("#bigThumbPanelHolder").is(':visible')) {
+	          				$(".hideWhenPop").show();
 	          				// To do: Only up scroll AND SHOW if not visible
 	          				$('html,body').animate({
 								scrollTop: 0
@@ -1540,6 +1536,7 @@ function initSiteObject(layerName) {
 	          				$('#showApps').removeClass("active");
 
 	          			} else {
+	          				$(".hideWhenPop").hide();
 							showThumbMenu(siteObject);
 							$('html,body').animate({
 								scrollTop: 0

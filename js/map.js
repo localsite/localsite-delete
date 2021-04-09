@@ -93,9 +93,16 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
       dp.itemsColumn = dp.itemsColumn.toLowerCase();
     }
 
+    if (dp.dataTitle) {
+      $("#appMenu").attr("placeholder",dp.dataTitle );
+    }
+
     if (dp.listTitle) {
       dp.dataTitle = dp.listTitle;
     }
+
+   
+
     dp = mix(dp,defaults); // Gives priority to dp
     if (dp.addLink) {
       //console.log("Add Link: " + dp.addLink)
@@ -535,11 +542,11 @@ function addIcons(dp,map,map2) {
           circle = L.marker([element[dp.latColumn], element[dp.lonColumn]]).addTo(dp.group);
           circle2 = L.marker([element[dp.latColumn], element[dp.lonColumn]]).addTo(dp.group2);
         } else {
-          if (!dp.showShapeMap) {
+          //if (!dp.showShapeMap) {
             // If this line returns an error, try setting dp1.latColumn and dp1.latColumn to the names of your latitude and longitude columns.
             circle = L.marker([element[dp.latColumn], element[dp.lonColumn]], {icon: busIcon}).addTo(dp.group); // Works, but not in Drupal site.
             //circle2 = L.marker([element[dp.latColumn], element[dp.lonColumn]], {icon: busIcon}).addTo(dp.group2);
-          }
+          //}
           // Display a small circle on small side map2
           circle2 = L.circle([element[dp.latColumn], element[dp.lonColumn]], {
                 color: colorScale(element[dp.valueColumn]),
@@ -935,7 +942,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   let state_abbreviation = param.state || "GA";
 
   let dp1 = {}
-  // Might use when height it 280px
+  // Might use when height is 280px
   dp1.latitude = 31.6074;
   dp1.longitude = -81.8854;
 
@@ -944,6 +951,9 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   //dp1.longitude = -83.4;
   dp1.zoom = 7;
 
+  if (param.state) {
+    $("#state_select").val(param.state);
+  }
   let theState = $("#state_select").find(":selected").val();
   if (theState != "") {
     let kilometers_wide = $("#state_select").find(":selected").attr("km");
@@ -1058,7 +1068,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.countyColumn = "county";
     dp1.itemsColumn = "Category1";
   } else if (show == "smart" || param["data"] == "smart") { // param["data"] for legacy: https://www.georgia.org/smart-mobility
-    
+    dp1.dataTitle = "Smart Data Projects";
     dp1.listTitle = "Data Driven Decision Making";
     //dp1.listSubtitle = "Smart & Sustainable Movement of Goods & Services";
     dp1.industryListTitle = "EV Ecosystem";
@@ -2329,7 +2339,10 @@ function renderMapShapes(whichmap, hash) { // whichGeoRegion is not yet applied.
               //"arcs":[[38,39,40,41,42]],"type":"Polygon","properties":{"STATEFP":"13","COUNTYFP":"003","COUNTYNS":"00345784","AFFGEOID":"0500000US13003","GEOID":"13003","NAME":"Atkinson","LSAD":"06","ALAND":879043416,"AWATER":13294218}}
 
               console.log("topojson")
-              console.log(topojson)
+
+              // Since this line returns error, subsquent assignment to "neighbors" can be removed, or update with Community Forecasting boundaries.
+              //console.log(topojson)
+
               // Was used by applyStyle
               ////neighbors = topojson.neighbors(topoob.objects.data.geometries);
               neighbors = topojson.neighbors(topoob.arcs); // .properties
@@ -2693,7 +2706,8 @@ var mapFixed = false;
 var previousScrollTop = $(window).scrollTop();
 $(window).scroll(function() {
   if (revealHeader == false) {
-    $('.headerbar').hide(); $('#logoholderbar').show(); $('#logoholderside').show();
+    $('.headerbar').hide(); $('.showMenuSmNav').show(); $('#logoholderbar').show(); $('#logoholderside').show();
+    $('#filterFieldsHolder').hide();
     $('.headerOffset').hide();
     if (!$("#filterFieldsHolder").is(':visible')) { // Retain search filters space at top, unless they are already hidden
       $('#headerFixed').hide();
@@ -2702,7 +2716,8 @@ $(window).scroll(function() {
     revealHeader = true; // For next manual scroll
   } else if ($(window).scrollTop() > previousScrollTop) { // Scrolling Up
     if ($(window).scrollTop() > previousScrollTop + 20) { // Scrolling Up fast
-      $('.headerbar').hide(); $('#logoholderbar').show(); $('#logoholderside').show();
+      $('.headerbar').hide(); $('.showMenuSmNav').show(); $('#logoholderbar').show(); $('#logoholderside').show();
+      $('#filterFieldsHolder').hide();
       $('.headerOffset').hide();
       if (!$("#filterFieldsHolder").is(':visible')) { // Retain search filters space at top, unless they are already hidden
         $('#headerFixed').hide();
@@ -2710,11 +2725,13 @@ $(window).scroll(function() {
     }
   } else { // Scrolling Down
     if ($(window).scrollTop() < (previousScrollTop - 20)) { // Reveal if scrolling down fast
-      $('.headerbar').show(); $('#logoholderbar').hide(); $('#logoholderside').hide();
+      $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
+      $('#filterFieldsHolder').show();
       $('.headerOffset').show();
       $('#headerFixed').show();
     } else if ($(window).scrollTop() == 0) { // At top
-      $('.headerbar').show(); $('#logoholderbar').hide(); $('#logoholderside').hide();
+      $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
+      $('#filterFieldsHolder').show();
       $('.headerOffset').show();
         $('#headerFixed').show();
     }

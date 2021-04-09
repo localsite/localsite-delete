@@ -344,7 +344,7 @@ iframe {
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
 	position: absolute;
-	top: 5px;
+	top: -10px;
 	margin-left: -10px;
 }
 .uparrow-grey {
