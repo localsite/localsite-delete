@@ -115,7 +115,7 @@ Could use these state shapes: https://github.com/coryetzkorn/state-svg-defs
         <div class="showInfo showInfoButton1 pagebutton" style="float: left; padding: 3px 3px 3px 4px; color:#fff; display:none;"><i class="material-icons" style="font-size:28px;">&#xE88F;</i>
         </div>
 
-        <div id="showApps" class="local" style="display:none;float:left;">
+        <div class="showApps local" style="display:none;float:left;">
           <i class="material-icons">&#xE5C3;</i>
         </div>
       </div>
@@ -252,6 +252,7 @@ $(document).ready(function () {
 			window.location = "/localsite/info/" + window.location.hash;
 			return;
 		}
+		console.log("showSearchClick")
 		if ($("#filterFieldsHolder").is(':visible')) {
 			$("#filterFieldsHolder").hide();
 			$(".headerOffset2").hide();
@@ -259,6 +260,7 @@ $(document).ready(function () {
 		} else {
 			$("#filterFieldsHolder").show();
 			$(".headerOffset2").show();
+			$(".hideWhenPop").show();
 		}
 	    return;
 

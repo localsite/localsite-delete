@@ -17,15 +17,15 @@
 .select-menu-arrow-holder {
     position:absolute; right:5px; top:5px; pointer-events:none;bottom:2px;background:#fff;
 }
-#showApps {
+.showApps {
   padding-left:12px;
 }
-#showApps > .material-icons {
+.showApps > .material-icons {
   color: #ccc;
   font-size:36px;
   cursor:pointer;
 }
-#showApps.active > .material-icons {
+.showApps.active > .material-icons {
   color: #eee;
 }
 .fieldSelector {

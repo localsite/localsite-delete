@@ -314,7 +314,7 @@ strVar += "";
 strVar += "        <div class=\"showInfo showInfoButton1 pagebutton\" style=\"float: left; padding: 3px 3px 3px 4px; color:#fff; display:none;\"><i class=\"material-icons\" style=\"font-size:28px;\">&#xE88F;<\/i>";
 strVar += "        <\/div>";
 strVar += "";
-strVar += "        <div id=\"showApps\" class=\"local\" style=\"display:none;float:left;\">";
+strVar += "        <div class=\"showApps local\" style=\"display:none;float:left;\">";
 strVar += "          <i class=\"material-icons\">&#xE5C3;<\/i>";
 strVar += "        <\/div>";
 strVar += "      <\/div>";

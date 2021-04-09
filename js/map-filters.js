@@ -530,7 +530,7 @@ function filterClickLocation() {
 
 	$("#filterFieldsHolder").hide();
 	$("#bigThumbPanelHolder").hide();
-	$('#showApps').removeClass("active");
+	$('.showApps').removeClass("active");
 
 	//$('.hideMetaMenuClick').trigger("click"); // Otherwise covers location popup. Problem: hides hideLayers/hideLocationsMenu.
 	if ($("#filterLocations").is(':visible')) {
@@ -1522,8 +1522,8 @@ function initSiteObject(layerName) {
 	                
 	                // siteObjectFunctions(siteObject); // could add to keep simple here
 
-	                $(document).on("click", "#showApps, .hideApps, #appMenu", function(event) {
-	          			console.log('#showApps click');
+	                $(document).on("click", ".showApps, .hideApps, #appMenu", function(event) {
+	          			console.log('.showApps click');
 
 	          			if ($("#bigThumbPanelHolder").is(':visible')) {
 	          				$(".hideWhenPop").show();
@@ -1533,10 +1533,10 @@ function initSiteObject(layerName) {
 							});
 
 	          				$("#bigThumbPanelHolder").hide();
-	          				$('#showApps').removeClass("active");
+	          				$('.showApps').removeClass("active");
 
 	          			} else {
-	          				$(".hideWhenPop").hide();
+	          				//$(".hideWhenPop").hide();
 							showThumbMenu(siteObject);
 							$('html,body').animate({
 								scrollTop: 0
@@ -1576,7 +1576,7 @@ function showThumbMenu(siteObject) {
 	if (!$(".bigThumbMenuContent").length) {
 		displayBigThumbnails("main",siteObject);
 	}
-	$('#showApps').addClass("active");
+	$('.showApps').addClass("active");
 }
 function callInitSiteObject(attempt) { // wait for dual_map
 	if (typeof dual_map !== 'undefined') {

@@ -140,7 +140,9 @@
       <div id="logoholderbar" style="display:none;float:left;">
       </div>
 
-
+      <div class="showApps local" style="display:none;float:left; padding-top:6px">
+        <i class="material-icons">&#xE5C3;</i>
+      </div>
 
       <div style="overflow:visible; display:none" class="filterField searchElements mock-up earth neighborhood">
         <div class="filterLabel">
@@ -1116,6 +1118,35 @@ Displayed by refreshWidgets() in map-filters.js
     </div>
   </div>
 
+  <div style="display:none;margin:20px 10px 20px 17px; min-width:195px; line-height: 1.5em;" class="layerclass open">
+    <div class="catList" id="industryCatList">
+      <div>All Categories</div>
+      <div>Accessibility</div>
+      <div>Data Portals</div>
+      <div>Education</div>
+      <div>Environment</div>
+      <div>Emergency Services</div>
+      <div>Geographic Boundaries</div>
+      <div>Geography</div>
+      <div>Government</div>
+      <div>Health & Wellness</div>
+      <div>Homelessness</div>
+      <div>Housing</div>
+      <div>Infrastructure</div>
+      <div>Justice System</div>
+      <div>Natural Resources</div>
+      <div>Poverty</div>
+      <div>Preservation</div>
+      <div>Smart Cities</div>
+      <div>Tax</div>
+      <div>Transportation</div>
+      <div>Veterans</div>
+      <div>Voting & Elections</div>
+      <div>Zoning</div>
+      <div>Not Classified</div>
+    </div>
+  </div>
+
 </div>
 
 <div id="list_main" style="display:none; overflow:auto; background: #fff">
@@ -1416,8 +1447,8 @@ window.onhashchange = function() {
 
 $(document).ready(function () {
   // Show app menu button
-  $("#showApps").removeClass("local");
-  $("#showApps").show();
+  $(".showApps").removeClass("local");
+  $(".showApps").show();
 });
 
 

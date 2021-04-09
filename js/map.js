@@ -978,14 +978,14 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   //if (dp && dp[0]) { // Parameters set in page or layer json
   if (dp && dp.dataset) { // Parameters set in page or layer json
     dp1 = dp;
-  } else if (show == "opendata") {
-    // https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing
-    dp1.listTitle = "Open Data";
+  } else if (show == "open") {
+    dp1.editLink = "https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing";
+    dp1.dataTitle = "Georgia Open Data";
+    dp1.listTitle = "Georgia Open Data Resources";
     dp1.googleDocID = "1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo";
     dp1.sheetName = "OpenData";
-    //dp1.nameColumn = "company";
-    //dp1.valueColumnLabel = "Category1";
-    //dp1.valueColumn = "materials_category";
+    dp1.valueColumn = "Category1";
+    dp1.valueColumnLabel = "Type";
   
   } else if (show == "360") {
     dp1.listTitle = "Birdseye Views";

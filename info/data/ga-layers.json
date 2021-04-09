@@ -230,7 +230,20 @@ callback(
 		"directlink": "/localsite/map/#show=360",
 		"caption": ""
 	},
-	
+	{
+		"menulevel": "1",
+		"item": "open",
+		"title": "Open Data",
+		"tabtitle": "Open Data",
+		"mobiletitle": "Open Data",
+		"section": "Open Data",
+		"provider": "Admin",
+		"image": "/localsite/img/show/open-data.jpg",
+		"icon": "",
+		"menuaccess": "0",
+		"directlink": "/localsite/map/#show=open",
+		"caption": ""
+	},
   ]
 }
 );
