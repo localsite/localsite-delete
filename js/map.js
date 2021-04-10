@@ -993,41 +993,42 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.dataset =  dual_map.custom_data_root() + "360/GeorgiaPowerSites.csv";
 
   } else if (show == "recycling" || show == "transfer" || show == "recyclers" || show == "inert" || show == "landfills") { // recycling-processors
-    
-    dp1.editLink = "https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing";
-    dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
-    if (show == "transfer") {
-      dp1.listTitle = "Georgia Transfer Stations";
-      dp1.sheetName = "Transfer Stations";
-      dp1.valueColumn = "waste type"; // Bug - need to support uppercase too.
-      dp1.valueColumnLabel = "Waste Type";
-    } else if (show == "recyclers") {
-      dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
-      dp1.sheetName = "Manufacturer Recyclers";
-      dp1.valueColumn = "category"; // Bug - need to support uppercase too.
-      dp1.valueColumnLabel = "Recycles";
-    } else if (show == "landfills") {
-      dp1.listTitle = "Georgia Landfills";
-      dp1.sheetName = "Landfills";
-      dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
-      dp1.valueColumnLabel = "Sector";
-    } else if (show == "inert") {
-      dp1.listTitle = "Georgia Inert Waste Landfills";
-      dp1.sheetName = "Inert Waste Landfills";
-      dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
-      dp1.valueColumnLabel = "Sector";
-    } else {
-      dp1.listTitle = "Georgia Recycling Processors";
-      dp1.sheetName = "Recycling Processors";
-      dp1.valueColumn = "category";
-      dp1.valueColumnLabel = "Materials Category";
+    if (!param.state || param.state == "GA") {
+      dp1.editLink = "https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing";
+      dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
+      if (show == "transfer") {
+        dp1.listTitle = "Georgia Transfer Stations";
+        dp1.sheetName = "Transfer Stations";
+        dp1.valueColumn = "waste type"; // Bug - need to support uppercase too.
+        dp1.valueColumnLabel = "Waste Type";
+      } else if (show == "recyclers") {
+        dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
+        dp1.sheetName = "Manufacturer Recyclers";
+        dp1.valueColumn = "category"; // Bug - need to support uppercase too.
+        dp1.valueColumnLabel = "Recycles";
+      } else if (show == "landfills") {
+        dp1.listTitle = "Georgia Landfills";
+        dp1.sheetName = "Landfills";
+        dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+        dp1.valueColumnLabel = "Sector";
+      } else if (show == "inert") {
+        dp1.listTitle = "Georgia Inert Waste Landfills";
+        dp1.sheetName = "Inert Waste Landfills";
+        dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+        dp1.valueColumnLabel = "Sector";
+      } else {
+        dp1.listTitle = "Georgia Recycling Processors";
+        dp1.sheetName = "Recycling Processors";
+        dp1.valueColumn = "category";
+        dp1.valueColumnLabel = "Materials Category";
+      }
+      dp1.nameColumn = "company";
+      dp1.listInfo = "<br><br>View additional <a href='../map/recycling/ga/'>recycling datasets</a>.<br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.";
+      
+      //dp1.latColumn = "latitude";
+      //dp1.lonColumn = "longitude";
+      dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
     }
-    dp1.nameColumn = "company";
-    dp1.listInfo = "<br><br>View additional <a href='../map/recycling/ga/'>recycling datasets</a>.<br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.";
-    
-    //dp1.latColumn = "latitude";
-    //dp1.lonColumn = "longitude";
-    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
   } else if (show == "vehicles" || show == "ev") {
     dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
     if (show == "ev") {
@@ -1067,11 +1068,11 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.valueColumnLabel = "County";
     dp1.countyColumn = "county";
     dp1.itemsColumn = "Category1";
-  } else if (show == "smart" || param["data"] == "smart") { // param["data"] for legacy: https://www.georgia.org/smart-mobility
+  } else if (show == "smart") { // param["data"] for legacy: https://www.georgia.org/smart-mobility
     dp1.dataTitle = "Smart Data Projects";
     dp1.listTitle = "Data Driven Decision Making";
     //dp1.listSubtitle = "Smart & Sustainable Movement of Goods & Services";
-    dp1.industryListTitle = "EV Ecosystem";
+    dp1.industryListTitle = "Mobility Tech";
 
     console.log("map.js loading " + dual_map.custom_data_root() + "communities/map-georgia-smart.csv");
 

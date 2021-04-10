@@ -528,7 +528,7 @@ function filterClickLocation() {
 	$("#searchLocation").focus(); // Not working
 	//document.getElementById("searchLocation").focus(); // Not working
 
-	$("#filterFieldsHolder").hide();
+	//$("#filterFieldsHolder").hide();
 	$("#bigThumbPanelHolder").hide();
 	$('.showApps').removeClass("active");
 
@@ -1324,7 +1324,7 @@ function displayBigThumbnails(layerName,siteObject) {
 	        var directlink = getDirectLink(thelayers[layer].livedomain, thelayers[layer].directlink, thelayers[layer].rootfolder, thelayers[layer].item);
 
 	        if (bigThumbSection == "main") {
-	            if (thelayers[layer].menulevel == "1") {
+	            if (thelayers[layer].menulevel == "1" && !thelayers[layer].states) {
 	                if (access(currentAccess,menuaccess)) {
 	                    //if (siteObject.items[layer].section == bigThumbSection && siteObject.items[layer].showthumb != '0' && bigThumbSection.replace(" ","-").toLowerCase() != thelayers[layer].item) {
 	                    
@@ -1345,8 +1345,12 @@ function displayBigThumbnails(layerName,siteObject) {
 	                                if (thelayers[layer].directlink) {
 	                                    //hrefLink = "href='" + removeFrontFolder(thelayers[layer].directlink) + "'";
 	                                }
+	                                if (thelayers[layer].rootfolder && thelayers[layer].rootfolder != "map") {
+	                                	// Change to pass entire hash
 
-	                                if ((directlink.indexOf('/map/') >= 0 && location.pathname.indexOf('/map/') >= 0) || (directlink.indexOf('/info/') >= 0 && location.pathname.indexOf('/info/') >= 0)) { // Stayon page when on map or info
+	                                	linkJavascript = 'onclick="window.location = \'/localsite/' + thelayers[layer].rootfolder + '/#show=' + siteObject.items[layer].item + '\';return false;"';
+
+	                                } else if ((directlink.indexOf('/map/') >= 0 && location.pathname.indexOf('/map/') >= 0) || (directlink.indexOf('/info/') >= 0 && location.pathname.indexOf('/info/') >= 0)) { // Stayon page when on map or info
 	                                	linkJavascript = "onclick='goHash({\"show\":\"" + siteObject.items[layer].item + "\",\"cat\":\"\",\"sectors\":\"\",\"naics\":\"\",\"go\":\"\",\"m\":\"\"}); return false;'"; // Remain in current page.
 	                                } else {
 	                                	linkJavascript = "";
@@ -1409,16 +1413,16 @@ function displayBigThumbnails(layerName,siteObject) {
         $("#bigThumbPanelHolder").hide(); // Could remain open when small version above map added.         
     });
 }
-function getDirectLink(livedomain,directlink,rootfolder,layer) {
+function getDirectLink(livedomain,directlink,rootfolder,hashStr) {
     if (directlink) {
         directlink = removeFrontFolder(directlink);
     } else if (rootfolder) {
         if (rootfolder.indexOf('/explore/') < 0) {
             rootfolder = "/explore/" + rootfolder;
         }
-        directlink = removeFrontFolder(rootfolder + "#" + layer);
+        directlink = removeFrontFolder(rootfolder + "#" + hashStr);
     } else {
-        directlink = removeFrontFolder("/explore/#" + layer);
+        directlink = removeFrontFolder("/explore/#" + hashStr);
     }
     
     if (livedomain && location.host.indexOf('localhost') < 0) {

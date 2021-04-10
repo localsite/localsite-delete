@@ -51,7 +51,7 @@ callback(
 		"sectionTitle": "leftNav",
 		"topnavaccess": "10",
 		"menuaccess": "0",
-		"defaultmap-ToAdd": "/localsite/info/",
+		"defaultroot": "/localsite/info/",
 		"directlink": "/localsite/info/",
 		"caption": ""
 	},
@@ -113,7 +113,7 @@ callback(
 		"topnavaccess": "10",
 		"menuaccess": "0",
 		"directlink": "/localsite/map/#show=smart",
-		"caption": ""
+		"states": "GA"
 	},
 	{
 		"menulevel": "1",
@@ -153,6 +153,7 @@ callback(
 		"mainiframeX": "/localsite/map/recycling/ga/",
 		"directlinkX": "/localsite/map/recycling/ga/",
 		"directlink": "/localsite/map/#show=recycling",
+		"rootfolder": "info",
 		"footerlogos": "Residential recycling center content from <a href='https://RecycleSearch.com' target='recyclesearch'>recyclesearch.com</a>",
 		"caption": "Residential recycling center content from <a href='https://RecycleSearch.com' target='recyclesearch'>recyclesearch.com</a>"
 	},
@@ -214,7 +215,7 @@ callback(
 		"topnavaccess": "10",
 		"menuaccess": "0",
 		"directlink": "/localsite/info/#show=ppe",
-		"caption": ""
+		"states": "GA"
 	},
 	{
 		"menulevel": "1",
@@ -228,7 +229,7 @@ callback(
 		"icon": "",
 		"menuaccess": "0",
 		"directlink": "/localsite/map/#show=360",
-		"caption": ""
+		"states": "GA"
 	},
 	{
 		"menulevel": "1",
@@ -242,7 +243,7 @@ callback(
 		"icon": "",
 		"menuaccess": "0",
 		"directlink": "/localsite/map/#show=open",
-		"caption": ""
+		"states": "GA"
 	},
   ]
 }
