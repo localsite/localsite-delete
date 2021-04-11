@@ -15,7 +15,7 @@
     min-height: 34px;
 }
 .select-menu-arrow-holder {
-    position:absolute; right:5px; top:5px; pointer-events:none;bottom:2px;background:#fff;
+    position:absolute; right:4px; top:4px;
 }
 .showApps {
   padding-left:12px;
@@ -51,32 +51,34 @@
 	min-height: 34px;
 }
 .filterClick {
+    position: relative;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 20px;
     border: 1px solid #d9d9de;
-    padding: 0px 9px 0px 10px;
+    padding: 0px 9px 0px 12px;
     min-height: 34px !important;
     vertical-align: baseline;
     background-color: #fff;
-    color: #121a0d;
+    color: #686868;
     text-shadow: none;
     float: left;
 }
 @media (max-width: 600px) {
   .filterClick {
-    width:100% !important;
+    float:none;
   }
+}
+.filterClickText {
+    font-size: 11pt;
+    line-height: 12pt;
+    white-space: nowrap;
+    padding-top:8px;
+    padding-right:23px;
 }
 .filterClickActive {
     border-bottom: 0px solid #fff;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-}
-.filterSelected {
-    font-size: 13pt;
-    line-height: 13pt;
-    white-space: nowrap;
-    padding-top:9px;
 }
 .detailbutton {
     font-family: 'Lato', sans-serif;
@@ -407,10 +409,10 @@
 }
 
 .pagebutton {
-  margin-left: 8px;
   border-radius: 4px;
   border: 1px solid #dfdfdf;
   padding: 0px 4px 0 6px;
+  height: 34px;
   min-height: 34px;
   vertical-align: middle;
   cursor: pointer;

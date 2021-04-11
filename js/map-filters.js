@@ -199,8 +199,8 @@ $(document).ready(function () {
 		e.preventDefault();
 		$(".filterUL li").removeClass("selected");
 		$(this).addClass("selected");
-		//$(".filterSelected").html($(this).text() + '<i class="entypo-down-open" style="font-size:13pt"></i>');
-		$("#filterClickLocation .filterSelected").html($(this).text()).data('selected', $(this).data('id'));
+		//$(".locationTabText").html($(this).text() + '<i class="entypo-down-open" style="font-size:13pt"></i>');
+		$("#filterClickLocation .locationTabText").html($(this).text()).data('selected', $(this).data('id'));
 		$("#locationDD option[value='" + $(this).data('id') + "']").prop("selected", true).trigger("change");
 		
 		$("#locationStatus").hide();
@@ -529,22 +529,25 @@ function filterClickLocation() {
 	//document.getElementById("searchLocation").focus(); // Not working
 
 	//$("#filterFieldsHolder").hide();
+
 	$("#bigThumbPanelHolder").hide();
 	$('.showApps').removeClass("active");
 
 	//$('.hideMetaMenuClick').trigger("click"); // Otherwise covers location popup. Problem: hides hideLayers/hideLocationsMenu.
 	if ($("#filterLocations").is(':visible')) {
+		$(".locationTabText").text($(".locationTabText").attr("title"));
         $("#showLocations").hide();
 		$("#hideLocations").show();
-		//$(".filterSelected").text("Entire State");
+		//$(".locationTabText").text("Entire State");
 		$("#filterLocations").hide();
 		$("#filterClickLocation").removeClass("filterClickActive");
 	} else {
+		$(".locationTabText").text("Locations");
 		$("#topPanel").hide();
 		locationFilterChange("counties");
         $("#showLocations").show();
 		$("#hideLocations").hide();
-		//$(".filterSelected").text("Location");
+		//$(".locationTabText").text("Location");
 		$("#filterLocations").show();
 		$("#filterClickLocation").addClass("filterClickActive");
 		let hash = getHash();
@@ -587,7 +590,7 @@ function locationFilterChange(selectedValue,selectedGeo) {
     //$(".filterUL li").removeClass("selected");
         //$(this).addClass("selected");
 
-        //$("#filterClickLocation .filterSelected").html($(this).text()).data('selected', $(this).data('id'));
+        //$("#filterClickLocation .locationTabText").html($(this).text()).data('selected', $(this).data('id'));
 
     
     if (selectedValue == 'all' || selectedValue == 'state') { // its entire state
@@ -912,7 +915,7 @@ function getLatLonFromBrowser(limitByDistance) {
 }
 // INIT
 //locationFilterChange("counties"); // Display county list
-//$("#filterClickLocation .filterSelected").html("Counties");
+//$("#filterClickLocation .locationTabText").html("Counties");
 //$(".filterUL li").removeClass("selected");
 //$(".filterUL li").find("[data-id='counties']").addClass("selected"); // Not working
 $(".showSearch").css("display","inline-block");
@@ -1180,10 +1183,12 @@ $(document).ready(function () {
   // If this does not work, may need to call when map1 is initially loaded, but only once.
   $('.refreshMap').click(function(event) {
 
+  	  alert("Not fully implemented.")
       //$("#map1").show();
       //displayMap(layerName,siteObject);
+      $(".listOptions").hide();
       console.log(".refreshMap ");
-      
+
       if (document.querySelector('#geomap')._leaflet_map) {
       	document.querySelector('#geomap')._leaflet_map.invalidateSize(); // Force Leaflet map to reload
 	  } else {
@@ -1526,10 +1531,16 @@ function initSiteObject(layerName) {
 	                
 	                // siteObjectFunctions(siteObject); // could add to keep simple here
 
-	                $(document).on("click", ".showApps, .hideApps, #appMenu", function(event) {
+	                $(document).on("click", ".showApps, .hideApps", function(event) {
 	          			console.log('.showApps click');
 
 	          			if ($("#bigThumbPanelHolder").is(':visible')) {
+
+	          				$("#appSelectHolder .select-menu-arrow-holder .material-icons").hide();
+	          				$("#appSelectHolder .select-menu-arrow-holder .material-icons:first-of-type").show();
+
+	          				$("#appSelectHolder .showApps").removeClass("filterClickActive");
+	          				$("#showAppsText").text($("#showAppsText").attr("title"));
 	          				$(".hideWhenPop").show();
 	          				// To do: Only up scroll AND SHOW if not visible
 	          				$('html,body').animate({
@@ -1540,7 +1551,12 @@ function initSiteObject(layerName) {
 	          				$('.showApps').removeClass("active");
 
 	          			} else {
-	          				//$(".hideWhenPop").hide();
+
+	          				$("#appSelectHolder .select-menu-arrow-holder .material-icons:first-of-type").hide();
+	          				$("#appSelectHolder .select-menu-arrow-holder .material-icons:nth-of-type(2)").show();
+
+	          				$("#showAppsText").text("Now Showing");
+	          				$("#appSelectHolder .showApps").addClass("filterClickActive");
 							showThumbMenu(siteObject);
 							$('html,body').animate({
 								scrollTop: 0
@@ -1796,14 +1812,14 @@ function refreshWidgets() {
 				$(".layerclass.ppe").hide();
 			}
 			if (hash.show == "ppe") {
-				$("#appMenu").attr("placeholder","PPE Suppliers");
+				$("#showAppsText").text("PPE Suppliers");
 			} else if (hash.show == "farmfresh") {
-				$("#appMenu").attr("placeholder","Farm Fresh");
+				$("#showAppsText").text("Farm Fresh");
 			} else {
-				$("#appMenu").attr("placeholder",hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," ") );
+				$("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));
 			}
 		} else {
-			$("#appMenu").attr("placeholder","Top Industries");
+			$("#showAppsText").attr("placeholder","Top Industries");
 		}
 		if (hash.show == "vehicles") {
 			if(location.host.indexOf('georgia') < 0){
@@ -1937,7 +1953,7 @@ function refreshWidgets() {
 			} else {
 				$(".regiontitle").text(hash.regiontitle);
 			}
-			$(".filterSelected").text(hash.regiontitle.replace(/\+/g," "));
+			$(".locationTabText").text(hash.regiontitle.replace(/\+/g," "));
 
 			
 			$("#region_select").val(hash.regiontitle.replace(/\+/g," "));
@@ -1968,11 +1984,12 @@ function refreshWidgets() {
 		} else {
 			$(".regionFilter").hide();
 		}
-		$(".filterSelected").text($("#state_select").find(":selected").text());
+		$(".locationTabText").text($("#state_select").find(":selected").text());
 		//'geo':'', 
 		updateHash({'regiontitle':'', 'lat':'', 'lon':''});
 		showCounties(0);
 	}
+	$(".locationTabText").attr("title",$(".locationTabText").text());
 	if (hash.m != priorHash.m) {
 		var mapframe;
 		$("#mapframe").hide();

@@ -1116,7 +1116,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             } else {
                                 $(".regiontitle").text("Industries within "+ fips.length + " counties");
                             }
-                            $(".filterSelected").text(fips.length + " counties");
+                            $(".locationTabText").text(fips.length + " counties");
                             //}
                         } else if (params.regiontitle) {
                             if (params.show) {
@@ -1124,7 +1124,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             } else {
                                 $(".regiontitle").text(params.regiontitle.replace(/\+/g," "));
                             }
-                            $(".filterSelected").text(params.regiontitle.replace(/\+/g," "));
+                            $(".locationTabText").text(params.regiontitle.replace(/\+/g," "));
                         }
                         for(var i=0; i < fips.length; i++){
                             var filteredData = consdata.filter(function(d) {
@@ -1177,8 +1177,8 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             $(".regiontitle").text("Industries");
                             //$(".regiontitle").text(String(d['Name'])+"'s Top Industries");
                         }
-                        //alert("filterSelected2")
-                        $(".filterSelected").text("State"); // Temp
+                        //alert("locationTabText2")
+                        $(".locationTabText").text("State"); // Temp
                     } else {
 
                         var filteredData = consdata.filter(function(d) {

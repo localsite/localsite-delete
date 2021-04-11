@@ -151,7 +151,7 @@ $(document).ready(function(){
 			 		$('#headerSiteTitle').html(titleValue);
 			 		let theState = $("#state_select").find(":selected").text();
 			 		if (theState) {
-			 			//$(".filterSelected").text(theState);
+			 			//$(".locationTabText").text(theState);
 			 		}
 			 	}
 		 	}

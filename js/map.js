@@ -94,7 +94,8 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
     }
 
     if (dp.dataTitle) {
-      $("#appMenu").attr("placeholder",dp.dataTitle );
+      $("#showAppsText").text(dp.dataTitle);
+      $("#showAppsText").attr("title",dp.dataTitle);
     }
 
     if (dp.listTitle) {
@@ -2718,7 +2719,7 @@ $(window).scroll(function() {
   } else if ($(window).scrollTop() > previousScrollTop) { // Scrolling Up
     if ($(window).scrollTop() > previousScrollTop + 20) { // Scrolling Up fast
       $('.headerbar').hide(); $('.showMenuSmNav').show(); $('#logoholderbar').show(); $('#logoholderside').show();
-      $('#filterFieldsHolder').hide();
+      //$('#filterFieldsHolder').hide();
       $('.headerOffset').hide();
       if (!$("#filterFieldsHolder").is(':visible')) { // Retain search filters space at top, unless they are already hidden
         $('#headerFixed').hide();
@@ -2727,14 +2728,14 @@ $(window).scroll(function() {
   } else { // Scrolling Down
     if ($(window).scrollTop() < (previousScrollTop - 20)) { // Reveal if scrolling down fast
       $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
-      $('#filterFieldsHolder').show();
+      //$('#filterFieldsHolder').show();
       $('.headerOffset').show();
       $('#headerFixed').show();
     } else if ($(window).scrollTop() == 0) { // At top
       $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
-      $('#filterFieldsHolder').show();
+      //$('#filterFieldsHolder').show();
       $('.headerOffset').show();
-        $('#headerFixed').show();
+      $('#headerFixed').show();
     }
   }
   previousScrollTop = $(window).scrollTop();
