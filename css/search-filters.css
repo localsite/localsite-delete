@@ -28,6 +28,12 @@
 .showApps.active > .material-icons {
   color: #eee;
 }
+#filterFieldsHolder {
+  border-top: 1px solid #eee;
+}
+#filterFieldsHolder {
+  border-bottom: 1px solid #eee;
+}
 .fieldSelector {
 	display: none;
 }
@@ -79,6 +85,8 @@
     border-bottom: 0px solid #fff;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    background-color: #fcfcfc;
+    margin-bottom:-12px;
 }
 .detailbutton {
     font-family: 'Lato', sans-serif;
