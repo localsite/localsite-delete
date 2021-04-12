@@ -1300,6 +1300,7 @@ function thumbClick(show,path) {
 	let hash = getHash();
 	hash.show = show;
 	delete hash.naics;
+	delete hash.m; // Birdseye view
 	if (path) {
 		var hashString = decodeURIComponent($.param(hash)); 
 		window.location = "/localsite/" + path + "#" + hashString;
@@ -1748,6 +1749,7 @@ function getNaics_setHiddenHash(go) {
     var parts_carpets = "325520,314110,313110,313210,"
     var ppe_suppliers = "622110,621111,325414,339113,423450,"
     var farmfresh = "311612,311615,311911,311919,311830,311824,311941,311710,311611,115114,311613,311811,311942,311991,311999,311211,311224,311920,"
+    var recycling = "423930,562111,562112,562119,562211,562212,562213,562219,562910,562920,562991,562998";
 
     if (param.naics) {
         cat_filter = param.naics.split(',');
@@ -1772,6 +1774,10 @@ function getNaics_setHiddenHash(go) {
         else if (go == "vehicles") {
         	//alert("go vehicles")
             cat_filter = (electric + auto_parts + parts).split(',');
+        }
+        else if (go == "recycling") {
+        	//alert("go vehicles")
+            cat_filter = (recycling).split(',');
         }
         if (cat_filter.length) {
             cat_filt=[]
