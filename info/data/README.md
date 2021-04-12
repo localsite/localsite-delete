@@ -14,7 +14,7 @@ We'll start by displaying with Data Commons standardized chart syntax using YAML
 ---
 <br>
 
-Help us pull Commute Time from the Google Data Commons API.  
+Help us pull Commute Times from the Google Data Commons API.  
 And generate csv files with Walkability data from one of the free API's available.  
 
 Here are API’s that provide a free Walk Score, Transit Score and Bike Score.  
