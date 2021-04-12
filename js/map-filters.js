@@ -58,7 +58,6 @@ function populateFieldsFromHash() {
 
 $(document).ready(function () {
 
-
 	//loadMarkupPage("intro.md", "introDiv", "_parent");
 	if (! ('webkitSpeechRecognition' in window) ) {
 		$(".si-btn").hide();
@@ -1297,6 +1296,19 @@ function displayHexagonMenu(layerName,siteObject) {
   //$("#iconMenu").append(iconMenu);
     $("#honeyMenuHolder").show();
 }
+function thumbClick(show,path) {
+	//alert("test");
+	//alert("show: " + show + " " + path);
+	let hash = getHash();
+	hash.show = show;
+	delete hash.naics;
+	if (path) {
+		var hashString = decodeURIComponent($.param(hash)); 
+		window.location = "/localsite/" + path + "#" + hashString;
+	} else {
+		goHash(hash);
+	}
+}
 function displayBigThumbnails(layerName,siteObject) {
 	if (!$('.bigThumbUl').length) {
 
@@ -1353,19 +1365,21 @@ function displayBigThumbnails(layerName,siteObject) {
 	                                if (thelayers[layer].rootfolder && thelayers[layer].rootfolder != "map") {
 	                                	// Change to pass entire hash
 
-	                                	linkJavascript = 'onclick="window.location = \'/localsite/' + thelayers[layer].rootfolder + '/#show=' + siteObject.items[layer].item + '\';return false;"';
-
-	                                } else if ((directlink.indexOf('/map/') >= 0 && location.pathname.indexOf('/map/') >= 0) || (directlink.indexOf('/info/') >= 0 && location.pathname.indexOf('/info/') >= 0)) { // Stayon page when on map or info
-	                                	linkJavascript = "onclick='goHash({\"show\":\"" + siteObject.items[layer].item + "\",\"cat\":\"\",\"sectors\":\"\",\"naics\":\"\",\"go\":\"\",\"m\":\"\"}); return false;'"; // Remain in current page.
+	                                	//linkJavascript = 'onclick="window.location = \'/localsite/' + thelayers[layer].rootfolder + '/#show=' + siteObject.items[layer].item + '\';return false;"';
+	                                	linkJavascript = 'onclick="thumbClick(\'' + siteObject.items[layer].item + '\',\'' + thelayers[layer].rootfolder + '\');return false;"';
+	                                } else if ((directlink.indexOf('/map/') >= 0 && location.pathname.indexOf('/map/') >= 0) || (directlink.indexOf('/info/') >= 0 && location.pathname.indexOf('/info/') >= 0)) {
+	                                	// Stayon page when on map or info
+	                                	//linkJavascript = "onclick='goHash({\"show\":\"" + siteObject.items[layer].item + "\",\"cat\":\"\",\"sectors\":\"\",\"naics\":\"\",\"go\":\"\",\"m\":\"\"}); return false;'"; // Remain in current page.
+	                                	linkJavascript = 'onclick="thumbClick(\'' + siteObject.items[layer].item + '\',\'\');return false;"';
 	                                } else {
 	                                	linkJavascript = "";
 	                                }
 
 	                                if (menuaccess==0) { // Quick hack until user-0 displays for currentAccess 1. In progress...
-	                                    sectionMenu += "<div class='bigThumbMenuContent'><div class='bigThumbWidth user-" + menuaccess + "' style='displayX:none'><div class='bigThumbHolder'><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div></div>";
+	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='displayX:none'><div class='bigThumbHolder'><a hrefX='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
 	                                } else {
 	                                	// This one is hidden
-	                                    sectionMenu += "<div class='bigThumbMenuContent'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div></div>";
+	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a hrefX='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
 	                                }
 	                            }
 	                    //}
@@ -1392,14 +1406,14 @@ function displayBigThumbnails(layerName,siteObject) {
 	                            if (thelayers[layer].directlink) {
 	                                //hrefLink = "href='" + removeFrontFolder(thelayers[layer].directlink) + "'";
 	                            }
-	                            sectionMenu += "<div class='bigThumbMenuContent'><div class='bigThumbWidth user-" + menuaccess + "'><div class='bigThumbHolder'><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><a href='" + directlink + "'><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div></div>";
+	                            //sectionMenu += "<div class='bigThumbMenuContent'><div class='bigThumbWidth user-" + menuaccess + "'><div class='bigThumbHolder'><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div><a href='" + directlink + "'></a></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></div></div></div>";
+	                            sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
 	                        }
 	                    }
 	                }
 	            }
 	        }
 	    }
-	    //alert(sectionMenu);
 	    $(".bigThumbMenu").append("<div class='bigThumbMenuInner'>" + sectionMenu + "</div>");
 	    //$("#honeycombMenu").append("<ul class='bigThumbUl'>" + sectionMenu + "</ul>");
 	    
@@ -1417,6 +1431,9 @@ function displayBigThumbnails(layerName,siteObject) {
 	$('.bigThumbHolder').click(function(event) {
         $("#bigThumbPanelHolder").hide(); // Could remain open when small version above map added.         
     });
+    if (param.show) {
+    	$(".bigThumbMenuContent[show='" + param.show +"']").addClass("bigThumbActive");
+    }
 }
 function getDirectLink(livedomain,directlink,rootfolder,hashStr) {
     if (directlink) {
