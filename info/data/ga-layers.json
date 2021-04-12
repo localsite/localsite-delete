@@ -1,39 +1,6 @@
 callback(
 {
   "items": [
-  	{
-		"item": "main",
-		"section": "",
-		"provider": "Neighborhood.org",
-		"youTubeID": "6B_6K-splRU",
-		"vimeoIDX": "174754343",
-		"image": "/localsite/img/show/automotive.jpg",
-		"bigThumbSection": "main",
-		"icon": "<i class='material-icons'>&#xE88A;</i>",
-		"siteHeaderHeight": "130px",
-		"siteHeaderHeightMax": "150px",
-		"showlist": "0",
-		"introX": "Georgia Data Layers",
-		"showmenuX": "1",
-		"mapwidthX": "200px"
-	},
-
-	{
-		"menulevel": "1",
-		"item": "home",
-		"rootfolder": "info",
-		"title": "Home",
-		"tabtitle": "Home",
-		"section": "Home",
-		"provider": "Admin",
-		"icon": "<i class='material-icons'>&#xE88A;</i>",
-		"mainiframe": "https://model.earth",
-		"iframeheight": "800",
-		"hideOverlaysButton": "true",
-		"sectionTitle": "leftNav",
-		"menuaccess": "10"
-	},
-
 	{
 		"menulevel": "1",
 		"item": "industries",

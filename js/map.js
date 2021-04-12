@@ -64,45 +64,48 @@ var localsite_map = localsite_map || (function(){
 function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callback) {
   // To Do: Map background could be loaded while waiting for D3 file. 
   // Move "d3.csv(dp.dataset).then" further down into a new function that starts with the following line.
+
+  // Even without dataset, set titles since NAICS industries are still loaded.
+  let defaults = {};
+  defaults.zoom = 7;
+  defaults.numColumns = ["zip","lat","lon"];
+  defaults.nameColumn = "name";
+  defaults.valueColumn = "name"; // For color coding
+  defaults.latColumn = "latitude";
+  defaults.lonColumn = "longitude";
+  //defaults.scaleType = "scaleQuantile";
+  defaults.scaleType = "scaleOrdinal";
+  defaults.dataTitle = "Data Projects"; // Must match "map.addLayer(overlays" below.
+  if (dp.latitude && dp.longitude) {
+      mapCenter = [dp.latitude,dp.longitude];
+  }
+
+  // Make all keys lowercase - add more here, good to loop through array of possible keeys
+  if (dp.itemsColumn) {
+    dp.itemsColumn = dp.itemsColumn.toLowerCase();
+  }
+
+  if (dp.dataTitle) {
+    $("#showAppsText").text(dp.dataTitle);
+    $("#showAppsText").attr("title",dp.dataTitle);
+    $(".regiontitle").text(dp.dataTitle);
+  }
+  if (dp.listTitle) {
+    dp.dataTitle = dp.listTitle;
+  }
+
   if (typeof d3 !== 'undefined') {
     if (!dp.dataset && !dp.googleDocID) {
       console.log('CANCEL loadFromSheet - no dataset selected for top map.');
       $("#" + whichmap).hide();
       $("#data-section").hide();
+      $(".keywordField").hide();
       return;
     } else {
       console.log('loadFromSheet into #' + whichmap);
+      $(".keywordField").show();
       $("#" + whichmap).show();
     }
-    let defaults = {};
-    defaults.zoom = 7;
-    defaults.numColumns = ["zip","lat","lon"];
-    defaults.nameColumn = "name";
-    defaults.valueColumn = "name"; // For color coding
-    defaults.latColumn = "latitude";
-    defaults.lonColumn = "longitude";
-    //defaults.scaleType = "scaleQuantile";
-    defaults.scaleType = "scaleOrdinal";
-    defaults.dataTitle = "Data Projects"; // Must match "map.addLayer(overlays" below.
-    if (dp.latitude && dp.longitude) {
-        mapCenter = [dp.latitude,dp.longitude];
-    }
-
-    // Make all keys lowercase - add more here, good to loop through array of possible keeys
-    if (dp.itemsColumn) {
-      dp.itemsColumn = dp.itemsColumn.toLowerCase();
-    }
-
-    if (dp.dataTitle) {
-      $("#showAppsText").text(dp.dataTitle);
-      $("#showAppsText").attr("title",dp.dataTitle);
-    }
-
-    if (dp.listTitle) {
-      dp.dataTitle = dp.listTitle;
-    }
-
-   
 
     dp = mix(dp,defaults); // Gives priority to dp
     if (dp.addLink) {
@@ -1241,6 +1244,9 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.addlisting = "https://www.ams.usda.gov/services/local-regional/food-directories-update";
     // community/farmfresh/ 
     dp1.listInfo = "Farmers markets and local farms providing fresh produce directly to consumers. <a style='white-space: nowrap' href='https://model.earth/community/farmfresh/ga/'>About Data</a> | <a href='https://www.ams.usda.gov/local-food-directories/farmersmarkets'>Update Listings</a>";
+  } else {
+    console.log("no show text match for listing map")
+    dp1.dataTitle = "Top Industries";
   }
 
   // Load the map using settings above
@@ -1254,6 +1260,14 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
       });
     });
   } else {
+    // Set to Georiga - later we'll show globe
+    if (!hash.state) {hash.state = "GA"};
+    $("#state_select").val(hash.state);
+    $(".locationTabText").text($("#state_select").find(":selected").text());
+    $(".locationTabText").attr("title",$("#state_select").find(":selected").text());
+    //$(".locationTabText").text("Georgia");
+    //$(".locationTabText").attr("title","Georgia");
+
     loadFromSheet('map1','map2', dp1, basemaps1, basemaps2, 0, function(results) {
       initialHighlight(hash);  
     });

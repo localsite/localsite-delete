@@ -1734,7 +1734,7 @@ if(typeof hiddenhash == 'undefined') {
     var hiddenhash = {};
 }
 function getNaics_setHiddenHash(go) {
-    //alert("getNaics_setHiddenHash: " + go);
+    let showtitle;
     let cat_filter = [];
     
     // NAICS FROM community/projects/biotech
@@ -1756,27 +1756,30 @@ function getNaics_setHiddenHash(go) {
     }
     else if (go){
         if (go == "bioeconomy") {
+        	showtitle = "Bioeconomy and Petroleum Industries";
             cat_filter = (bio_input + bio_output + green_energy + fossil_energy).split(',');
-        }
-        else if (go == "farmfresh") {
+        } else if (go == "farmfresh") {
+        	showtitle = "Farm Fresh";
             cat_filter = (farmfresh).split(',');
-        }
-        else if (go == "ev" || go == "smart") {
+        } else if (go == "smart") {
+        	
         	// smart also shows list of data-driven mobility projects
             cat_filter = (electric + auto_parts).split(',');
-        }
-        else if (go == "parts") {
+        } else if (go == "ev") {
+        	showtitle = "EV Related Manufacturing";
+        	// smart also shows list of data-driven mobility projects
+            cat_filter = (electric + auto_parts).split(',');
+        } else if (go == "parts") {
+        	showtitle = "Parts Manufacturing";
             cat_filter = (electric + auto_parts + parts + combustion_engine).split(',');
-        }
-        else if (go == "ppe") {
+        } else if (go == "ppe") {
+        	showtitle = "Healthcare Industries";
             cat_filter = (ppe_suppliers).split(',');
-        }
-        else if (go == "vehicles") {
-        	//alert("go vehicles")
+        } else if (go == "vehicles") {
+        	showtitle = "Vehicles and Vehicle Parts";
             cat_filter = (electric + auto_parts + parts).split(',');
-        }
-        else if (go == "recycling") {
-        	//alert("go vehicles")
+        } else if (go == "recycling") {
+        	
             cat_filter = (recycling).split(',');
         }
         if (cat_filter.length) {
@@ -1804,6 +1807,7 @@ function getNaics_setHiddenHash(go) {
     });
     */
 
+    hiddenhash.showtitle = showtitle;
     hiddenhash.naics = cat_filter.join(); // Override the existing naics
 
     // Convert back to string

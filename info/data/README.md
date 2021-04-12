@@ -20,3 +20,7 @@ And generate csv files with Walkability data from one of the free API's availabl
 Here are API’s that provide a free Walk Score, Transit Score and Bike Score.  
 [RapidAPI.com](https://rapidapi.com/theapiguy/api/walk-score/details)  
 [WalkScore.com](https://www.walkscore.com/professional/api.php)
+
+---
+<br>
+Should we use YAML (instead of [json](ga-layers.json)) for layer lists? [Sample](https://nodeca.github.io/js-yaml/) - [Source](https://github.com/nodeca/js-yaml)

@@ -1112,7 +1112,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             //} else 
                             if (params.show) {
 
-                                $(".regiontitle").text(gotext + " Industries within "+ fips.length + " counties");
+                                $(".regiontitle").text(gotext + " within "+ fips.length + " counties");
                             } else {
                                 $(".regiontitle").text("Industries within "+ fips.length + " counties");
                             }
@@ -1157,7 +1157,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         if (params.show == "bioeconomy") {
                             $(".regiontitle").text("Bioeconomy and Petroleum Industries");
                         } else if (params.show == "parts") {
-                            $(".regiontitle").text("Parts Manufacturing");
+                            //$(".regiontitle").text("Parts Manufacturing");
                         } else if (params.show == "manufacturing") {
                             $(".regiontitle").text("Manufacturing");
                         } else if (params.show == "farmfresh") {
@@ -1171,14 +1171,15 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         } else if (params.show == "vehicles") {
                             $(".regiontitle").text("Vehicles and Vehicle Parts");
                         } else if (gotext) {
-                            $(".regiontitle").text(gotext);
+                            // Would overwrite longer title from map.js loadFromSheet which includes non-datasets
+                            //$(".regiontitle").text(gotext);
                         } else {
                             // Temp, reactivate after iogrid stops deleteing hash values.
                             $(".regiontitle").text("Industries");
                             //$(".regiontitle").text(String(d['Name'])+"'s Top Industries");
                         }
                         //alert("locationTabText2")
-                        $(".locationTabText").text("State"); // Temp
+                        //$(".locationTabText").text("State"); // Temp
                     } else {
 
                         var filteredData = consdata.filter(function(d) {
