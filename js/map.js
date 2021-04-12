@@ -1114,13 +1114,15 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   } else if (show == "suppliers" || show == "ppe") { 
 
     // https://docs.google.com/spreadsheets/d/1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI/edit?usp=sharing
-    dp1.listTitle = "Georgia COVID-19 Response";
+    dp1.listTitle = "Georgia COVID-19 Response"; // Appears at top of list
+    //dp1.listTitle = "Georgia PPE Suppliers"; // How do we set the layer title for checkbox?
     //dp1.editLink = "";
     dp1.googleDocID = "1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI";
     dp1.sheetName = "GA Suppliers List";
     dp1.listInfo = "Select a category to the left to filter results. View&nbsp;<a href='https://map.georgia.org/display/products/suppliers-pdf/ga_suppliers_list_2021-03-10.pdf' target='_parent'>PDF&nbsp;version</a>&nbsp;of&nbsp;the&nbsp;complete&nbsp;list.";
     
-    dp1.dataTitle = "Manufacturers and Distributors";
+    //dp1.dataTitle = "Manufacturers and Distributors";
+    dp1.dataTitle = "PPE Suppliers";
     dp1.itemsColumn = "items";
     dp1.valueColumn = "type";
     dp1.valueColumnLabel = "Type";
