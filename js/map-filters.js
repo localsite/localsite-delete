@@ -227,7 +227,7 @@ $(document).ready(function () {
 	
  	$('#state_select').on('change', function() {
 	    goHash({'filter':'','state':this.value}); // triggers renderMapShapes("geomap", hash); // County select map
-
+	    $("#filterLocations").hide(); // So state appears on map immediately
 	    /*
 	    if (this.value == "GA") {
 	    	$("#geoPicker").show();
@@ -1836,11 +1836,7 @@ function refreshWidgets() {
 			if (hash.show != "ppe") {
 				$(".layerclass.ppe").hide();
 			}
-			if (hash.show == "ppe") {
-				$("#showAppsText").text("PPE Suppliers");
-			} else if (hash.show == "farmfresh") {
-				$("#showAppsText").text("Farm Fresh");
-			} else {
+			if (!$("#showAppsText").text()) {
 				$("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));
 			}
 		} else {

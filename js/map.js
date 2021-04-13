@@ -138,6 +138,8 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
       // Placing map.whenReady or map.on('load') here did not resolve
       map.setView(mapCenter,dp.zoom);
       */
+    } else {
+      map.setView(mapCenter,dp.zoom);
     }
     let map2 = {};
     if (whichmap2) {

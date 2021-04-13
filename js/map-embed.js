@@ -665,7 +665,7 @@ strVar += "        <\/ul>";
 strVar += "";
 strVar += "";
 strVar += "      <\/div>";
-strVar += "      <div id=\"locationFilterHolder\" style=\"overflow:auto; padding:20px 0 0 40px;\">";
+strVar += "      <div id=\"locationFilterHolder\" style=\"overflow:auto; padding:20px 0 20px 40px;\">";
 strVar += "";
 strVar += "            <div class=\"hideAdvanced close-X\" style=\"float:right; margin-top:-20px\">&#10005;";
 strVar += "            <\/div>";

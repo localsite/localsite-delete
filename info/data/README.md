@@ -1,4 +1,4 @@
-# Data Commons
+# Data Setup
 
 We're aiming to provide the EPA impact data through Google Data Commons and DataUSA.io.  
 
@@ -23,4 +23,5 @@ Here are API’s that provide a free Walk Score, Transit Score and Bike Score.
 
 ---
 <br>
-Should we use YAML (instead of [json](ga-layers.json)) for layer lists? [Sample](https://nodeca.github.io/js-yaml/) - [Source](https://github.com/nodeca/js-yaml)
+Are any maps or navigation standards using using YAML for layer lists (instead of [json](ga-layers.json)?  
+[YAML Sample](https://nodeca.github.io/js-yaml/) - [Source](https://github.com/nodeca/js-yaml)
