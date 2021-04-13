@@ -114,7 +114,7 @@
 <!-- FILTERS -->
 <div class="search-filters-css" style="display:none">
 <div id="headerFixed" class="filterPanel">
-  <div class="headerOffset headerOffsetOne">&nbsp;</div>
+  <div class="headerOffset headerOffsetOne" style="display: none">&nbsp;</div>
 
   <div class="filterPanel_background">
   </div>
@@ -127,11 +127,13 @@
 
     <!-- Displayed on scroll up -->
     <div class="showMenuSmNav" style="float:right; display:none">
+      <!-- delete
       <div class="showSearch local" style="display:none;float:left">
-        <img src="../../localsite/img/icon/search.png" style="width:27px; opacity:0.5; margin:10px 20px 0 0">
+        <img src="/localsite/img/icon/search.png" style="width:27px; opacity:0.5; margin:10px 20px 0 0">
       </div>
+      -->
       <div class="showMenu" style="font-size:24px;color:#999;float:left">
-        <img src="../../localsite/img/icon/hamburger.png" style="width:30px; opacity:0.5; margin-top:10px">
+        <img src="/localsite/img/icon/hamburger.png" style="width:30px; opacity:0.5; margin-top:10px">
       </div>
     </div>
 
@@ -146,11 +148,11 @@
             </div>
         </div>
         <div class="showApps local" style="display:none; padding:0; border:0px solid #ccc; margin-right:4px">
-          <i class="material-icons" style="font-size:34px">&#xE5C3;</i>
+          <i class="material-icons georgiaorg-hide" style="font-size:34px">&#xE5C3;</i>
         </div>
       </div>
 
-      <div style="overflow:visible; display:none" class="filterField searchElements mock-up earth neighborhood">
+      <div style="overflow:visible" class="filterField locationTab">
         <div class="filterLabel">
           <div class="filterLabelMain">
             Where
@@ -192,7 +194,7 @@
                   <i class="material-icons" style="font-size:24px;cursor:pointer;display:none;">&#xE313;</i>
               </div>
               <div style="width:100%">
-                <div class="filterClickText" id="showAppsText"></div>
+                <div class="filterClickText" id="showAppsText" title="Display...">Display...</div>
               </div>
             </div>
 

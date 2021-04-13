@@ -1247,8 +1247,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     // community/farmfresh/ 
     dp1.listInfo = "Farmers markets and local farms providing fresh produce directly to consumers. <a style='white-space: nowrap' href='https://model.earth/community/farmfresh/ga/'>About Data</a> | <a href='https://www.ams.usda.gov/local-food-directories/farmersmarkets'>Update Listings</a>";
   } else {
-    console.log("no show text match for listing map")
-    dp1.dataTitle = "Top Industries";
+    console.log("no show text match for listing map");
   }
 
   // Load the map using settings above
@@ -2747,12 +2746,16 @@ $(window).scroll(function() {
     if ($(window).scrollTop() < (previousScrollTop - 20)) { // Reveal if scrolling down fast
       $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
       //$('#filterFieldsHolder').show();
-      $('.headerOffset').show();
+      if ($("#headerbar").length) {
+        $('.headerOffset').show();
+      }
       $('#headerFixed').show();
     } else if ($(window).scrollTop() == 0) { // At top
       $('.headerbar').show(); $('.showMenuSmNav').hide(); $('#logoholderbar').hide(); $('#logoholderside').hide();
       //$('#filterFieldsHolder').show();
-      $('.headerOffset').show();
+      if ($("#headerbar").length) {
+        $('.headerOffset').show();
+      }
       $('#headerFixed').show();
     }
   }

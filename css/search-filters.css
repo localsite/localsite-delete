@@ -45,6 +45,7 @@
   .filterField {
     float: none;
     margin-right:0px;
+    clear: both;
   }
   #appSelectHolder {
     clear: both;

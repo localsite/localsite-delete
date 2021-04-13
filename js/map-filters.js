@@ -1432,6 +1432,9 @@ function displayBigThumbnails(layerName,siteObject) {
     });
     if (param.show) {
     	$(".bigThumbMenuContent[show='" + param.show +"']").addClass("bigThumbActive");
+    	let activeTitle = $(".bigThumbMenuContent[show='" + param.show +"']").text();
+    	$("#showAppsText").text(activeTitle);
+    	$("#showAppsText").attr("title",activeTitle);
     }
 }
 function getDirectLink(livedomain,directlink,rootfolder,hashStr) {
@@ -1608,6 +1611,7 @@ function initSiteObject(layerName) {
 } // end initSiteObject
 
 function showThumbMenu(siteObject) {
+	$("#menuHolder").css('margin-right','-250px');
 	$("#bigThumbPanelHolder").show();
 	if (!$(".bigThumbMenuContent").length) {
 		displayBigThumbnails("main",siteObject);
@@ -1749,7 +1753,7 @@ function getNaics_setHiddenHash(go) {
     var parts_carpets = "325520,314110,313110,313210,"
     var ppe_suppliers = "622110,621111,325414,339113,423450,"
     var farmfresh = "311612,311615,311911,311919,311830,311824,311941,311710,311611,115114,311613,311811,311942,311991,311999,311211,311224,311920,"
-    var recycling = "423930,562111,562112,562119,562211,562212,562213,562219,562910,562920,562991,562998";
+    var recycling = "423930,562111,562112,562119,562211,562212,562213,562219,562910,562920,562991,562998,56299";
 
     if (param.naics) {
         cat_filter = param.naics.split(',');
@@ -1807,9 +1811,9 @@ function getNaics_setHiddenHash(go) {
     });
     */
 
-    hiddenhash.showtitle = showtitle;
-    hiddenhash.naics = cat_filter.join(); // Override the existing naics
-
+    	hiddenhash.showtitle = showtitle;
+    	hiddenhash.naics = cat_filter.join(); // Override the existing naics
+	
     // Convert back to string
     //hiddenhash = decodeURIComponent($.param(hiddenhashObject)); // Convert to query string, and remove encoding of commas
 
@@ -2070,4 +2074,12 @@ $(document).ready(function () {
 		//$("#state_select option[value='NV']").prop('selected', true);
 	}
 	refreshWidgets();
+	if (hiddenhash.showtitle.length) {
+    	$("#showAppsText").text(hiddenhash.showtitle);
+    	$("#showAppsText").attr("",hiddenhash.showtitle);
+
+    	console.log("why is regiontitle not set here?"); // Neither console.log or alert appears
+    	$(".regiontitle").text(hiddenhash.showtitle);
+    	
+	}
 });

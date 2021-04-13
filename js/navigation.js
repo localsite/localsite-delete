@@ -83,9 +83,10 @@ $(document).ready(function(){
 		    })
 	 		$("#header img[src]").each(function() {
 	 		  if($(this).attr("src").toLowerCase().indexOf("http") < 0){
-		      	$(this).attr("src", climbpath + $(this).attr('src'));
+		      	$(this).attr("src", modelpath + $(this).attr('src')); // Was climbpath
 		  	  }
 		    })
+
 
 	 		// Set here so path works at all levels.
 
@@ -104,6 +105,10 @@ $(document).ready(function(){
 		 		changeFavicon("https://www.georgia.org/sites/default/files/logo-georgia-peach-notext_0.png")
 		 		$('.georgia').css('display', 'inline');
 		 		$('.georgia-hide').css('display', 'none');
+		 		$(".locationTab").hide();
+		 		if (location.host.indexOf('georgia.org') >= 0) {
+		 			$('.georgiaorg-hide').css('display', 'none');
+		 		}
 		 	} else if (!Array.isArray(param.titleArray) && (param.startTitle == "Neighborhood.org" || location.host.indexOf('neighborhood.org') >= 0)) {
 		 		$(".siteTitleShort").text("Neighborhood Modeling");
 		 		param.titleArray = ["neighbor","hood"]
@@ -225,7 +230,7 @@ $(document).ready(function(){
 	        	//$("#filterLocations").hide();
 			});
 		// END WAS LIMITED TO HEADER
-
+		$(".headerOffset").show();
 		}); // End $("#header").load
 	}
 

@@ -54,7 +54,7 @@ svg{max-width:none;} /* Fix for embedding material icon map points in Drupal */
 
 @media (max-width: 800px) {
   .hideMobile {display:none;}
-  .showMobile {display:inline-block;}
+  .showMobile {display:inline-block !important;}
 }
 @media (max-width: 900px) {
   .hideMobileWide {display:none;}

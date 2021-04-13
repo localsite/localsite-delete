@@ -98,7 +98,7 @@ $(document).ready(function () {
 .markdownEye {
 	display:none;
 }
-.searchElements {
+.locationTab {
 	display: block !important;
 }
 #map1 {
@@ -345,7 +345,7 @@ To do: make the links below an optional widget
 					<div id="quickLinks" style="display:none">
 						<div>Choose counties</div>
 					</div>
-					<h1 class="regiontitle" style="margin-top:0px;padding-top:0px;">Loading Industries...</h1>
+					<h1 class="regiontitle" style="margin-top:0px;padding-top:0px;"></h1>
 					<h4 class="location_titles" style="font-size:16px;color:#555;display:none"></h4>
 				</div>
 
@@ -732,6 +732,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 
 <script>
 function updateMosic(naics) {
+	
     var config = useeio.urlConfig();
     var modelID = config.get().model || 'GAUSEEIO';
 
@@ -757,6 +758,8 @@ function updateMosic(naics) {
     });
     config.join(sectorListMosaic);
 }
+
+// Not used
 function updateMosicNew(naics) {
 	// Might not use this, unless it can be revised to allow the hash to trigger when indicators dropdown changes. Remove location.reload() above.
 	var modelID = 'USEEIO';
