@@ -144,6 +144,7 @@ function refreshNaicsWidget() {
 
 
 function promisesReady(values) {
+
     console.log("promisesReady - promises loaded")
     d3.csv(dual_map.community_data_root() + "us/id_lists/state_fips.csv").then( function(consdata) {
         var filteredData = consdata.filter(function(d) {
@@ -237,7 +238,7 @@ $(document).ready(function() {
     //alert("Add addEventListener"); // Confirms only added once, but why does this occur twice?
     document.addEventListener('hashChangeEvent', function (elem) {
         if (location.host.indexOf('localhost') >= 0) {
-            console.log('BUGBUG hashChangeEvent invoked 2 times by info/index.html'); // Invoked twice by iogrid inflow-outflow chart
+            alert('BUGBUG hashChangeEvent invoked 2 times by info/index.html'); // Invoked twice by iogrid inflow-outflow chart
         }
         console.log("The hash: " + location.hash);
         let params = loadParams(location.search,location.hash);
@@ -245,11 +246,14 @@ $(document).ready(function() {
         if(typeof value == 'undefined') {
             console.log("ALERT value object undefined in naics.js")
         } else {
-            renderIndustryChart(dataObject,values,params);
+
+            // Might need
+            //renderIndustryChart(dataObject,values,params);
         }
 
     }, false);
-                        
+    
+
     if (document.getElementById("clearButton")) {
         document.getElementById("clearButton").addEventListener("click", function(){
 
@@ -524,6 +528,9 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
     $("#econ_list").html("");
     console.log("topRatesInFips")
     //alert(String(dataObject.stateshown))
+
+    // Redirect occurs somewhere below....
+
     d3.csv(dual_map.community_data_root() + "us/id_lists/state_fips.csv").then( function(consdata) {
         var filteredData = consdata.filter(function(d) {
             if(d["FIPS"]==String(dataObject.stateshown)) {
@@ -551,7 +558,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                 }
 
                 // TO DO: Use hiddenhash.naics here instead
-                var cat_filter = getNaics_setHiddenHash(params.show);
+                var cat_filter = getNaics_setHiddenHash(params.show); // Resides in map-filters.js
 
                 //alert(cat_filter)
                 var rates_dict = {};
@@ -1079,7 +1086,9 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         if (!$.trim( $('#iogrid').html() ).length) { // If empty, otherwise triggered by hash change.
                             applyIO(naicshash);
                         }
-                        updateMosic(naicshash);
+                        
+                        // To Reactivate - BugBug
+                        //updateMosic(naicshash);
 
                         //updateHash({"naics":naicshash});
                         //params = loadParams(location.search,location.hash);
@@ -1089,6 +1098,8 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                 d3.csv(dual_map.community_data_root() + "us/id_lists/county_id_list.csv").then( function(consdata) {
                     //document.getElementById("industryheader").text = ""; // Clear initial.
                     $(".location_titles").text(""); //Clear
+
+                    /*
                     if (params.show == "bioeconomy") {
                         $(".regiontitle").text("Bioeconomy and Petroleum Industries");
                     } else if (params.show == "parts") {
@@ -1102,6 +1113,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                     } else if (gotext) {
                         //$(".regiontitle").text(gotext);
                     }
+                    */
                     //alert("statelength " + statelength + " fips.length " + fips.length)
                     //if(Array.isArray(fips) && statelength != fips.length) {
                     if(Array.isArray(fips)) {
@@ -1154,6 +1166,8 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         }
 
                     } else if (fips==dataObject.stateshown) {
+                        /*
+                        // Resides in map-filters.js
                         if (params.show == "bioeconomy") {
                             $(".regiontitle").text("Bioeconomy and Petroleum Industries");
                         } else if (params.show == "parts") {
@@ -1180,6 +1194,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         }
                         //alert("locationTabText2")
                         //$(".locationTabText").text("State"); // Temp
+                        */
                     } else {
 
                         var filteredData = consdata.filter(function(d) {
@@ -1339,10 +1354,18 @@ function applyIO(naics) { // Called from naics.js
     //
     //if (!hash.go && !hash.geo && !hash.catsort && !hash.catsize) {
 
-        //  BUGBUG - THIS NEEDS TO STOP POPULATING NAICS IN THE HASH. FIND OTHER WAY.
+        
 
         //config.update({naics: naicsCodes, count: 20}); // filters the BEA sectors
-        config.update({naics: naicsCodes, count: 20, indicators: indicatorCodes}); // filters the BEA sectors
+
+
+
+        //  BUGBUG - THIS NEEDS TO STOP POPULATING NAICS IN THE HASH. FIND OTHER WAY.
+        // To Reactivate BugBug
+        //config.update({naics: naicsCodes, count: 20, indicators: indicatorCodes}); // filters the BEA sectors
+
+
+
         //config.update(hiddenhash);
 
         //document.dispatchEvent(new CustomEvent('hashChangeEvent'));
