@@ -1053,7 +1053,7 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.editLink = "https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing";
     dp1.googleDocID = "1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU";
     dp1.sheetName = "Companies";
-    dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing'>Google Sheet</a> to submit updates.";
+    dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing'>Google Sheet</a> to submit map updates.<br>View Georgia's <a href='https://www.solarpowerworldonline.com/2020-top-georgia-contractors/'>top solar contractors by KW installed</a>.";
     dp1.valueColumn = "firm type";
     dp1.valueColumnLabel = "Firm Type";
     dp1.markerType = "google";

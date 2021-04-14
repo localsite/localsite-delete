@@ -10,7 +10,7 @@ The following verified that holes resided in Automotive Manufacturing at the cou
 
 The steps below have been applied in our [Google CoLab for exploring NAICS](https://colab.research.google.com/drive/1HLK4HIUMLlgTR524QoCKvfaNl-La48XU?usp=sharing) which can be used to output 6-digit naics by state to a [CSV file](https://drive.google.com/drive/u/0/folders/1EoWDvNoaKO8xLclX4fr5exw83jJkkJIy) called naics-6digit-ga.csv on Google Drive. We've manually output [3 years](https://github.com/modelearth/community-data/tree/master/us/state/GA/naics) using the CoLab script.  The original Python also resides in our [FLOWSA fork](https://github.com/modelearth/flowsa/tree/master/colabs).
 
-[Compare to FactFnder](https://data.census.gov/cedsci/table?g=0400000US13&n=336111&tid=CBP2018.CB1800CBP&hidePreview=true)  
+[Compare to FactFinder](https://data.census.gov/cedsci/table?g=0400000US13&n=336111&tid=CBP2018.CB1800CBP&hidePreview=true)  
 
 U.S. Bureau of Labor Statistics (BLS) industry data  
 BLS data is pulled using the [FLOWSA Python script](https://github.com/USEPA/flowsa/blob/master/flowsa/BLS_QCEW.py)
