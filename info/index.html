@@ -662,7 +662,8 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 			<option value="ETOX" title="Freshwater Aquatic Ecotoxicity (ETOX): 
 			Like humans, wildlife can be harmed by exposure to toxic chemicals and substances. An ever-expanding list of common chemicals have been assessed for their tendency to cause ecological damage when released in to the air, water, or soil. In this indicator, emissions are expressed in terms of their contribution to ecological damage in the water column of freshwater bodies. A standardized Comparative Toxicity Unit is used. The source of the factors for this indicator is TRACI 2.1 (Bare 2012) which uses USETox 1.0 (Rosenbaum et al. 2008).">&nbsp; &nbsp;Freshwater Aquatic Ecotoxicity (ETOX)</option>
 
-			<option value="GCC" title="Greenhouse Gases (GCC): 
+			<!-- hiddenhash.indicators = "GCC" is also set below on page init. -->
+			<option value="GCC" selectedX title="Greenhouse Gases (GCC): 
 			Greenhouse gases are the primary driver of climate change. These gases absorb infrared radiation emitted by the sun at a higher rate than standard atmospheric gases. The result is that, when these gases are emitted, the atmosphere absorbs and stores more heat, causing it to warm up. Carbon dioxide is the most commonly known greenhouse gas, but other gases such as methane, nitrous oxide, and even water vapor are all major contributors to the warming of the atmosphere. In this indicator, emissions are expressed as their equivalent in carbon dioxide (CO2), based on the amount of heat they can absorb and their average life span in the atmosphere. The source of the factors for this indicator is TRACI 2.1 (Bare 2012).">&nbsp; &nbsp;Greenhouse Gases (GCC)</option>
 
 			<option value="HRSP" title="Human Health - Respiratory Effects (HRSP): 
@@ -693,8 +694,8 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
     </div>
 
 	<span style="font-size:14px">
-	Select an impact area and move sliders to view changes to production levels.<br>
-	Use the commodities sort menu to choose multiple impact areas.<br>
+	Select an impact area above and move sliders below view impacts of different production levels and green tech.<br>
+	Use the commodities sort menu to choose multiple impact areas. (Center column below, upper right)<br>
 	Values are currently national rather than state-specific.<br><br>
 	</span>
 	<div id="iogrid"></div>
@@ -703,7 +704,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 
 
 	<style>
-		.industry-list-mosaic input[type="checkbox" i] {
+		.sector-list input[type="checkbox" i] {
 			display: none;
 		}
 	</style>
@@ -711,7 +712,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 	<br><br><br><br><br><br>
 	<div style="padding-left:23px">
 		<h1>Impact Levels</h1>
-		<div class="industry-list-mosaic"></div>
+		<div class="sector-list"></div>
 	</div>
 </div>
 
@@ -731,6 +732,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 
 
 <script>
+// Not used - Delete
 function updateMosic(naics) {
 	
     var config = useeio.urlConfig();
@@ -759,7 +761,7 @@ function updateMosic(naics) {
     config.join(sectorListMosaic);
 }
 
-// Not used
+// Not used - Delete
 function updateMosicNew(naics) {
 	// Might not use this, unless it can be revised to allow the hash to trigger when indicators dropdown changes. Remove location.reload() above.
 	var modelID = 'USEEIO';
@@ -900,11 +902,11 @@ config.join(sectorList);
 
       <div>
        
-        <label  style="float:left; margin-right:6px" class="switch">
+        <label id="switchRedBubbles" style="float:left; margin-right:6px" class="switch">
           <input id="mySelect" type="checkbox" checked>
           <span class="slider round"></span>
         </label>
-        <div class="switch-text">Highlight industries from the counties and/or topic selected above. (Hit refresh after changing counties.)</div>
+        <div class="switch-text">Highlight top industries from the counties and/or topic selected above.</div>
 
       </div>
 
@@ -928,9 +930,8 @@ config.join(sectorList);
 	<div id="impactText" style="float:left"></div>
 	<div style="clear:both"></div>
 
-
+	<!-- BUBBUG: Currently must be placed after HTML above -->
 	<script type="text/javascript" src="../../io/charts/bubble/js/bubble.js"></script>
-
 
 	<div class="io" style=" max-width: 850px; margin: auto;">
 	        <h1 class="text-center">Impact chart</h1>
@@ -943,7 +944,7 @@ config.join(sectorList);
 	</div>
 
 
-	<div id="sector-list" class="sector-list"></div>
+	<div id="sector-listXX" class="sector-listXX"></div>
 </div>
 
 <script>
@@ -970,6 +971,7 @@ config.join(sectorList);
     });
 
     //update the chart if the sector-list changes.
+    /*
     var element = document.querySelector('#sector-list');
     var observer = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
@@ -1010,6 +1012,7 @@ config.join(sectorList);
     observer.observe(element, {
       attributes: true //configure it to listen to attribute changes
     });
+    */
 </script>
 <br><br><br><br>
 
@@ -1069,6 +1072,17 @@ if (!param["go"]) {
 // INIT
 var priorHashLocal = {};
 
+let hash = getHash();
+if (!hash.state && !hash.geo) {
+	hiddenhash.state = "GA"; // Temp until triggered by domains and map prompt.
+}
+if (!hiddenhash.show) {
+	hiddenhash.show = "industries";
+}
+if (!hiddenhash.indicators) {
+	//hiddenhash.indicators = "GCC";
+}
+
 /* Allows map to remove selected shapes when backing up. */
 document.addEventListener('hashChangeEvent', function (elem) {
 	console.log("local page detects hashChangeEvent");
@@ -1085,6 +1099,7 @@ function refreshWidgetsLocal() {
 	// NOTE: params after ? are not included, just the hash.
 	if (hash.go != priorHash.go) {
 		if (hash.show == priorHash.show) {
+			console.log("Clear hash.show, but not actual hash. Call updateText from refreshWidgetsLocal since hash has changed.")
 			hash.show = ""; // Clear the suppliers display
 		}
 		updateText(hash.go);

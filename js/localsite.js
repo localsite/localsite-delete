@@ -1,9 +1,7 @@
 // Updates originate in GitHub localsite/js/localsite.js
 // To do: dynamically add target _parent to external link when in an iFrame, and no existing target
 
-// common.js does NOT use jquery, so it can be used before jquery loads.
-
-// Dual Map Library - A global namespace singleton
+// Localsite Path Library - A global namespace singleton
 // If dual_map library exists then use it, else define a new object.
 var dual_map = dual_map || (function(){
     var _args = {}; // private
@@ -52,12 +50,17 @@ var dual_map = dual_map || (function(){
 // USE params (plural) to isolate within functions when creating embedable widgets.
 // USE param for any html page using common.js.
 var param = loadParams(location.search,location.hash);
+if(typeof hiddenhash == 'undefined') {
+    var hiddenhash = {};
+}
 
 // Loads params with priority given to:
 // 1. Hash values on URL.
 // 2. Parameters on URL.
 // 3. Parameters on javascript include file.
 function loadParams(paramStr,hashStr) {
+  paramStr = paramStr.substring(paramStr.indexOf('?') + 1);
+  hashStr = hashStr.substring(hashStr.indexOf('#') + 1);
   // NOTE: Hardcoded to pull params from last script, else 'embed-map.js' only
   // Get Script - https://stackoverflow.com/questions/403967/how-may-i-reference-the-script-tag-that-loaded-the-currently-executing-script
   let scripts = document.getElementsByTagName('script'); 
@@ -81,7 +84,7 @@ function loadParams(paramStr,hashStr) {
     //console.log("Param from javascript include: " + pair[0].toLowerCase() + " " + decodeURIComponent(pair[1]));
   }
 
-  let pairs = paramStr.substring(paramStr.indexOf('?') + 1).split('&');
+  let pairs = paramStr.split('&');
   for (let i = 0; i < pairs.length; i++) {
       if(!pairs[i])
           continue;
@@ -89,7 +92,7 @@ function loadParams(paramStr,hashStr) {
       params[decodeURIComponent(pair[0]).toLowerCase()] = decodeURIComponent(pair[1]);
    }
 
-  let hashPairs = hashStr.substring(hashStr.indexOf('#') + 1).split('&');
+  let hashPairs = hashStr.split('&');
   for (let i = 0; i < hashPairs.length; i++) {
       if(!hashPairs[i])
           continue;
@@ -103,18 +106,25 @@ function loadParams(paramStr,hashStr) {
    return params;
 }
 function mix(incoming, target) { // Combine two objects, priority to incoming. Delete blanks indicated by incoming.
+   target2 = jQuery.extend(true, {}, target); // Clone/copy object without entanglement
    for(var key in incoming) {
      if (incoming.hasOwnProperty(key)) {
         if (incoming[key] === null || incoming[key] === undefined || incoming[key] === '') {
-          delete target[key];
+          delete target2[key];
         } else {
-          target[key] = incoming[key];
+          target2[key] = incoming[key];
         }
      }
    }
-   return target;
+   //alert("cat test out " + hiddenhash.cat);
+   return target2;
 }
-function getHash() {
+function getHash() { // Includes hiddenhash
+    //return getHashOnly(); // Test
+    //alert("cat test in " + hiddenhash.cat);
+    return (mix(getHashOnly(),hiddenhash));
+}
+function getHashOnly() {
     return (function (a) {
       if (a == "") return {};
       var b = {};
@@ -129,7 +139,7 @@ function getHash() {
 function updateHash(addToHash, addToExisting) {
     let hash = {};
     if (addToExisting != false) {
-      hash = getHash(); // Include all existing
+      hash = getHashOnly(); // Include all existing. Excludes hiddenhash.
     }
     hash = mix(addToHash,hash); // Gives priority to addToHash
 
@@ -166,6 +176,9 @@ var triggerHashChangeEvent = function () {
 };
 $(window).on('hashchange', function() { // Avoid window.onhashchange since overridden by map and widget embeds  
   console.log("window hashchange");
+  console.log("delete hiddenhash.name");
+  delete hiddenhash.name; // Not sure where this is set.
+  delete hiddenhash.cat; // Not sure where this is set.
   triggerHashChangeEvent();
 });
 function clearHash(toClear) {
@@ -249,23 +262,23 @@ function formatRow(key,value,level,item) {
 
           // NEVER REACHED?
           console.log("This code is reached for location: " + key + " " + value);
-        if (value[c].length >1){
+          if (value[c].length >1){
 
-          for (d in value[c]){  
-              
-              if (isObject(value[c][d])) {
-              //addHtml += "<b>Add something else here</b>\n";
-              for (e in value[c][d]){
-                //addHtml += "<div class='level" + level + "'>" + e + ":: " + value[c][d][e] + "</div>\n";
-                addHtml += formatRow(e,"-- " + value[c][d][e],level);
+            for (d in value[c]){  
+                
+                if (isObject(value[c][d])) {
+                //addHtml += "<b>Add something else here</b>\n";
+                for (e in value[c][d]){
+                  //addHtml += "<div class='level" + level + "'>" + e + ":: " + value[c][d][e] + "</div>\n";
+                  addHtml += formatRow(e,"-- " + value[c][d][e],level);
+                }
+              } else {
+                //addHtml += "<div class='level" + level + "'>" + d + "::: " + value[c][d] + "</div>\n";
+                addHtml += formatRow(d,"---- " + value[c][d],level);
               }
-            } else {
-              //addHtml += "<div class='level" + level + "'>" + d + "::: " + value[c][d] + "</div>\n";
-              addHtml += formatRow(d,"---- " + value[c][d],level);
-            }
 
+            }
           }
-        }
 
       } else {
         addHtml += formatRow(c,value[c],level);

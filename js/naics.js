@@ -119,10 +119,9 @@ document.addEventListener('hashChangeEvent', function (elem) {
 function refreshNaicsWidget() {
     let reloadedMap = false;
     //param = loadParams(location.search,location.hash); // param is declared in localsite.js
-    //let hash = getHash();
+    let hash = getHash(); // Includes hiddenhash
     
     params = loadParams(location.search,location.hash); // Also used by loadIndustryData()
-
     if (!params.catsort) {
         params.catsort = "payann";
     }
@@ -138,6 +137,9 @@ function refreshNaicsWidget() {
         stateAbbr = params.state || defaultState;
         dataObject.stateshown=stateID[stateAbbr];
         loadIndustryData(); // Occurs on INIT
+    } else if (priorHash_naicspage.naics != hash.naics) {
+        //alert("hash.naics " + hash.naics);
+        loadIndustryData();
     }
     priorHash_naicspage = getHash();
 }
@@ -475,6 +477,7 @@ function keyFound(this_key, cat_filter, params) {
     if (!params.show) {
         params.show = params.go;
     }
+
     if (this_key <= 1) {
         return false;
     } else if (cat_filter.length == 0) { // No filter
@@ -504,7 +507,7 @@ function keyFound(this_key, cat_filter, params) {
     } else if ( (params.show == "bioeconomy" || params.show=="parts" || cat_filter.length > 0) && params.catsize == 6 && cat_filter.includes(this_key.slice(0,6))) { // Our 6 digit array matches key
         return true;
     } else {
-        console.log("NO CAT MATCH FOUND");
+        console.log("NO CAT MATCH FOUND FOR: " + params.show);
         return false;
     }
 }
@@ -558,6 +561,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                 }
 
                 // TO DO: Use hiddenhash.naics here instead
+                //alert("naics.js hiddenhash.naics: " + hiddenhash.naics);
                 var cat_filter = getNaics_setHiddenHash(params.show); // Resides in map-filters.js
 
                 //alert(cat_filter)
@@ -1087,7 +1091,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             applyIO(naicshash);
                         }
                         
-                        // To Reactivate - BugBug
+                        // To Remove - Moveed into applyIO below instead. BugBug
                         //updateMosic(naicshash);
 
                         //updateHash({"naics":naicshash});
@@ -1221,6 +1225,9 @@ function getKeyByValue(object, value) {
 }
 
 
+if(typeof hiddenhash == 'undefined') {
+    var hiddenhash = {};
+}
 function applyIO(naics) { // Called from naics.js
     //alert("applyIO")
 
@@ -1290,12 +1297,6 @@ function applyIO(naics) { // Called from naics.js
     var naicsCodes = naics.split(',');
     //var handled = {};
 
-    // Likely occurs before naics.js sets hiddenhash.naics
-    if(typeof hiddenhash == 'undefined') {
-        var hiddenhash = {};
-    }
-
-
     //var indicators = "VADD";
     var indicators = "";
     let hash = getHash();
@@ -1310,6 +1311,8 @@ function applyIO(naics) { // Called from naics.js
     hiddenhash.naics = naicsCodes;
     hiddenhash.indicators = indicatorCodes;
     hiddenhash.count = 10;
+
+    console.log("hiddenhash.naics set in naics.js " + hiddenhash.naics);
 
     /*
     hiddenhash = {
@@ -1413,5 +1416,24 @@ function applyIO(naics) { // Called from naics.js
 
     // TEMP - Remove NAICS from has manually
     //updateHash({'naics':''});
+
+    //alert("HEATMAP")
+    // HEATMAP
+    // Copied from sector_list.html - uses hiddenhash.naics set above.
+
+    //delete hiddenhash.indicators;
+    //hiddenhash.view = mosaic;
+    //hiddenhash.count = 10;
+    //hiddenhash.naics = "2122,213"
+    var sectorList = useeio.sectorList({
+        model: model,
+        selector: '.sector-list',
+    });
+    config.join(sectorList);
+    config.update({
+        view: ["mosaic"],
+        count: 10,
+    });
+    // End Copied from sector_list.html
 
 }

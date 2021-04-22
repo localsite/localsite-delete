@@ -25,7 +25,7 @@ document.addEventListener('hashChangeEvent', function (elem) {
 var mbAttr = '<a href="https://www.mapbox.com/">Mapbox</a>', mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWUyZGV2IiwiYSI6ImNqaWdsMXJvdTE4azIzcXFscTB1Nmcwcm4ifQ.hECfwyQtM7RtkBtydKpc5g';
 
 //////////////////////////////////////////////////////////////////
-// Loads from Google Sheet or CSV
+// Loads from JSON API, Google Sheet or CSV file
 //  longitude, latitude for position (lon, lat also supported)
 //  one numerical or categorical attribute to be visualized
 //  + (optional) attributes like  "address" to be shown in tooltip and list.
@@ -89,6 +89,8 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
     $("#showAppsText").text(dp.dataTitle);
     $("#showAppsText").attr("title",dp.dataTitle);
     $(".regiontitle").text(dp.dataTitle);
+  } else {
+    $("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));  
   }
   if (dp.listTitle) {
     dp.dataTitle = dp.listTitle;
@@ -170,13 +172,20 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
     // We are currently loading dp.dataset from a CSV file.
     // Later we will check if the filename ends with .csv
 
-    if (dp.dataset) {
-      d3.csv(dp.dataset).then(function(data) {
+    if (dp.dataset && dp.dataset.toLowerCase().includes(".json")) { // To Do: only check that it ends with .json
+      $.getJSON(dp.dataset, function (data) {
+        dp.data = readJsonData(data, dp.numColumns, dp.valueColumn);
+        processOutput(dp,map,map2,whichmap,whichmap2,basemaps1,basemaps2,function(results){
+          callback(); // Triggers initialHighlight()
+        });
+      });
+    } else if (dp.dataset) {
+      d3.csv(dp.dataset).then(function(data) { // One row per line
           //console.log("To do: store data in browser to avoid repeat loading from CSV.");
 
-          dp.data = readCsvData(data, dp.numColumns, dp.valueColumn);
+          dp.data = makeRowValuesNumeric(data, dp.numColumns, dp.valueColumn);
+          
           // Make element key always lowercase
-
           //dp.data_lowercase_key;
 
           processOutput(dp,map,map2,whichmap,whichmap2,basemaps1,basemaps2,function(results){});
@@ -539,6 +548,17 @@ function addIcons(dp,map,map2) {
       outlineWidth: 1,                   // Marker outline width 
     })
 
+    let name = element.name;
+    if (element[dp.nameColumn]) {
+      name = element[dp.nameColumn];
+    } else if (element.title) {
+      name = element.title;
+    }
+
+    if (!element[dp.latColumn] || !element[dp.lonColumn]) {
+      console.log("Missing lat/lon: " + name)
+      return;
+    }
     // Attach the icon to the marker and add to the map
     //L.marker([element[dp.latColumn], element[dp.lonColumn]], {icon: busIcon}).addTo(map)
 
@@ -562,7 +582,6 @@ function addIcons(dp,map,map2) {
             }).addTo(dp.group2);
         }
     } else {
-      console.log("dp.latColumn " + dp.latColumn);
       circle = L.circle([element[dp.latColumn], element[dp.lonColumn]], {
                 color: colorScale(element[dp.valueColumn]),
                 fillColor: colorScale(element[dp.valueColumn]),
@@ -578,12 +597,6 @@ function addIcons(dp,map,map2) {
     }
 
     // MAP POPUP
-    let name = element.name;
-    if (element[dp.nameColumn]) {
-      name = element[dp.nameColumn];
-    } else if (element.title) {
-      name = element.title;
-    }
     var output = "<b>" + name + "</b><br>";
     if (element.description) {
       output += element.description + "<br>";
@@ -778,7 +791,10 @@ function addIcons(dp,map,map2) {
       //$(this).css("background-color","rgb(250, 250, 250)");
       //$(this).css("padding","15px");
       $(this).addClass("detailActive");
-      
+      var listingsVisible = $('#detaillist .detail:visible').length;
+      if (listingsVisible == 1) {
+        $("#viewAllLink").show();
+      }
       if ($(this).attr("latitude") && $(this).attr("longitude")) {
         popMapPoint(dp, map2, $(this).attr("latitude"), $(this).attr("longitude"), $(this).attr("name"));
       } else {
@@ -984,14 +1000,27 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   //if (dp && dp[0]) { // Parameters set in page or layer json
   if (dp && dp.dataset) { // Parameters set in page or layer json
     dp1 = dp;
-  } else if (show == "open") {
+  } else if (show == "opendata") {
     dp1.editLink = "https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing";
     dp1.dataTitle = "Georgia Open Data";
     dp1.listTitle = "Georgia Open Data Resources";
     dp1.googleDocID = "1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo";
     dp1.sheetName = "OpenData";
+    dp1.itemsColumn = "Category1"; // For side nav search
     dp1.valueColumn = "Category1";
     dp1.valueColumnLabel = "Type";
+    dp1.listInfo = "<a href='https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing'>Update Google Sheet</a>.";
+      dp1.search = {"In Dataset Name": "name", "In Type": "Category1", "In Website URL": "website"};
+    
+  } else if (show == "brigades") {
+    dp1.listTitle = "Coding Brigades";
+    dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
+
+    // Not needed
+    //dp1.latColumn = "latitude";
+    //dp1.lonColumn = "longitude";
+    // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
+    dp1.search = {"In Location Name": "name"};
   
   } else if (show == "360") {
     dp1.listTitle = "Birdseye Views";
@@ -1287,7 +1316,7 @@ function initialHighlight(hash) {
     let locname = hash.name.replace(/_/g," ");
 
     // console.log("Auto select the first location in list")
-    $("#detaillist > [name='"+locname+"']" ).trigger("click");
+    //$("#detaillist > [name='"+locname+"']" ).trigger("click");
 
     //$("#detaillist").scrollTop($("#detaillist").scrollTop() + $("#detaillist > [name='"+locname+"']" ).position().top);
 
@@ -1456,6 +1485,10 @@ function showList(dp,map) {
   var productcodes = "";
   var products_array = [];
   var productcode_array = [];
+
+  isObject = function(a) {
+      return (!!a) && (a.constructor === Object);
+  };
 
   if (dp.listTitle) {$(".listTitle").html(dp.listTitle); $(".listTitle").show()};
   if (dp.listSubtitle) {$(".listSubtitle").html(dp.listSubtitle); $(".listSubtitle").show()};
@@ -1790,16 +1823,17 @@ function showList(dp,map) {
 
       // TO INVESTIGATE - elementRaw (not element) has to be used here for color scale.
 
-      if (showIt) {
+      if (1==1) {
         // DETAILS LIST
         // colorScale(element[dp.valueColumn])
         //console.log("iconColor test here: " + iconColor)
         //console.log("color test here: " + colorScale(elementRaw[dp.valueColumn]))
 
+        // Hide all until displayed after adding to dom
         if (element[dp.latColumn] && element[dp.lonColumn]) {
-          output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "' latitude='" + element[dp.latColumn] + "' longitude='" + element[dp.lonColumn] + "'>";
+          output = "<div style='display:none' class='detail' name='" + name.replace(/'/g,'&#39;') + "' latitude='" + element[dp.latColumn] + "' longitude='" + element[dp.lonColumn] + "'>";
         } else {
-          output = "<div class='detail' name='" + name.replace(/'/g,'&#39;') + "'>";
+          output = "<div style='display:none' class='detail' name='" + name.replace(/'/g,'&#39;') + "'>";
         }
 
         output += "<div class='showItemMenu' style='float:right'>&mldr;</div>"; 
@@ -1851,13 +1885,8 @@ function showList(dp,map) {
         }
         if (element.county) {
           output += '<b>Location:</b> ' + element.county + " County<br>";
-        } else if (!(element[dp.latColumn] && element[dp.lonColumn])) {
-          if (!element[dp.lonColumn]) {
-            output += "<span style='color:red'>Needs latitude and longitude</span><br>";
-          } else {
-            output += "<span style='color:red'>Needs address or lat/lon values</span><br>";
-          }
         }
+
         if (element.website) {
           if (element.website.length <= 50) {
             output += "<b>Website:</b> <a href='" + element.website + "' target='_blank'>" + element.website.replace("https://","").replace("http://","").replace("www.","").replace(/\/$/, "") + "</a><br>";
@@ -1876,7 +1905,15 @@ function showList(dp,map) {
           output += "<b>District:</b> " + element.district + "<br>";
         }
         if (element.location) {
-          output += "<b>From Location Data:</b> " + element.location + "<br>";
+          if (isObject(element.location)) {
+            // No need to display since Location is also proviced as a string in Brigade data
+            //output += "<b>Location Object:</b><br>" + element.location + "<br>";
+            //for (e in element.location){
+            //  output += "<div>" + e + ": " + element.location[e] + "</div>";
+            //}             
+          } else {
+            output += "<b>Location:</b> " + element.location + "<br>";
+          }
         }
         if (element.comments) {
           output += element.comments + "<br>";
@@ -1884,7 +1921,7 @@ function showList(dp,map) {
         if (element.availability) {
           output += element.availability + "<br>";
         }
-        output += element.name + " View Details<br>";
+        //output += element.name + " View Details<br>";
 
         if (element.phone || element.phone_afterhours) {
           if (element.phone) {
@@ -1928,6 +1965,13 @@ function showList(dp,map) {
             output += "&nbsp;| &nbsp;"
           }
           output += "<a href='" + dp.editLink + "' target='edit" + param["show"] + "'>Make Updates</a><br>";
+        }
+        if (!element.county && !(element[dp.latColumn] && element[dp.lonColumn])) {
+          if (!element[dp.lonColumn]) {
+            output += "<span>Add latitude and longitude</span><br>";
+          } else {
+            output += "<span>Add address or lat/lon values</span><br>";
+          }
         }
 
         //alert(dp.listLocation)
@@ -1973,7 +2017,21 @@ function showList(dp,map) {
       }
     }
     
+
   });
+
+  if (hash.name && $("#detaillist > [name='"+ hash.name.replace(/_/g,' ') +"']").length) {
+    let listingName = hash.name.replace(/_/g,' ');
+    $("#detaillist > [name='"+ listingName.replace(/'/g,'&#39;') +"']").show(); // To do: check if this or next line for apostrophe in name.
+    $("#detaillist > [name='"+ listingName +"']").show();
+    // Clickit
+    setTimeout(function(){  
+      $("#detaillist > [name='"+ listingName +"']" ).trigger("click"); // Not working to show close-up map
+    }, 100);
+  } else {
+    $("#detaillist .detail").show(); // Show all
+  }
+    //$("#detaillist > [name='"+ name.replace(/'/g,'&#39;') +"']").show();
 
   // BUGBUG - May need to clear first to avoid multiple calls.
   $('.detail').mouseover(
@@ -2021,9 +2079,12 @@ function showList(dp,map) {
           if (showCount > 1) {
             searchFor += " Viewing " + showCount;
           }
-          searchFor += " <a href='#show=" + param["show"] + "'>View All</a>";
+          //line below was here
         }
       }
+      searchFor += " <div id='viewAllLink' style='float:right;display:none;'><a href='#show=" + param["show"] + "'>View All</a></div>";
+      
+
       if (dp.listInfo) {
         searchFor += dp.listInfo;
       }
@@ -2169,6 +2230,7 @@ function getScale(data, scaleType, valueCol) {
   return scale;
 }
 
+// For pipe separated
 function readData(selector, delimiter, columnsNum, valueCol) {
   var psv = d3.dsvFormat(delimiter);
   var initialData = psv.parse(removeWhiteSpaces(d3.select(selector).text())); 
@@ -2183,18 +2245,69 @@ function readData(selector, delimiter, columnsNum, valueCol) {
   //console.log(_data);
   return _data;
 }
-function readCsvData(_data, columnsNum, valueCol) {
+function readJsonData(_data, columnsNum, valueCol) {
+
+  //console.log("_data")
+  //console.log(_data)
+  //return _data;
+
+
+
+  // Not needed. Since it's json, first array (row) may not have the same quantity as next ones.
+  /*
+  var col = [];
+   for (var i = 0; i < _data.length; i++) {
+        for (var key in _data[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+  */
+
+  /*
+  // Convert numbers to number. Works, but we might not need
+    for (var i = 0; i < _data.length; i++) {
+      console.log("TTTTEEESSSTTT");
+      console.log(_data[i]);
+      //for (var j = 0; j < _data[i].length; j++) {
+      for (j in _data[i] ) { // For each key in object containing the row's key-value pairs
+        //console.log("TTTT3 " + j);
+        //for (d in _data[i][j] ) {
+
+        //for (var key in _data[i]) {
+          //row = removeWhiteSpaces(row);
+          //convertToNumber(row, columnsNum);
+          //console.log(_data[i][j]);
+          if (isNumeric(_data[i][j])) {
+            _data[i][j] = +_data[i][j]; // convert number strings to number
+          }
+        //}
+      }
+    };
+  */
+  return _data;
+  
+}
+function isNumeric(str) {
+  if (typeof str != "string") return false // we only process strings!  
+  return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+function makeRowValuesNumeric(_data, columnsNum, valueCol) {
   //console.log(_data);
   
   // 'for of' loop is more efficient than forEach. 
   // Also works on objects. You can call it like this 'for let d of Object.entries(data){ }'
 
+  // Might not need this, try removing
   if (typeof columnsNum !== "undefined") {
     _data.forEach( function (row) {
       //row = removeWhiteSpaces(row);
       convertToNumber(row, columnsNum);
     });
   }
+
   //console.log(_data); // Careful, this can overwhelm browser
   return _data;
 }

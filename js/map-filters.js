@@ -1,3 +1,6 @@
+/* Localsite Filters */
+// refreshWidgets() responds to hash changes
+
 // For autocomplete - Vue could be removed - Source: https://cdn.jsdelivr.net/npm/vue
 /*!
  * Vue.js v2.6.12
@@ -238,8 +241,8 @@ $(document).ready(function () {
 	});
  	$('#region_select').on('change', function() {
  		//alert($(this).attr("geo"))
- 		//alert();
-	    goHash({'regiontitle':this.value,'lat':this.options[this.selectedIndex].getAttribute('lat'),'lon':this.options[this.selectedIndex].getAttribute('lon'),'geo':this.options[this.selectedIndex].getAttribute('geo')})
+ 	    //goHash({'regiontitle':this.value,'lat':this.options[this.selectedIndex].getAttribute('lat'),'lon':this.options[this.selectedIndex].getAttribute('lon'),'geo':this.options[this.selectedIndex].getAttribute('geo')});
+ 		goHash({'regiontitle':this.value,'lat':this.options[this.selectedIndex].getAttribute('lat'),'lon':this.options[this.selectedIndex].getAttribute('lon')});
 	});
 
  	/*
@@ -530,7 +533,8 @@ function filterClickLocation() {
 	//$("#filterFieldsHolder").hide();
 
 	$("#bigThumbPanelHolder").hide();
-	$('.showApps').removeClass("active");
+	//$('.showApps').removeClass("active");
+	$('.showApps').removeClass("filterClickActive");
 
 	//$('.hideMetaMenuClick').trigger("click"); // Otherwise covers location popup. Problem: hides hideLayers/hideLocationsMenu.
 	if ($("#filterLocations").is(':visible')) {
@@ -563,6 +567,7 @@ function filterClickLocation() {
     // TO DO: Display cities, etc. somehow without clicking submenu.
     // 
 }
+
 function locationFilterChange(selectedValue,selectedGeo) {
 	var useCookies = false; // Would need Cookies from site repo.
 
@@ -582,7 +587,9 @@ function locationFilterChange(selectedValue,selectedGeo) {
 
     //hideCounties();
     $("#cityFields").hide();
-    $(".keywordField").show(); // Since hidden by zip search
+
+    // Avoid always showing since some show values do not have searchable datasets, until we also search industries.
+    //$(".keywordField").show(); // Since hidden by zip search
 
     //filterULSelect(selectedValue); // When from hash
 
@@ -1299,10 +1306,15 @@ function displayHexagonMenu(layerName,siteObject) {
 function thumbClick(show,path) {
 	let hash = getHash();
 	hash.show = show;
+
+	delete hiddenhash.show;
+	delete param.show;
+	delete params.show;
+
 	delete hash.naics;
 	delete hash.m; // Birdseye view
-	if (path) {
-		var hashString = decodeURIComponent($.param(hash)); 
+	if (path && !window.location.pathname.includes(path)) {
+		var hashString = decodeURIComponent($.param(hash));
 		window.location = "/localsite/" + path + "#" + hashString;
 	} else {
 		goHash(hash);
@@ -1430,9 +1442,9 @@ function displayBigThumbnails(layerName,siteObject) {
 	$('.bigThumbHolder').click(function(event) {
         $("#bigThumbPanelHolder").hide(); // Could remain open when small version above map added.         
     });
-    if (param.show) {
-    	$(".bigThumbMenuContent[show='" + param.show +"']").addClass("bigThumbActive");
-    	let activeTitle = $(".bigThumbMenuContent[show='" + param.show +"']").text();
+    if (hash.show) {
+    	$(".bigThumbMenuContent[show='" + hash.show +"']").addClass("bigThumbActive");
+    	let activeTitle = $(".bigThumbMenuContent[show='" + hash.show +"']").text();
     	$("#showAppsText").text(activeTitle);
     	$("#showAppsText").attr("title",activeTitle);
     }
@@ -1825,6 +1837,7 @@ function getNaics_setHiddenHash(go) {
 function refreshWidgets() {
   	// This function does NOT invoke loadMap1. Only updates display of map filter widgets
 
+
 	let reloadedMap = false;
 	param = loadParams(location.search,location.hash); // param is declared in localsite.js
 	let hash = getHash();
@@ -1849,10 +1862,9 @@ function refreshWidgets() {
 		if (hash.show == "vehicles") {
 			if(location.host.indexOf('georgia') < 0){
 				// set viz=true to hide left text 
-				let introframe = "https://datausa.io/profile/naics/motor-vehicles-motor-vehicle-equipment-manufacturing/undefined/wage_geo_rca?viz=false";
-				//introframe = "https://kuula.co/share/collection/7lrpl?fs=1&vr=1&zoom=1&initload=1&thumbs=1&chromeless=1&logo=-1";
-				$("#introframe").show();
-				$("#introframe").prop("src", introframe);
+				//let introframe = "https://datausa.io/profile/naics/motor-vehicles-motor-vehicle-equipment-manufacturing/undefined/wage_geo_rca?viz=false";
+				//$("#introframe").show();
+				//$("#introframe").prop("src", introframe);
 			}
 		} else {
 			$("#introframe").hide();
@@ -1918,6 +1930,25 @@ function refreshWidgets() {
 	}
 	*/
 
+	//Resides before geo
+	if (hash.regiontitle != priorHash.regiontitle) {
+		if(!hash.regiontitle) {
+
+		} else {
+			if (hash.show) {
+				$(".regiontitle").text(hash.regiontitle + " - " + hash.show.toTitleCase());
+			} else {
+				$(".regiontitle").text(hash.regiontitle);
+			}
+			$(".locationTabText").text(hash.regiontitle.replace(/\+/g," "));
+
+			
+			$("#region_select").val(hash.regiontitle.replace(/\+/g," "));
+			hiddenhash.geo = $("#region_select option:selected").attr("geo");
+			hash.geo = hiddenhash.geo;
+			params.geo = hiddenhash.geo; // Used by naics.js
+		}
+	}
 
 	if (hash.geo != priorHash.geo) {
 		if (hash.geo && hash.geo.length > 4) { 
@@ -1968,22 +1999,7 @@ function refreshWidgets() {
 		let hash = getHash();
    		renderMapShapes("geomap", hash); // County select map
 	}
-	//alert(hash.regiontitle)
-	if (hash.regiontitle != priorHash.regiontitle) {
-		if(!hash.regiontitle) {
 
-		} else {
-			if (hash.show) {
-				$(".regiontitle").text(hash.regiontitle + " - " + hash.show.toTitleCase());
-			} else {
-				$(".regiontitle").text(hash.regiontitle);
-			}
-			$(".locationTabText").text(hash.regiontitle.replace(/\+/g," "));
-
-			
-			$("#region_select").val(hash.regiontitle.replace(/\+/g," "));
-		}
-	}
 
 	// Before hash.state to utilize initial lat/lon
 	if (hash.lat != priorHash.lat || hash.lon != priorHash.lon) {
@@ -2044,7 +2060,10 @@ function refreshWidgets() {
 			}
 		}
 	}
-
+	if (!hash.cat && priorHash.cat) { // Clear the cat
+		//alert("Clear the cat. Temp fix. Refresh page. Need to avoid roundtrip to server for cats.")
+		//window.location.reload();
+	}
 
     if (param.catsort) {
 		$("#catsort").val(param.catsort);
@@ -2074,7 +2093,7 @@ $(document).ready(function () {
 		//$("#state_select option[value='NV']").prop('selected', true);
 	}
 	refreshWidgets();
-	if (hiddenhash.showtitle.length) {
+	if (hiddenhash.showtitle) {
     	$("#showAppsText").text(hiddenhash.showtitle);
     	$("#showAppsText").attr("",hiddenhash.showtitle);
 

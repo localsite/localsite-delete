@@ -200,7 +200,7 @@ callback(
 	},
 	{
 		"menulevel": "1",
-		"item": "open",
+		"item": "opendata",
 		"title": "Open Data",
 		"tabtitle": "Open Data",
 		"mobiletitle": "Open Data",
@@ -209,7 +209,7 @@ callback(
 		"image": "/localsite/img/show/open-data.jpg",
 		"icon": "",
 		"menuaccess": "0",
-		"directlink": "/localsite/map/#show=open",
+		"directlink": "/localsite/map/#show=opendata",
 		"states": "GA"
 	},
   ]

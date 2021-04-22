@@ -122,7 +122,7 @@ Fix the dependency tree, follow these steps in the exact order. (Skip step 1 if 
 ## Create a Virtual Environment (optional)
 
 Optional, run the following within your local **tools/covid19-dashboard** folder.  
-Wasn't needed. You can skip to "Install and Start" below.  
+Wasn't needed. You can skip to "Install and Start" below.<!-- virtualenv -->  
 
 Setup the environment:
 
