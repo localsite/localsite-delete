@@ -1387,10 +1387,10 @@ function displayBigThumbnails(layerName,siteObject) {
 	                                }
 
 	                                if (menuaccess==0) { // Quick hack until user-0 displays for currentAccess 1. In progress...
-	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='displayX:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
+	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='displayX:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "</div><div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></a></div></div></div>";
 	                                } else {
 	                                	// This one is hidden
-	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
+	                                    sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "</div><div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></a></div></div></div>";
 	                                }
 	                            }
 	                    //}
@@ -1417,8 +1417,7 @@ function displayBigThumbnails(layerName,siteObject) {
 	                            if (thelayers[layer].directlink) {
 	                                //hrefLink = "href='" + removeFrontFolder(thelayers[layer].directlink) + "'";
 	                            }
-	                            //sectionMenu += "<div class='bigThumbMenuContent'><div class='bigThumbWidth user-" + menuaccess + "'><div class='bigThumbHolder'><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div><a href='" + directlink + "'></a></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></div></div></div>";
-	                            sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "<div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></div></a></div></div></div>";
+	                            sectionMenu += "<div class='bigThumbMenuContent' show='" + siteObject.items[layer].item + "'><div class='bigThumbWidth user-" + menuaccess + "' style='display:none'><div class='bigThumbHolder'><a href='" + directlink + "' " + linkJavascript + "><div class='bigThumb' style='background-image:url(" + bkgdUrl + ");'><div class='bigThumbStatus'><div class='bigThumbSelected'></div></div></div><div class='bigThumbText'>" + thumbTitle + "</div><div class='bigThumbSecondary'>" + thumbTitleSecondary + "</div></a></div></div></div>";
 	                        }
 	                    }
 	                }
@@ -1444,8 +1443,8 @@ function displayBigThumbnails(layerName,siteObject) {
     });
     if (hash.show) {
     	$(".bigThumbMenuContent[show='" + hash.show +"']").addClass("bigThumbActive");
-    	let activeTitle = $(".bigThumbMenuContent[show='" + hash.show +"']").text();
-    	$("#showAppsText").text(activeTitle);
+    	let activeTitle = $(".bigThumbMenuContent[show='" + hash.show +"'] .bigThumbText").text();
+    	//alert("activeTitle " + activeTitle);
     	$("#showAppsText").attr("title",activeTitle);
     }
 }
@@ -1750,7 +1749,7 @@ if(typeof hiddenhash == 'undefined') {
     var hiddenhash = {};
 }
 function getNaics_setHiddenHash(go) {
-    let showtitle;
+    let showtitle, showtab;
     let cat_filter = [];
     
     // NAICS FROM community/projects/biotech
@@ -1773,17 +1772,19 @@ function getNaics_setHiddenHash(go) {
     //else 
 
     if (go){
+
         if (go == "bioeconomy") {
-        	showtitle = "Bioeconomy and Petroleum Industries";
+        	showtab = "Bioeconomy and Energy";
+        	showtitle = "Bioeconomy and Energy Industries";
             cat_filter = (bio_input + bio_output + green_energy + fossil_energy).split(',');
         } else if (go == "farmfresh") {
         	showtitle = "Farm Fresh";
             cat_filter = (farmfresh).split(',');
         } else if (go == "smart") {
-        	
         	// smart also shows list of data-driven mobility projects
             cat_filter = (electric + auto_parts).split(',');
         } else if (go == "ev") {
+        	showtab = "EV Ecosystem";
         	showtitle = "EV Related Manufacturing";
         	// smart also shows list of data-driven mobility projects
             cat_filter = (electric + auto_parts).split(',');
@@ -1794,16 +1795,19 @@ function getNaics_setHiddenHash(go) {
         	showtitle = "Healthcare Industries";
             cat_filter = (ppe_suppliers).split(',');
         } else if (go == "vehicles") {
+        	showtab = "Automotive"
         	showtitle = "Vehicles and Vehicle Parts";
             cat_filter = (electric + auto_parts + parts).split(',');
         } else if (go == "recycling") {
-        	
+        	showtitle = "Recycling";
             cat_filter = (recycling).split(',');
-
+        } else if(go=="manufacturing") {
+        	showtitle = "Manufacturing";
+        	cat_filter=["manufacturing placeholder"];
         } else if (param.naics) {
+        	showtitle = hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," ");
     	    cat_filter = param.naics.split(',');
     	}
-
 
         if (cat_filter.length) {
             cat_filt=[]
@@ -1813,37 +1817,40 @@ function getNaics_setHiddenHash(go) {
             cat_filter=cat_filt
             //console.log(cat_filter)
         }
+        if (!showtab) {
+        	showtab = showtitle;
+        }
+        if (!showtab) {
+        	showtab = hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," ");
+        }
+
+        if (go != "vehicles") {
+			$("#introframe").hide();
+		}
+        if (go != "ppe") {
+			$(".layerclass.ppe").hide();
+		}
+		if (go != "opendata") {
+			$(".layerclass.opendata").hide();
+		}
+
     } else if (param.naics) {
+    	showtitle = "Top Industries";
+    	//
+    	showtab = "Top Industries";
     	cat_filter = param.naics.split(',');
     }
 
-    if(go=="manufacturing"){
-        cat_filter=["manufacturing placeholder"]
-    }
-    // TO DO: Retain other values within hiddenhash
-
-    // Convert to object
-    /*
-    let pairs = hiddenhash.split('&');
-    pairs.forEach(function(pair) {
-        pair = pair.split('=');
-        if(pair[1]) {
-            hiddenhashObject[pair[0]] = decodeURIComponent(pair[1] || '');
-        }
-    });
-    */
-
-    	hiddenhash.showtitle = showtitle;
-    	hiddenhash.naics = cat_filter.join(); // Override the existing naics
+    hiddenhash.showtitle = showtitle;
+    hiddenhash.naics = cat_filter.join(); // Override the existing naics
 	
+	$("#showAppsText").text(showtab);
+	$("#showAppsText").attr("title",showtab); // Swaps in when viewing app thumbs
 	$(".regiontitle").text(showtitle);
-    // Convert back to string
-    //hiddenhash = decodeURIComponent($.param(hiddenhashObject)); // Convert to query string, and remove encoding of commas
-
-    //alert(hiddenhash);
-
+	
     return cat_filter;
 }
+
 
 function refreshWidgets() {
   	// This function does NOT invoke loadMap1. Only updates display of map filter widgets
@@ -1857,45 +1864,14 @@ function refreshWidgets() {
 
 	// NOTE: params after ? are not included, just the hash.
 	if (hash.show != priorHash.show) {
-		if (hash.show == priorHash.show) {
-			hash.show = ""; // Clear the suppliers display
-		}
-		if (hash.show) {
-			if (hash.show != "ppe") {
-				$(".layerclass.ppe").hide();
-			}
-			if (!$("#showAppsText").text()) {
-				$("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));
-			}
-		} else {
-			$("#showAppsText").attr("placeholder","Top Industries");
-		}
-		if (hash.show == "vehicles") {
-			if(location.host.indexOf('georgia') < 0){
-				// set viz=true to hide left text 
-				//let introframe = "https://datausa.io/profile/naics/motor-vehicles-motor-vehicle-equipment-manufacturing/undefined/wage_geo_rca?viz=false";
-				//$("#introframe").show();
-				//$("#introframe").prop("src", introframe);
-			}
-		} else {
-			$("#introframe").hide();
-		}
-
-		/*
-		if (hash.show == "farmfresh") {
-			$(".data-section").show();
-		} else if (hash.show == "ppe") {
-			$(".data-section").show();
-			$(".suppliers").show();
-		} else {
-			$(".data-section").hide();
-			$(".suppliers").hide();
-		}
-		*/
+		//if (hash.show == priorHash.show) {
+		//	hash.show = ""; // Clear the suppliers display
+		//}
+		
 
 		getNaics_setHiddenHash(hash.show); // Sets hiddenhash.naics for use by other widgets.
 
-		hash.naics = ""; // Since go value invokes hiddenhash
+		//hash.naics = ""; // Since go value invokes hiddenhash
 		// Then we call applyIO at end of this refreshWidgets function
 	}
 	if (hash.geomap) {
@@ -2088,12 +2064,11 @@ function refreshWidgets() {
 	if (param.indicators) {
 		$("#indicators").val(param.indicators);
 	}
-	priorHash = getHash();
-
-	// TEMP
+	
 	if (hash.show != priorHash.show) {
 		applyIO(hiddenhash.naics);
 	}
+	priorHash = getHash();
 }
 
 // INIT
@@ -2104,6 +2079,7 @@ $(document).ready(function () {
 		//$("#state_select option[value='NV']").prop('selected', true);
 	}
 	refreshWidgets();
+	/*
 	if (hiddenhash.showtitle) {
     	$("#showAppsText").text(hiddenhash.showtitle);
     	$("#showAppsText").attr("",hiddenhash.showtitle);
@@ -2112,4 +2088,5 @@ $(document).ready(function () {
     	$(".regiontitle").text(hiddenhash.showtitle);
     	
 	}
+	*/
 });

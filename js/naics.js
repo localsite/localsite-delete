@@ -560,9 +560,9 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                     
                 }
 
-                // TO DO: Use hiddenhash.naics here instead
                 //alert("naics.js hiddenhash.naics: " + hiddenhash.naics);
-                var cat_filter = getNaics_setHiddenHash(params.show); // Resides in map-filters.js
+                //var cat_filter = getNaics_setHiddenHash(params.show); // Resides in map-filters.js
+                var cat_filter = hiddenhash.naics;
 
                 //alert(cat_filter)
                 var rates_dict = {};

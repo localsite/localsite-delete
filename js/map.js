@@ -90,7 +90,8 @@ function loadFromSheet(whichmap,whichmap2,dp,basemaps1,basemaps2,attempts,callba
     $("#showAppsText").attr("title",dp.dataTitle);
     $(".regiontitle").text(dp.dataTitle);
   } else {
-    $("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));  
+    // Handled by getNaics_setHiddenHash()
+    //$("#showAppsText").text(hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," "));  
   }
   if (dp.listTitle) {
     dp.dataTitle = dp.listTitle;
