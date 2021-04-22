@@ -1503,14 +1503,6 @@ To add and update listings, download the <a href="map.csv">map.csv</a> file and 
 // Omit 'use strict' when creating an embed because it could brake third-party code.
 'use strict'; // Optional, makes sure we are declaring variables.
 
-/*
-window.onhashchange = function() {
-  //param = loadParam(location.search,location.hash);
-  alert("user changed hash");
-  loadMap1();
-}
-*/
-
 $(document).ready(function () {
   // Show app menu button
   $(".showApps").removeClass("local");
@@ -1553,7 +1545,7 @@ if (!param.show) {
 }
 
 //var localmap = 
-loadMap1(param["show"], dp);
+loadMap1("map/index.html 2", param["show"], dp);
 if (param["show"] != "suppliers") {
   // Additional layer
   //loadMap1("suppliers", dp);
@@ -1561,7 +1553,7 @@ if (param["show"] != "suppliers") {
 document.addEventListener('hashChangeEvent', function (elem) {
   //param = loadParam(location.search,location.hash);
   console.log("index.html detects hashChangeEvent");
-  loadMap1();
+  loadMap1("map/index.html");
 }, false);
 
 // Append railroads here, somehow

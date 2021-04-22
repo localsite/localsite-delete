@@ -302,7 +302,7 @@ $(document).ready(function () {
 		let search = $('.selected_col:checked').map(function() {return this.id;}).get().join(',');
 		// To do: set search to empty array if all search boxes are checked.
 		updateHash({"q":searchQuery,"search":search});
-		loadMap1();
+		loadMap1("map-filters.js");
 	    event.stopPropagation();
    	});
 
@@ -378,7 +378,7 @@ $(document).ready(function () {
    		let hash = getHash();
    		renderMapShapes("geomap", hash); // County select map
 
-   		loadMap1(); // BUGBUG - this hid map on /map page, perhaps dataset is not available during clear.
+   		loadMap1("map-filters.js 2"); // BUGBUG - this hid map on /map page, perhaps dataset is not available during clear.
    		event.stopPropagation();
    	});
    	$("#botGo").click(function() {
@@ -1162,11 +1162,6 @@ $(document).ready(function () {
     $("#bigThumbPanelHolder").hide();
     console.log("catList triggers update");
     goHash({"cat":catString}); // Let the hash change trigger updates
-
-    //console.log("catList clicked, call loadMap1 which calls loadFromSheet > showList in map.js");
-    
-    //loadMap1('suppliers');
-    //hideNonListPanels();
     event.stopPropagation();
   });
 

@@ -14,7 +14,7 @@ document.addEventListener('hashChangeEvent', function (elem) {
   console.log("map.js detects hashChangeEvent");
 
   // NEED TO FIRST REMOVE FROM index.html and embed-map.js. Also prevent map-filters.js from involking loadMap1
-  //loadMap1();
+  //loadMap1("map.js");
 
 }, false);
 
@@ -39,7 +39,7 @@ var mbAttr = '<a href="https://www.mapbox.com/">Mapbox</a>', mbUrl = 'https://ap
 // options for scales:
 // "scaleThreshold", "scaleOrdinal", "scaleOrdinal" or "scaleQuantile"
 //
-// refreshWidgets() resides within map-filters.js. In the index.html pages, any hash change invokes loadMap1()
+// refreshWidgets() resides within map-filters.js. In the index.html pages, any hash change invokes loadMap1
 //////////////////////////////////////////////////////////////////
 
 /////////// LOAD FROM HTML ///////////
@@ -880,9 +880,9 @@ var showprevious = param["show"];
 
 var tabletop; // Allows us to wait for tabletop to load.
 
-function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filters.js
+function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js and map-filters.js
 
-  console.log('loadMap1');
+  //alert('loadMap1 calledBy ' + calledBy);
   if (!show) {
     show = param["show"];
   }
@@ -892,6 +892,8 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   if (show != showprevious) {
     changeCat(""); // Clear side
   }
+  $("#list_main").hide(); // Hide list and map2 until displayed by state-specific data
+
   // To do: limit to when layer changes
   //$(".layerclass").hide(); // Hides suppliers, and other layer-specific css
   
@@ -1001,251 +1003,6 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
   //if (dp && dp[0]) { // Parameters set in page or layer json
   if (dp && dp.dataset) { // Parameters set in page or layer json
     dp1 = dp;
-  } else if (show == "opendata") {
-    dp1.editLink = "https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing";
-    dp1.dataTitle = "Georgia Open Data";
-    dp1.listTitle = "Georgia Open Data Resources";
-    dp1.googleDocID = "1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo";
-    dp1.sheetName = "OpenData";
-    dp1.itemsColumn = "Category1"; // For side nav search
-    dp1.valueColumn = "Category1";
-    dp1.valueColumnLabel = "Type";
-    dp1.listInfo = "<a href='https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing'>Update Google Sheet</a>.";
-      dp1.search = {"In Dataset Name": "name", "In Type": "Category1", "In Website URL": "website"};
-    
-  } else if (show == "brigades") {
-    dp1.listTitle = "Coding Brigades";
-    dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
-
-    // Not needed
-    //dp1.latColumn = "latitude";
-    //dp1.lonColumn = "longitude";
-    // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
-    dp1.search = {"In Location Name": "name"};
-  
-  } else if (show == "360") {
-    dp1.listTitle = "Birdseye Views";
-    //  https://model.earth/community-data/us/state/GA/VirtualTourSites.csv
-    dp1.dataset =  dual_map.custom_data_root() + "360/GeorgiaPowerSites.csv";
-
-  } else if (show == "recycling" || show == "transfer" || show == "recyclers" || show == "inert" || show == "landfills") { // recycling-processors
-    if (!param.state || param.state == "GA") {
-      dp1.editLink = "https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing";
-      dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
-      if (show == "transfer") {
-        dp1.listTitle = "Georgia Transfer Stations";
-        dp1.sheetName = "Transfer Stations";
-        dp1.valueColumn = "waste type"; // Bug - need to support uppercase too.
-        dp1.valueColumnLabel = "Waste Type";
-      } else if (show == "recyclers") {
-        dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
-        dp1.sheetName = "Manufacturer Recyclers";
-        dp1.valueColumn = "category"; // Bug - need to support uppercase too.
-        dp1.valueColumnLabel = "Recycles";
-      } else if (show == "landfills") {
-        dp1.listTitle = "Georgia Landfills";
-        dp1.sheetName = "Landfills";
-        dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
-        dp1.valueColumnLabel = "Sector";
-      } else if (show == "inert") {
-        dp1.listTitle = "Georgia Inert Waste Landfills";
-        dp1.sheetName = "Inert Waste Landfills";
-        dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
-        dp1.valueColumnLabel = "Sector";
-      } else {
-        dp1.listTitle = "Georgia Recycling Processors";
-        dp1.sheetName = "Recycling Processors";
-        dp1.valueColumn = "category";
-        dp1.valueColumnLabel = "Materials Category";
-      }
-      dp1.nameColumn = "company";
-      dp1.listInfo = "<br><br>View additional <a href='../map/recycling/ga/'>recycling datasets</a>.<br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.";
-      
-      //dp1.latColumn = "latitude";
-      //dp1.lonColumn = "longitude";
-      dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
-    }
-  } else if (show == "vehicles" || show == "ev") {
-    dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
-    if (show == "ev") {
-      dp1.listTitle = "Electric Vehicle Manufacturing";
-    }
-    dp1.editLink = "https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing";
-    dp1.googleDocID = "1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs";
-    dp1.sheetName = "Automotive";
-    dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing'>Google Sheet</a> to submit updates. Learn about <a href='../../community/projects/mobility/'>data sources</a>.";
-    dp1.valueColumn = "ev industry";
-    dp1.valueColumnLabel = "EV Industry";
-    dp1.markerType = "google";
-    dp1.search = {"EV Industry": "ev industry", "In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
-  } else if (show == "solar") {
-    dp1.listTitle = "Solar Companies";
-    dp1.editLink = "https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing";
-    dp1.googleDocID = "1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU";
-    dp1.sheetName = "Companies";
-    dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing'>Google Sheet</a> to submit map updates.<br>View Georgia's <a href='https://www.solarpowerworldonline.com/2020-top-georgia-contractors/'>top solar contractors by KW installed</a>.";
-    dp1.valueColumn = "firm type";
-    dp1.valueColumnLabel = "Firm Type";
-    dp1.markerType = "google";
-    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
-  } else if (show == "vax" || show == "vac") { // Phase out vac
-    dp1.listTitle = "Vaccine Locations";
-    //dp1.dataset = "https://docs.google.com/spreadsheets/d/1odIH33Y71QGplQhjJpkYhZCfN5gYCA6zXALTctSavwE/gviz/tq?tqx=out:csv&sheet=Sheet1"; // MapBox sample
-    // Link above works, but Google enforces CORS with this link to Vaccine data:
-    //dp1.dataset = "https://docs.google.com/spreadsheets/d/1q5dvOEaAoTFfseZDqP_mIZOf2PhD-2fL505jeKndM88/gviz/tq?tqx=out:csv&sheet=Sheet3";
-    dp1.editLink = "https://docs.google.com/spreadsheets/d/1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90/edit?ts=60233cb5#gid=698462553";
-    dp1.googleDocID = "1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90";
-    dp1.sheetName = "Current Availability";
-    dp1.listInfo = "<br><br><a href='https://docs.google.com/spreadsheets/d/1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90/edit?ts=60233cb5#gid=698462553'>Help update Google Sheet data by posting comments</a>.<br><br><a href='https://myvaccinegeorgia.com/'>Preregister with myvaccinegeorgia.com</a> and join the <a href='https://vaxstandby.com/'>VAX Standby</a> list to receive a message when extra doses are available. Also receive text messages on availability from <a href='https://twitter.com/DiscoDroidAI'>Disco Droid</a> or check their <a href='https://twitter.com/DiscoDroidAI'>Tweets</a>.<br><br><a href='https://www.vaccinatega.com/vaccination-sites/providers-in-georgia'>Check provider status</a> at <a href='https://VaccinateGA.com'>VaccinateGA.com</a> and <a href='neighborhood/'>assist with data and coding</a>.";
-    // <a href='neighborhood/vaccines/'>view availability and contribute updates</a>
-    dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
-    // "In Description": "description", "In City Name": "city", "In Zip Code" : "zip"
-    dp1.valueColumn = "county";
-    dp1.valueColumnLabel = "County";
-    dp1.countyColumn = "county";
-    dp1.itemsColumn = "Category1";
-  } else if (show == "smart") { // param["data"] for legacy: https://www.georgia.org/smart-mobility
-    dp1.dataTitle = "Smart Data Projects";
-    dp1.listTitle = "Data Driven Decision Making";
-    //dp1.listSubtitle = "Smart & Sustainable Movement of Goods & Services";
-    dp1.industryListTitle = "Mobility Tech";
-
-    console.log("map.js loading " + dual_map.custom_data_root() + "communities/map-georgia-smart.csv");
-
-    dp1.dataset =  dual_map.custom_data_root() + "communities/map-georgia-smart.csv";
-    dp1.listInfo = "Includes Georgia Smart Community Projects";
-    dp1.search = {"In Title": "title", "In Description": "description", "In Website URL": "website", "In Address": "address", "In City Name": "city", "In Zip Code" : "zip"};
-    dp1.markerType = "google";
-    dp1.showShapeMap = true;
-
-  } else if (show == "logistics") { // "http://" + param["domain"]
-
-    dp1.listTitle = "Logistics";
-
-    dp1.listInfo = "Select a category to filter your results.";
-    //dp1.dataset = "https://georgiadata.github.io/display/data/logistics/coi_with_cognito.csv";
-    dp1.dataset = "../../display/data/logistics/coi_with_cognito.csv";
-
-    dp1.dataTitle = "Manufacturers and Distributors";
-    dp1.itemsColumn = "items";
-    dp1.valueColumn = "type";
-    dp1.valueColumnLabel = "Type";
-    dp1.markerType = "google";
-    //dp1.keywords = "items";
-    // "In Business Type": "type", "In State Name": "state", "In Postal Code" : "zip"
-    dp1.search = {"In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
-    dp1.nameColumn = "title";
-    dp1.latColumn = "lat_rand";
-    dp1.lonColumn = "lon_rand";
-
-    dp1.nameColumn = "company";
-    dp1.latColumn = "latitude";
-    dp1.lonColumn = "longitude";
-    dp1.showLegend = false;
-
-    dp1.listLocation = false;
-    dp1.addLink = "https://www.georgia.org/covid19response"; // Not yet used
-
-  } else if (show == "suppliers" || show == "ppe") { 
-
-    // https://docs.google.com/spreadsheets/d/1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI/edit?usp=sharing
-    dp1.listTitle = "Georgia COVID-19 Response"; // Appears at top of list
-    //dp1.listTitle = "Georgia PPE Suppliers"; // How do we set the layer title for checkbox?
-    //dp1.editLink = "";
-    dp1.googleDocID = "1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI";
-    dp1.sheetName = "GA Suppliers List";
-    dp1.listInfo = "Select a category to the left to filter results. View&nbsp;<a href='https://map.georgia.org/display/products/suppliers-pdf/ga_suppliers_list_2021-03-10.pdf' target='_parent'>PDF&nbsp;version</a>&nbsp;of&nbsp;the&nbsp;complete&nbsp;list.";
-    
-    //dp1.dataTitle = "Manufacturers and Distributors";
-    dp1.dataTitle = "PPE Suppliers";
-    dp1.itemsColumn = "items";
-    dp1.valueColumn = "type";
-    dp1.valueColumnLabel = "Type";
-    dp1.color = "#ff9819"; // orange
-    dp1.markerType = "google";
-    dp1.search = {"In Company Name": "company", "In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
-    dp1.nameColumn = "company";
-
-  } else if (show == "suppliersX" || show == "ppeX") { // "http://" + param["domain"]
-
-    dp1.listTitle = "Georgia COVID-19 Response";
-    dp1.listTitle = "Georgia Suppliers of&nbsp;Critical Items <span style='white-space:nowrap'>to Fight COVID-19</span>"; // For iFrame site
-    // https://www.georgia.org/sites/default/files/2021-01 
-    dp1.listInfo = "Select a category to the left to filter results. View&nbsp;<a href='https://map.georgia.org/display/products/suppliers-pdf/ga_suppliers_list_2021-03-10.pdf' target='_parent'>PDF&nbsp;version</a>&nbsp;of&nbsp;the&nbsp;complete&nbsp;list.";
-    dp1.dataset = "https://map.georgia.org/display/products/suppliers/us_ga_suppliers_ppe_2021_02_24.csv";
-    //dp1.dataset = "/display/products/suppliers/us_ga_suppliers_ppe_2020_06_17.csv";
-
-    dp1.dataTitle = "Manufacturers and Distributors";
-    dp1.itemsColumn = "items";
-    dp1.valueColumn = "type";
-    dp1.valueColumnLabel = "Type";
-    dp1.color = "#ff9819"; // orange
-    dp1.markerType = "google";
-    //dp1.keywords = "items";
-    // "In Business Type": "type", "In State Name": "state", "In Postal Code" : "zip"
-    dp1.search = {"In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
-    dp1.nameColumn = "title";
-    dp1.latColumn = "lat_rand";
-    dp1.lonColumn = "lon_rand";
-
-    if (param["initial"] != "response") {
-      dp1.nameColumn = "company";
-      dp1.latColumn = "latitude";
-      dp1.lonColumn = "longitude";
-      dp1.showLegend = false;
-    }
-
-    dp1.listLocation = false;
-    dp1.addLink = "https://www.georgia.org/covid19response"; // Not yet used
-
-  } else if (show == "restaurants") {
-    // Fulton County 5631 restaurants
-    
-    dp1 = {};
-    dp1.listTitle = "Restaurant Ratings";
-    dp1.dataTitle = "Restaurant Ratings";
-    dp1.dataset = "/community/tools/map.csv";
-    dp1.latitude = 32.9;
-    dp1.longitude = -83.4;
-
-    //dp1.showLayer = false;
-    dp1.name = "Fulton County Restaurants";
-    dp1.titleColumn = "restaurant";
-    dp1.nameColumn = "restaurant";
-
-    dp1.valueColumnLabel = "Health safety score";
-    dp1.valueColumn = "score";
-    dp1.scale = "scaleThreshold";
-
-    dp1.latColumn = "latitude";
-    dp1.lonColumn = "longitude";
-
-    dp1.dataset = "/community/farmfresh/usa/georgia/fulton_county_restaurants.csv"; // Just use 50
-    dp1.dataTitle = "Restaurant Scores";
-    dp1.titleColumn = "restaurant";
-    dp1.listInfo = "Fulton County";
-  } else if (show == "pickup") {
-    // Atlanta Pickup
-    dp1.latitude = 33.76;
-    dp1.longitude = -84.3880;
-    dp1.zoom = 14;
-
-    // CURBSIDE PICKUP
-    dp1.listTitle = "Restaurants with Curbside Pickup";
-    dp1.listInfo = "Data provided by coastapp.com. <a href='https://coastapp.com/takeoutcovid/atl/' target='_blank'>Make Updates</a>";
-    dp1.dataset = "/community/places/usa/ga/restaurants/atlanta-coastapp.csv";
-    dp1.dataTitle = "Curbside Pickup";
-    // 
-    dp1.markerType = "google";
-    dp1.search = {"In Restaurant Name": "Name", "In Description": "Description", "In City Name": "City", "In Address" : "Address"};
-    dp1.nameColumn = "Name";
-    dp1.titleColumn = "Description";
-    //dp1.addressColumn = "Address";
-    //dp1.website = "Link";
-    dp1.valueColumnLabel = "Delivery";
-    dp1.valueColumn = "Delivery";
-    dp1.listLocation = true;
-
   } else if (show == "farmfresh") {
     dp1.listTitle = "USDA Farm Produce";
     //if (location.host.indexOf('localhost') >= 0) {
@@ -1276,9 +1033,259 @@ function loadMap1(show, dp) { // Called by index.html, map-embed.js and map-filt
     dp1.addlisting = "https://www.ams.usda.gov/services/local-regional/food-directories-update";
     // community/farmfresh/ 
     dp1.listInfo = "Farmers markets and local farms providing fresh produce directly to consumers. <a style='white-space: nowrap' href='https://model.earth/community/farmfresh/ga/'>About Data</a> | <a href='https://www.ams.usda.gov/local-food-directories/farmersmarkets'>Update Listings</a>";
-  } else {
-    console.log("no show text match for listing map");
-  }
+  
+  } else if (theState == "GA") {
+
+      if (show == "opendata") {
+        dp1.editLink = "https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing";
+        dp1.dataTitle = "Georgia Open Data";
+        dp1.listTitle = "Georgia Open Data Resources";
+        dp1.googleDocID = "1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo";
+        dp1.sheetName = "OpenData";
+        dp1.itemsColumn = "Category1"; // For side nav search
+        dp1.valueColumn = "Category1";
+        dp1.valueColumnLabel = "Type";
+        dp1.listInfo = "<a href='https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing'>Update Google Sheet</a>.";
+          dp1.search = {"In Dataset Name": "name", "In Type": "Category1", "In Website URL": "website"};
+        
+      } else if (show == "brigades") {
+        dp1.listTitle = "Coding Brigades";
+        dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
+
+        // Not needed
+        //dp1.latColumn = "latitude";
+        //dp1.lonColumn = "longitude";
+        // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
+        dp1.search = {"In Location Name": "name"};
+      
+      } else if (show == "360") {
+        dp1.listTitle = "Birdseye Views";
+        //  https://model.earth/community-data/us/state/GA/VirtualTourSites.csv
+        dp1.dataset =  dual_map.custom_data_root() + "360/GeorgiaPowerSites.csv";
+
+      } else if (show == "recycling" || show == "transfer" || show == "recyclers" || show == "inert" || show == "landfills") { // recycling-processors
+        if (!param.state || param.state == "GA") {
+          dp1.editLink = "https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing";
+          dp1.googleDocID = "1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY";
+          if (show == "transfer") {
+            dp1.listTitle = "Georgia Transfer Stations";
+            dp1.sheetName = "Transfer Stations";
+            dp1.valueColumn = "waste type"; // Bug - need to support uppercase too.
+            dp1.valueColumnLabel = "Waste Type";
+          } else if (show == "recyclers") {
+            dp1.listTitle = "Georgia Companies that Recycle During Manufacturing";
+            dp1.sheetName = "Manufacturer Recyclers";
+            dp1.valueColumn = "category"; // Bug - need to support uppercase too.
+            dp1.valueColumnLabel = "Recycles";
+          } else if (show == "landfills") {
+            dp1.listTitle = "Georgia Landfills";
+            dp1.sheetName = "Landfills";
+            dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+            dp1.valueColumnLabel = "Sector";
+          } else if (show == "inert") {
+            dp1.listTitle = "Georgia Inert Waste Landfills";
+            dp1.sheetName = "Inert Waste Landfills";
+            dp1.valueColumn = "sector"; // Bug - need to support uppercase too.
+            dp1.valueColumnLabel = "Sector";
+          } else {
+            dp1.listTitle = "Georgia Recycling Processors";
+            dp1.sheetName = "Recycling Processors";
+            dp1.valueColumn = "category";
+            dp1.valueColumnLabel = "Materials Category";
+          }
+          dp1.nameColumn = "company";
+          dp1.listInfo = "<br><br>View additional <a href='../map/recycling/ga/'>recycling datasets</a>.<br>Submit updates by posting comments in our 5 <a href='https://docs.google.com/spreadsheets/d/1YmfBPEFpfmaKmxcnxijPU8-esVkhaVBE1wLZqPNOKtY/edit?usp=sharing'>Google Sheet Tabs</a>.";
+          
+          //dp1.latColumn = "latitude";
+          //dp1.lonColumn = "longitude";
+          dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+        }
+      } else if (show == "vehicles" || show == "ev") {
+        dp1.listTitle = "Motor Vehicle and Motor Vehicle Equipment Manufacturing";
+        if (show == "ev") {
+          dp1.listTitle = "Electric Vehicle Manufacturing";
+        }
+        dp1.editLink = "https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing";
+        dp1.googleDocID = "1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs";
+        dp1.sheetName = "Automotive";
+        dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit?usp=sharing'>Google Sheet</a> to submit updates. Learn about <a href='../../community/projects/mobility/'>data sources</a>.";
+        dp1.valueColumn = "ev industry";
+        dp1.valueColumnLabel = "EV Industry";
+        dp1.markerType = "google";
+        dp1.search = {"EV Industry": "ev industry", "In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+      } else if (show == "solar") {
+        dp1.listTitle = "Solar Companies";
+        dp1.editLink = "https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing";
+        dp1.googleDocID = "1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU";
+        dp1.sheetName = "Companies";
+        dp1.listInfo = "<br><br>Post comments in our <a href='https://docs.google.com/spreadsheets/d/1yt_saLpiBNPR1g_r2mn9-U5DozqLoVJHVwfR-4f0HTU/edit?usp=sharing'>Google Sheet</a> to submit map updates.<br>View Georgia's <a href='https://www.solarpowerworldonline.com/2020-top-georgia-contractors/'>top solar contractors by KW installed</a>.";
+        dp1.valueColumn = "firm type";
+        dp1.valueColumnLabel = "Firm Type";
+        dp1.markerType = "google";
+        dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+      } else if (show == "vax" || show == "vac") { // Phase out vac
+        dp1.listTitle = "Vaccine Locations";
+        //dp1.dataset = "https://docs.google.com/spreadsheets/d/1odIH33Y71QGplQhjJpkYhZCfN5gYCA6zXALTctSavwE/gviz/tq?tqx=out:csv&sheet=Sheet1"; // MapBox sample
+        // Link above works, but Google enforces CORS with this link to Vaccine data:
+        //dp1.dataset = "https://docs.google.com/spreadsheets/d/1q5dvOEaAoTFfseZDqP_mIZOf2PhD-2fL505jeKndM88/gviz/tq?tqx=out:csv&sheet=Sheet3";
+        dp1.editLink = "https://docs.google.com/spreadsheets/d/1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90/edit?ts=60233cb5#gid=698462553";
+        dp1.googleDocID = "1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90";
+        dp1.sheetName = "Current Availability";
+        dp1.listInfo = "<br><br><a href='https://docs.google.com/spreadsheets/d/1_wvZXUWFnpbgSAZGuIb1j2ni8p9Gqj3Qsvd8gV95i90/edit?ts=60233cb5#gid=698462553'>Help update Google Sheet data by posting comments</a>.<br><br><a href='https://myvaccinegeorgia.com/'>Preregister with myvaccinegeorgia.com</a> and join the <a href='https://vaxstandby.com/'>VAX Standby</a> list to receive a message when extra doses are available. Also receive text messages on availability from <a href='https://twitter.com/DiscoDroidAI'>Disco Droid</a> or check their <a href='https://twitter.com/DiscoDroidAI'>Tweets</a>.<br><br><a href='https://www.vaccinatega.com/vaccination-sites/providers-in-georgia'>Check provider status</a> at <a href='https://VaccinateGA.com'>VaccinateGA.com</a> and <a href='neighborhood/'>assist with data and coding</a>.";
+        // <a href='neighborhood/vaccines/'>view availability and contribute updates</a>
+        dp1.search = {"In Location Name": "name", "In Address": "address", "In County Name": "county", "In Website URL": "website"};
+        // "In Description": "description", "In City Name": "city", "In Zip Code" : "zip"
+        dp1.valueColumn = "county";
+        dp1.valueColumnLabel = "County";
+        dp1.countyColumn = "county";
+        dp1.itemsColumn = "Category1";
+      } else if (show == "smart") { // param["data"] for legacy: https://www.georgia.org/smart-mobility
+        dp1.dataTitle = "Smart Data Projects";
+        dp1.listTitle = "Data Driven Decision Making";
+        //dp1.listSubtitle = "Smart & Sustainable Movement of Goods & Services";
+        dp1.industryListTitle = "Mobility Tech";
+
+        console.log("map.js loading " + dual_map.custom_data_root() + "communities/map-georgia-smart.csv");
+
+        dp1.dataset =  dual_map.custom_data_root() + "communities/map-georgia-smart.csv";
+        dp1.listInfo = "Includes Georgia Smart Community Projects";
+        dp1.search = {"In Title": "title", "In Description": "description", "In Website URL": "website", "In Address": "address", "In City Name": "city", "In Zip Code" : "zip"};
+        dp1.markerType = "google";
+        dp1.showShapeMap = true;
+
+      } else if (show == "logistics") { // "http://" + param["domain"]
+
+        dp1.listTitle = "Logistics";
+
+        dp1.listInfo = "Select a category to filter your results.";
+        //dp1.dataset = "https://georgiadata.github.io/display/data/logistics/coi_with_cognito.csv";
+        dp1.dataset = "../../display/data/logistics/coi_with_cognito.csv";
+
+        dp1.dataTitle = "Manufacturers and Distributors";
+        dp1.itemsColumn = "items";
+        dp1.valueColumn = "type";
+        dp1.valueColumnLabel = "Type";
+        dp1.markerType = "google";
+        //dp1.keywords = "items";
+        // "In Business Type": "type", "In State Name": "state", "In Postal Code" : "zip"
+        dp1.search = {"In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
+        dp1.nameColumn = "title";
+        dp1.latColumn = "lat_rand";
+        dp1.lonColumn = "lon_rand";
+
+        dp1.nameColumn = "company";
+        dp1.latColumn = "latitude";
+        dp1.lonColumn = "longitude";
+        dp1.showLegend = false;
+
+        dp1.listLocation = false;
+        dp1.addLink = "https://www.georgia.org/covid19response"; // Not yet used
+
+      } else if (show == "suppliers" || show == "ppe") { 
+
+        // https://docs.google.com/spreadsheets/d/1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI/edit?usp=sharing
+        dp1.listTitle = "Georgia COVID-19 Response"; // Appears at top of list
+        //dp1.listTitle = "Georgia PPE Suppliers"; // How do we set the layer title for checkbox?
+        //dp1.editLink = "";
+        dp1.googleDocID = "1bqMTVgaMpHIFQBNdiyMe3ZeMMr_lp9qTgzjdouRJTKI";
+        dp1.sheetName = "GA Suppliers List";
+        dp1.listInfo = "Select a category to the left to filter results. View&nbsp;<a href='https://map.georgia.org/display/products/suppliers-pdf/ga_suppliers_list_2021-03-10.pdf' target='_parent'>PDF&nbsp;version</a>&nbsp;of&nbsp;the&nbsp;complete&nbsp;list.";
+        
+        //dp1.dataTitle = "Manufacturers and Distributors";
+        dp1.dataTitle = "PPE Suppliers";
+        dp1.itemsColumn = "items";
+        dp1.valueColumn = "type";
+        dp1.valueColumnLabel = "Type";
+        dp1.color = "#ff9819"; // orange
+        dp1.markerType = "google";
+        dp1.search = {"In Company Name": "company", "In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
+        dp1.nameColumn = "company";
+
+      } else if (show == "suppliersX" || show == "ppeX") { // "http://" + param["domain"]
+
+        dp1.listTitle = "Georgia COVID-19 Response";
+        dp1.listTitle = "Georgia Suppliers of&nbsp;Critical Items <span style='white-space:nowrap'>to Fight COVID-19</span>"; // For iFrame site
+        // https://www.georgia.org/sites/default/files/2021-01 
+        dp1.listInfo = "Select a category to the left to filter results. View&nbsp;<a href='https://map.georgia.org/display/products/suppliers-pdf/ga_suppliers_list_2021-03-10.pdf' target='_parent'>PDF&nbsp;version</a>&nbsp;of&nbsp;the&nbsp;complete&nbsp;list.";
+        dp1.dataset = "https://map.georgia.org/display/products/suppliers/us_ga_suppliers_ppe_2021_02_24.csv";
+        //dp1.dataset = "/display/products/suppliers/us_ga_suppliers_ppe_2020_06_17.csv";
+
+        dp1.dataTitle = "Manufacturers and Distributors";
+        dp1.itemsColumn = "items";
+        dp1.valueColumn = "type";
+        dp1.valueColumnLabel = "Type";
+        dp1.color = "#ff9819"; // orange
+        dp1.markerType = "google";
+        //dp1.keywords = "items";
+        // "In Business Type": "type", "In State Name": "state", "In Postal Code" : "zip"
+        dp1.search = {"In Items": "items", "In Website URL": "website", "In City Name": "city", "In Zip Code" : "zip"};
+        dp1.nameColumn = "title";
+        dp1.latColumn = "lat_rand";
+        dp1.lonColumn = "lon_rand";
+
+        if (param["initial"] != "response") {
+          dp1.nameColumn = "company";
+          dp1.latColumn = "latitude";
+          dp1.lonColumn = "longitude";
+          dp1.showLegend = false;
+        }
+
+        dp1.listLocation = false;
+        dp1.addLink = "https://www.georgia.org/covid19response"; // Not yet used
+
+      } else if (show == "restaurants") {
+        // Fulton County 5631 restaurants
+        
+        dp1 = {};
+        dp1.listTitle = "Restaurant Ratings";
+        dp1.dataTitle = "Restaurant Ratings";
+        dp1.dataset = "/community/tools/map.csv";
+        dp1.latitude = 32.9;
+        dp1.longitude = -83.4;
+
+        //dp1.showLayer = false;
+        dp1.name = "Fulton County Restaurants";
+        dp1.titleColumn = "restaurant";
+        dp1.nameColumn = "restaurant";
+
+        dp1.valueColumnLabel = "Health safety score";
+        dp1.valueColumn = "score";
+        dp1.scale = "scaleThreshold";
+
+        dp1.latColumn = "latitude";
+        dp1.lonColumn = "longitude";
+
+        dp1.dataset = "/community/farmfresh/usa/georgia/fulton_county_restaurants.csv"; // Just use 50
+        dp1.dataTitle = "Restaurant Scores";
+        dp1.titleColumn = "restaurant";
+        dp1.listInfo = "Fulton County";
+      } else if (show == "pickup") {
+        // Atlanta Pickup
+        dp1.latitude = 33.76;
+        dp1.longitude = -84.3880;
+        dp1.zoom = 14;
+
+        // CURBSIDE PICKUP
+        dp1.listTitle = "Restaurants with Curbside Pickup";
+        dp1.listInfo = "Data provided by coastapp.com. <a href='https://coastapp.com/takeoutcovid/atl/' target='_blank'>Make Updates</a>";
+        dp1.dataset = "/community/places/usa/ga/restaurants/atlanta-coastapp.csv";
+        dp1.dataTitle = "Curbside Pickup";
+        // 
+        dp1.markerType = "google";
+        dp1.search = {"In Restaurant Name": "Name", "In Description": "Description", "In City Name": "City", "In Address" : "Address"};
+        dp1.nameColumn = "Name";
+        dp1.titleColumn = "Description";
+        //dp1.addressColumn = "Address";
+        //dp1.website = "Link";
+        dp1.valueColumnLabel = "Delivery";
+        dp1.valueColumn = "Delivery";
+        dp1.listLocation = true;
+
+      } else {
+        console.log("no show text match for listing map");
+      }
+
+  } // end state GA
 
   // Load the map using settings above
 
@@ -1531,7 +1538,7 @@ function showList(dp,map) {
         */
         if ($("#keywordsTB").val()) {
           updateHash({"search":search});
-          loadMap1();
+          loadMap1("map.js keywordsTB");
         }
         event.stopPropagation();
     });
