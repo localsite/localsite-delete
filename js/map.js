@@ -976,10 +976,10 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
   //dp1.longitude = -83.4;
   dp1.zoom = 7;
 
-  if (param.state) {
-    $("#state_select").val(param.state);
-  }
   let theState = $("#state_select").find(":selected").val();
+  if (theState.length == 0) {
+    theState = "GA";
+  }
   if (theState != "") {
     let kilometers_wide = $("#state_select").find(":selected").attr("km");
     //zoom = 1/kilometers_wide * 1800000;

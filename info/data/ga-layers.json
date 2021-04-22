@@ -118,9 +118,9 @@ callback(
 		"feedname": "Georgia Economic Regions",
 		"icon": "<i class='fa fa-recycle'></i>",
 		"mainiframeX": "/localsite/map/recycling/ga/",
-		"directlinkX": "/localsite/map/recycling/ga/",
-		"directlink": "/localsite/map/#show=recycling",
-		"rootfolder": "info",
+		"directlinkX": "/localsite/map/#show=recycling",
+		"directlink": "/localsite/map/recycling/ga/",
+		"rootfolderX": "info",
 		"footerlogos": "Residential recycling center content from <a href='https://RecycleSearch.com' target='recyclesearch'>recyclesearch.com</a>",
 		"caption": "Residential recycling center content from <a href='https://RecycleSearch.com' target='recyclesearch'>recyclesearch.com</a>"
 	},

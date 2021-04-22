@@ -240,7 +240,7 @@ $(document).ready(function() {
     //alert("Add addEventListener"); // Confirms only added once, but why does this occur twice?
     document.addEventListener('hashChangeEvent', function (elem) {
         if (location.host.indexOf('localhost') >= 0) {
-            alert('BUGBUG hashChangeEvent invoked 2 times by info/index.html'); // Invoked twice by iogrid inflow-outflow chart
+            console.log('Localhost Alert: BUGBUG hashChangeEvent invoked 2 times by info/index.html'); // Invoked twice by iogrid inflow-outflow chart
         }
         console.log("The hash: " + location.hash);
         let params = loadParams(location.search,location.hash);

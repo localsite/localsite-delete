@@ -57,9 +57,23 @@ function populateFieldsFromHash() {
 // var param = loadParams(location.search,location.hash); // This occurs in localsite.js
 
 
+// INIT
+
+//locationFilterChange("counties"); // Display county list
+//$("#filterClickLocation .locationTabText").html("Counties");
+//$(".filterUL li").removeClass("selected");
+//$(".filterUL li").find("[data-id='counties']").addClass("selected"); // Not working
+
 //renderMapShapes("geomap", param); // Resides in map-filters.js
 
+$(".showSearch").css("display","inline-block");
+$(".showSearch").removeClass("local");
+
 $(document).ready(function () {
+
+	if (param.state) {
+	    $("#state_select").val(param.state);
+	  }
 
 	//loadMarkupPage("intro.md", "introDiv", "_parent");
 	if (! ('webkitSpeechRecognition' in window) ) {
@@ -919,13 +933,7 @@ function getLatLonFromBrowser(limitByDistance) {
         //chkGeoPosition = false;
     //}
 }
-// INIT
-//locationFilterChange("counties"); // Display county list
-//$("#filterClickLocation .locationTabText").html("Counties");
-//$(".filterUL li").removeClass("selected");
-//$(".filterUL li").find("[data-id='counties']").addClass("selected"); // Not working
-$(".showSearch").css("display","inline-block");
-$(".showSearch").removeClass("local");
+
 
 function hideLocationFilters() {
     $("#distanceField").hide();
@@ -1794,14 +1802,33 @@ function getNaics_setHiddenHash(go) {
         	showtitle = "Vehicles and Vehicle Parts";
             cat_filter = (electric + auto_parts + parts).split(',');
         } else if (go == "recycling") {
-        	showtitle = "Recycling";
+        	showtab = "Recycling";
+        	showtitle = "Recycling Processors (B2B)";
             cat_filter = (recycling).split(',');
+        } else if (go == "transfer") {
+        	showtab = "Transfer Stations";
+        	showtitle = "Recycling Transfer Stations (B2B)";
+        	cat_filter = (recycling).split(',');
+        } else if (go == "recyclers") {
+        	showtab = "Recyclers";
+        	showtitle = "Companies that Recycle during Manufacturing";
+        	cat_filter = (recycling).split(',');
+        } else if (go == "inert") {
+        	showtab = "Inert Waste Landfills";
+        	showtitle = "Inert Waste Landfills";
+        	cat_filter = (recycling).split(',');
+        } else if (go == "landfills") {
+        	showtab = "Landfills";
+        	showtitle = "Landfills";
+        	cat_filter = (recycling).split(',');
         } else if(go=="manufacturing") {
         	showtitle = "Manufacturing";
         	cat_filter=["manufacturing placeholder"];
         } else if (param.naics) {
-        	showtitle = hash.show.charAt(0).toUpperCase() + hash.show.substr(1).replace(/\_/g," ");
+        	showtitle = go.charAt(0).toUpperCase() + go.substr(1).replace(/\_/g," ");
     	    cat_filter = param.naics.split(',');
+    	} else {
+        	showtitle = go.charAt(0).toUpperCase() + go.substr(1).replace(/\_/g," ");
     	}
 
         if (cat_filter.length) {
@@ -1839,6 +1866,7 @@ function getNaics_setHiddenHash(go) {
     hiddenhash.showtitle = showtitle;
     hiddenhash.naics = cat_filter.join(); // Override the existing naics
 	
+
 	$("#showAppsText").text(showtab);
 	$("#showAppsText").attr("title",showtab); // Swaps in when viewing app thumbs
 	$(".regiontitle").text(showtitle);
@@ -2061,7 +2089,7 @@ function refreshWidgets() {
 	}
 	
 	if (hash.show != priorHash.show) {
-		applyIO(hiddenhash.naics);
+		//applyIO(hiddenhash.naics);
 	}
 	priorHash = getHash();
 }
