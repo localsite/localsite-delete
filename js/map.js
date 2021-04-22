@@ -1034,6 +1034,16 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
     // community/farmfresh/ 
     dp1.listInfo = "Farmers markets and local farms providing fresh produce directly to consumers. <a style='white-space: nowrap' href='https://model.earth/community/farmfresh/ga/'>About Data</a> | <a href='https://www.ams.usda.gov/local-food-directories/farmersmarkets'>Update Listings</a>";
   
+  } else if (show == "brigades") {
+    dp1.listTitle = "Coding Brigades";
+    dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
+
+    // Not needed
+    //dp1.latColumn = "latitude";
+    //dp1.lonColumn = "longitude";
+    // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
+    dp1.search = {"In Location Name": "name"};
+
   } else if (theState == "GA") {
 
       if (show == "opendata") {
@@ -1047,17 +1057,7 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
         dp1.valueColumnLabel = "Type";
         dp1.listInfo = "<a href='https://docs.google.com/spreadsheets/d/1bvD9meJgMqLywdoiGwe3f93sw1IVI_ZRjWSuCLSebZo/edit?usp=sharing'>Update Google Sheet</a>.";
           dp1.search = {"In Dataset Name": "name", "In Type": "Category1", "In Website URL": "website"};
-        
-      } else if (show == "brigades") {
-        dp1.listTitle = "Coding Brigades";
-        dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
-
-        // Not needed
-        //dp1.latColumn = "latitude";
-        //dp1.lonColumn = "longitude";
-        // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
-        dp1.search = {"In Location Name": "name"};
-      
+              
       } else if (show == "360") {
         dp1.listTitle = "Birdseye Views";
         //  https://model.earth/community-data/us/state/GA/VirtualTourSites.csv
