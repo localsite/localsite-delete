@@ -182,7 +182,7 @@ $(window).on('hashchange', function() { // Avoid window.onhashchange since overr
   triggerHashChangeEvent();
 });
 function clearHash(toClear) {
-  let hash = getHash(); // Include all existing
+  let hash = getHashOnly(); // Include all existing
   let clearArray = toClear.split(/\s*,\s*/);
   for(var i = 0; i < clearArray.length; i++) {
     delete hash[clearArray[i]];

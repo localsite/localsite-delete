@@ -1320,6 +1320,8 @@ function thumbClick(show,path) {
 		var hashString = decodeURIComponent($.param(hash));
 		window.location = "/localsite/" + path + "#" + hashString;
 	} else {
+		$(".bigThumbMenuContent").removeClass("bigThumbActive");
+		$(".bigThumbMenuContent[show='" + show +"']").addClass("bigThumbActive");
 		goHash(hash);
 	}
 }
@@ -1863,8 +1865,11 @@ function getNaics_setHiddenHash(go) {
     	cat_filter = param.naics.split(',');
     }
 
-    hiddenhash.showtitle = showtitle;
-    hiddenhash.naics = cat_filter.join(); // Override the existing naics
+    //hiddenhash.showtitle = showtitle; // This was sending to the URL hash.
+
+    // BUGBUG - Not sure where this sends the naics to the URL hash, which might be good until widget updates are tested.
+    // Problem, naics in URL is not updated after initial load.
+    hiddenhash.naics = cat_filter.join(); // Overrides the existing naics
 	
 
 	$("#showAppsText").text(showtab);
@@ -1891,7 +1896,8 @@ function refreshWidgets() {
 		//	hash.show = ""; // Clear the suppliers display
 		//}
 		
-
+		delete hash.naics; // Since go value invokes new hiddenhash
+		clearHash("naics");
 		getNaics_setHiddenHash(hash.show); // Sets hiddenhash.naics for use by other widgets.
 
 		//hash.naics = ""; // Since go value invokes hiddenhash
