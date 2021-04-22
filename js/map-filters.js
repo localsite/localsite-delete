@@ -1767,10 +1767,12 @@ function getNaics_setHiddenHash(go) {
     var farmfresh = "311612,311615,311911,311919,311830,311824,311941,311710,311611,115114,311613,311811,311942,311991,311999,311211,311224,311920,"
     var recycling = "423930,562111,562112,562119,562211,562212,562213,562219,562910,562920,562991,562998,56299";
 
-    if (param.naics) {
-        cat_filter = param.naics.split(',');
-    }
-    else if (go){
+    //if (param.naics) {
+    //    cat_filter = param.naics.split(',');
+    //}
+    //else 
+
+    if (go){
         if (go == "bioeconomy") {
         	showtitle = "Bioeconomy and Petroleum Industries";
             cat_filter = (bio_input + bio_output + green_energy + fossil_energy).split(',');
@@ -1797,7 +1799,12 @@ function getNaics_setHiddenHash(go) {
         } else if (go == "recycling") {
         	
             cat_filter = (recycling).split(',');
-        }
+
+        } else if (param.naics) {
+    	    cat_filter = param.naics.split(',');
+    	}
+
+
         if (cat_filter.length) {
             cat_filt=[]
             for(i=0;i<cat_filter.length;i++){
@@ -1806,7 +1813,10 @@ function getNaics_setHiddenHash(go) {
             cat_filter=cat_filt
             //console.log(cat_filter)
         }
+    } else if (param.naics) {
+    	cat_filter = param.naics.split(',');
     }
+
     if(go=="manufacturing"){
         cat_filter=["manufacturing placeholder"]
     }
@@ -1826,6 +1836,7 @@ function getNaics_setHiddenHash(go) {
     	hiddenhash.showtitle = showtitle;
     	hiddenhash.naics = cat_filter.join(); // Override the existing naics
 	
+	$(".regiontitle").text(showtitle);
     // Convert back to string
     //hiddenhash = decodeURIComponent($.param(hiddenhashObject)); // Convert to query string, and remove encoding of commas
 
