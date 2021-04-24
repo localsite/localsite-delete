@@ -1446,9 +1446,9 @@ function displayBigThumbnails(layerName,siteObject) {
 	$('.bigThumbHolder').click(function(event) {
         $("#bigThumbPanelHolder").hide(); // Could remain open when small version above map added.         
     });
-    if (hash.show) {
-    	$(".bigThumbMenuContent[show='" + hash.show +"']").addClass("bigThumbActive");
-    	let activeTitle = $(".bigThumbMenuContent[show='" + hash.show +"'] .bigThumbText").text();
+    if (layerName) {
+    	$(".bigThumbMenuContent[show='" + layerName +"']").addClass("bigThumbActive");
+    	let activeTitle = $(".bigThumbMenuContent[show='" + layerName +"'] .bigThumbText").text();
     	//alert("activeTitle " + activeTitle);
     	$("#showAppsText").attr("title",activeTitle);
     }

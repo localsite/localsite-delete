@@ -65,7 +65,7 @@ html,body { /* both are needed for map height in iframe */
 }
 body {
   margin: 0px;
-  background-color: #fafafa;
+  background-colorX: #fafafa;
   -webkit-font-smoothing: antialiased;
   font-family: 'Nunito Sans', Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color:#333;
@@ -146,7 +146,7 @@ h2, h3, h4 {
 h1 {
   font-weight: 300;
   color: #5f5f5f;
-  color: #333;
+  colorX: #333;
   line-height: 1.3;
   margin-top: 10px;
   font-size: 31px;
@@ -231,6 +231,9 @@ summary::-webkit-details-marker {
 }
 @media screen {.printonly {display: none; }}
 
+#header {
+	z-index: 10001;
+}
 .displayOnload {
   display:block !important; /* hidden until css loaded */
 }
@@ -826,12 +829,12 @@ content .js, pre code { /* Prevents .js from impacting js class within Drupal bo
   width:250px;
   margin-right:-250px;
   -webkit-transition-duration: 0.3s;
-    -moz-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-    transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
 
-    box-sizing: border-box;
-    z-index: 9999;
+	box-sizing: border-box;
+	z-index: 99999;
 }
 @media (max-width: 600px) {
 	#menuHolder {

@@ -749,7 +749,7 @@ function addIcons(dp,map,map2) {
   });
   map2.on('zoomend', function() { // zoomend
     // Resize the circle to avoid large circles on close-ups
-    dp.group2.eachLayer(function (marker) { // This hits every point individually. A CSS change might be less script processing intensive
+    dp.group2.eachLayer(function (marker) { // This hits every point individually. A CSS change might be less processing intensive
       //console.log('zoom ' + map.getZoom());
       if (marker.setRadius) {
         marker.setRadius(markerRadius(1,map2));
@@ -977,7 +977,10 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
   dp1.zoom = 7;
 
   let theState = $("#state_select").find(":selected").val();
-  if (theState.length == 0) {
+  if (!theState) {
+    theState = param["state"];
+  }
+  if (!theState) {
     theState = "GA";
   }
   if (theState != "") {
@@ -995,7 +998,9 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
 
   dp1.listLocation = false; // Hides Waze direction link in list, remains in popup.
 
-  $("." + show).show(); // Show layer's divs, after hiding all layer-specific above.
+  if (show && show.length) {
+    $("." + show).show(); // Show layer's divs, after hiding all layer-specific above.
+  }
   $(".headerOffset2").height($("#filterFieldsHolder").height() + "px"); // Adjust incase reveal/hide changes height.
 
   // Google Sheets must be published with File > Publish to Web to avoid error: "blocked by CORS policy: No 'Access-Control-Allow-Origin' header" 
@@ -1038,11 +1043,15 @@ function loadMap1(calledBy, show, dp) { // Called by index.html, map-embed.js an
     dp1.listTitle = "Coding Brigades";
     dp1.dataset = "https://neighborhood.org/brigade-information/organizations.json";
 
-    // Not needed
-    //dp1.latColumn = "latitude";
-    //dp1.lonColumn = "longitude";
     // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
     dp1.search = {"In Location Name": "name"};
+
+  } else if (show == "trees" && theState == "CA") {
+    dp1.listTitle = "Trees";
+    dp1.dataset = "https://storage.googleapis.com/public-tree-map/data/map.json";
+    dp1.nameColumn = "name_botanical";
+    // , "In Address": "address", "In County Name": "county", "In Website URL": "website"
+    dp1.search = {"Common Name": "family_common_name", "Family Name": "family_name_botanical", "Botanical Name": "name_botanical"};
 
   } else if (theState == "GA") {
 
@@ -1598,6 +1607,9 @@ function showList(dp,map) {
     foundMatch = 0;
     productMatchFound = 0;
 
+    if (count > 2000) {
+        return;
+    }
     let showIt = true;
     if (hash["name"] && elementRaw["name"]) { // Match company name from URL to isolate as profile page.
       //console.log("elementRaw[name] " + elementRaw["name"]);
@@ -2027,6 +2039,7 @@ function showList(dp,map) {
     
 
   });
+  console.log("Total " + dp.dataTitle + " " + count);
 
   if (hash.name && $("#detaillist > [name='"+ hash.name.replace(/_/g,' ') +"']").length) {
     let listingName = hash.name.replace(/_/g,' ');
