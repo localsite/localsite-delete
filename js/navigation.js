@@ -9,7 +9,6 @@ if (window.location.protocol != 'https:' && location.host.indexOf('localhost') <
 var imageUrl;
 
 $(document).ready(function(){
-
 	// Get the levels below root
  	var foldercount = (location.pathname.split('/').length - 1); // - (location.pathname[location.pathname.length - 1] == '/' ? 1 : 0) // Removed because ending with slash or filename does not effect levels. Increased -1 to -2.
  	foldercount = foldercount - 2;
@@ -87,11 +86,15 @@ $(document).ready(function(){
 		  	  }
 		    })
 
-
 	 		// Set here so path works at all levels.
 
 	 		// To do: fetch the existing background-image.
-	 		if (param.startTitle == "Code for Atlanta" ||  location.host.indexOf('atlanta') >= 0) {
+	 		if (param.startTitle == "Code for America" ||  location.host.indexOf('codeforamerica') >= 0) {
+	  			param.titleArray = []
+	  			param.headerLogo = "<img src='../localsite/img/logo/codeforamerica.png' style='width:140px;'>";
+		 		document.title = "Code for America - " + document.title
+		 		changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
+		 	} else if (param.startTitle == "Code for Atlanta" ||  location.host.indexOf('atlanta') >= 0) {
 	  			param.titleArray = []
 	  			param.headerLogo = "<img src='https://scienceatl.org/wp-content/uploads/2020/04/code.png' style='width:150px;'>";
 		 		document.title = "Code for Atlanta - " + document.title

@@ -49,7 +49,12 @@ var dual_map = dual_map || (function(){
 
 // USE params (plural) to isolate within functions when creating embedable widgets.
 // USE param for any html page using common.js.
-var param = loadParams(location.search,location.hash);
+if(typeof param == 'undefined') {
+    var param = {};
+    param = loadParams(location.search,location.hash);
+} else {
+  param = mix(param,loadParams(location.search,location.hash));
+}
 if(typeof hiddenhash == 'undefined') {
     var hiddenhash = {};
 }
@@ -501,7 +506,6 @@ function toggleFullScreen() {
     $('.expandToFullscreen').show();
   }
 }
-
 /**
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/

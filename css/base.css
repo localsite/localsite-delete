@@ -231,9 +231,24 @@ summary::-webkit-details-marker {
 }
 @media screen {.printonly {display: none; }}
 
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
 #header {
 	z-index: 10001;
 }
+
 .displayOnload {
   display:block !important; /* hidden until css loaded */
 }

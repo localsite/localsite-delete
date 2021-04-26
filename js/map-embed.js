@@ -979,7 +979,7 @@ strVar += "";
 strVar += "<div style=\"clear:both\"><\/div>";
 strVar += "";
 strVar += "<div class=\"displayOnload\" style=\"display:none;position:relative\">";
-strVar += "  <div id=\"map1\"><\/div>";
+strVar += "  <div id=\"map1\" style=\"display:none;\"><\/div>";
 strVar += "  <div class=\"localonly\" id=\"legendHolder\" style=\"display:none\">";
 strVar += "    <div id=\"allLegends\"><\/div>";
 strVar += "  <\/div>";
@@ -1463,8 +1463,12 @@ function includeCSS(url,root) {
         head.appendChild(link); // Since site-narrow.css comes after site.css
     }
 }
-var param = {};
-param = loadParam(location.search,location.hash);
+if(typeof param == 'undefined') {
+	var param = {};
+	param = loadParam(location.search,location.hash);
+} else {
+	param = mix(param,loadParam(location.search,location.hash));
+}
 window.onhashchange = function() { // Refresh params values when user changes URL hash after #.
 	//alert("window.onhashchange")
 	params = loadParams(location.search,location.hash);	
@@ -1474,7 +1478,7 @@ window.onhashchange = function() { // Refresh params values when user changes UR
 // 1. Hash values on URL.
 // 2. Parameters on URL.
 // 3. Parameters on javascript include file.
-function loadParam(paramStr,hashStr) {
+function loadParam(paramStr,hashStr) { // Note that function name is singular to avoid conflict with localsite.js
   let scripts = document.getElementsByTagName('script');
   let myScript = scripts[ scripts.length - 1 ];
   //let params = getParams(myScript.src); // Object
@@ -1508,16 +1512,17 @@ function loadParam(paramStr,hashStr) {
    return params;
 }
 function mix(incoming, target) { // Combine two objects, priority to incoming. Delete blanks indicated by incoming.
+   target2 = jQuery.extend(true, {}, target); // Clone/copy object without entanglement
    for(var key in incoming) {
      if (incoming.hasOwnProperty(key)) {
         if (incoming[key] === null || incoming[key] === undefined || incoming[key] === '') {
-          delete target[key];
+          delete target2[key];
         } else {
-          target[key] = incoming[key];
+          target2[key] = incoming[key];
         }
      }
    }
-   return target;
+   return target2;
 }
 // END COMMON
 
@@ -1546,18 +1551,16 @@ function jsLoaded(root) {
 		//document.write(strVarCss);
 		document.head.insertAdjacentHTML("beforeend", strVarCss);
 
-	  	loadScript(root + '/localsite/js/d3.v5.min.js', function(results) { // BUG - change so map-filters.js does not require this on it's load
-	    	loadScript(root + '/localsite/js/map.js', function(results) {
-	  			loadSearchFilters(root,1); // Uses dual_map library in localsite.js for community_data_root
-	  		});
-	    });
+		if (param.preloadmap != "false") {
+		  	loadScript(root + '/localsite/js/d3.v5.min.js', function(results) { // BUG - change so map-filters.js does not require this on it's load
+		    	loadScript(root + '/localsite/js/map.js', function(results) {
+		  			loadSearchFilters(root,1); // Uses dual_map library in localsite.js for community_data_root
+		  		});
+		    });
+		  }
 	});
 
 	loadScript(root + '/localsite/js/table-sort.js', function(results) {});
-	if (location.host.indexOf('localhost') >= 0) {
-		// Causing map points to shift right, maybe due to later loading.
-		//loadScript(root + '/localsite/js/common/navigation.js');
-	}
 }
 function leafletLoaded(root, count) {
 	console.log("From leafletLoaded typeof L: " + typeof L);
@@ -1566,12 +1569,14 @@ function leafletLoaded(root, count) {
 	  // The large d3-legend.js script is flawed because it throws errors due to dependencies on leaflet script, so we can not load early.
 		loadScript(root + '/localsite/js/leaflet.icon-material.js');
 		loadScript(root + '/localsite/js/jquery.min.js', function(results) {
-			loadScript(root + '/localsite/js/d3.v5.min.js', function(results) {
-				loadScript(root + '/localsite/js/map.js', function(results) { // BUG - change so dual-map does not require this on it's load
-					//loadScript(root + '/localsite/js/d3-legend.js', function(results) { // This checks that load above is completed.
-			  		dualmapLoaded(param, root, 1);
-			  	});
-			});
+			if (param.preloadmap != "false") {
+				loadScript(root + '/localsite/js/d3.v5.min.js', function(results) {
+					loadScript(root + '/localsite/js/map.js', function(results) { // BUG - change so dual-map does not require this on it's load
+						//loadScript(root + '/localsite/js/d3-legend.js', function(results) { // This checks that load above is completed.
+				  		dualmapLoaded(param, root, 1);
+				  	});
+				});
+			}
 		});
 	} else if (count<100) {
 		setTimeout( function() {
@@ -1615,20 +1620,24 @@ function lazyLoadFiles() {
 	});
 
 	// Load early so available later
-	loadScript(root + '/localsite/js/d3.v5.min.js', function(results) { // BUG - change so dual-map does not require this on it's load
-		loadScript(root + '/localsite/js/map.js', function(results) {});
-	});
-
-	includeCSS(root + '/localsite/css/leaflet.css',root);
-	// Resides AFTER css/leaflet.css
-	loadScript(root + '/localsite/js/leaflet.js', function(results) {
-		leafletLoaded(root,1);
-	});
- 	
+	if (param.preloadmap != "false") {
+		loadScript(root + '/localsite/js/d3.v5.min.js', function(results) { // BUG - change so dual-map does not require this on it's load
+			loadScript(root + '/localsite/js/map.js', function(results) {});
+		});
+	}
+	if (param.preloadmap != "false") {
+		includeCSS(root + '/localsite/css/leaflet.css',root);
+		// Resides AFTER css/leaflet.css
+		loadScript(root + '/localsite/js/leaflet.js', function(results) {
+			leafletLoaded(root,1);
+		});
+ 	}
 	//includeCSS(root + '/localsite/css/localsite.css',root);
 	includeCSS(root + '/localsite/css/base.css',root);
 	includeCSS(root + '/localsite/css/search-filters.css',root);
-	includeCSS(root + '/localsite/css/map-display.css',root);
+	if (param.preloadmap != "false") {
+		includeCSS(root + '/localsite/css/map-display.css',root);
+	}
 	//includeCSS(root + '/localsite/css/hexagons.css',root);
 
 
@@ -1656,7 +1665,7 @@ function dualmapLoaded(param, root, count) {
 				document.addEventListener('hashChangeEvent', function (elem) {
 					//param = loadParam(location.search,location.hash);
 					console.log("embed-map.js detects hashChangeEvent");
-					loadMap1();
+					loadMap1("map-embed.js from hashChangeEvent");
 				}, false);
 				
 			});
