@@ -1325,7 +1325,7 @@ function thumbClick(show,path) {
 		goHash(hash);
 	}
 }
-function displayBigThumbnails(layerName,siteObject) {
+function displayBigThumbnails(activeLayer, layerName,siteObject) {
 	if (!$('.bigThumbUl').length) {
 
   		//$("#filterFieldsHolder").hide();
@@ -1431,7 +1431,6 @@ function displayBigThumbnails(layerName,siteObject) {
 	    }
 	    $(".bigThumbMenu").append("<div class='bigThumbMenuInner'>" + sectionMenu + "</div>");
 	    //$("#honeycombMenu").append("<ul class='bigThumbUl'>" + sectionMenu + "</ul>");
-	    
 	    $("#iconMenu").append(iconMenu);
 	    $("#bigThumbPanelHolder").show();
 	    $("#honeyMenuHolder").show(); // Might be able to remove display:none on this
@@ -1446,10 +1445,9 @@ function displayBigThumbnails(layerName,siteObject) {
 	$('.bigThumbHolder').click(function(event) {
         $("#bigThumbPanelHolder").hide(); // Could remain open when small version above map added.         
     });
-    if (layerName) {
-    	$(".bigThumbMenuContent[show='" + layerName +"']").addClass("bigThumbActive");
-    	let activeTitle = $(".bigThumbMenuContent[show='" + layerName +"'] .bigThumbText").text();
-    	//alert("activeTitle " + activeTitle);
+    if (activeLayer) {
+    	$(".bigThumbMenuContent[show='" + activeLayer +"']").addClass("bigThumbActive");
+    	let activeTitle = $(".bigThumbMenuContent[show='" + activeLayer +"'] .bigThumbText").text();
     	$("#showAppsText").attr("title",activeTitle);
     }
 }
@@ -1543,6 +1541,7 @@ function styleShape(feature) {
 
 function initSiteObject(layerName) {
 
+	let hash = getHash();
 	//if(location.host.indexOf('localhost') >= 0) {
 	    // Greenville:
 	    // https://github.com/codeforgreenville/leaflet-google-sheets-template
@@ -1592,7 +1591,7 @@ function initSiteObject(layerName) {
 
 	          				$("#showAppsText").text("Now Showing");
 	          				$("#appSelectHolder .showApps").addClass("filterClickActive");
-							showThumbMenu(siteObject);
+							showThumbMenu(hash.show, siteObject);
 							$('html,body').animate({
 								scrollTop: 0
 							});
@@ -1601,14 +1600,14 @@ function initSiteObject(layerName) {
 					  	event.stopPropagation();
 					});
 	          		// These should be lazy loaded when clicking menu
-	                //displayBigThumbnails("main",siteObject);
+	                //displayBigThumbnails(hash.show, "main",siteObject);
 	                //displayHexagonMenu("",siteObject);
-	                let hash = getHash();
+	                
 	                if (!hash.show && !param.show) { // INITial load
 	                	// alert($("#fullcolumn").width()) = null
 	                	if ($("body").width() >= 800) {
 
-	                		//showThumbMenu(siteObject);
+	                		//showThumbMenu(hash.show, siteObject);
 	                	}
 	            	}
 	            	if (hash.show == "counties") {
@@ -1626,11 +1625,11 @@ function initSiteObject(layerName) {
 	//}
 } // end initSiteObject
 
-function showThumbMenu(siteObject) {
+function showThumbMenu(activeLayer, siteObject) {
 	$("#menuHolder").css('margin-right','-250px');
 	$("#bigThumbPanelHolder").show();
 	if (!$(".bigThumbMenuContent").length) {
-		displayBigThumbnails("main",siteObject);
+		displayBigThumbnails(activeLayer, "main",siteObject);
 	}
 	$('.showApps').addClass("active");
 }
@@ -1639,7 +1638,7 @@ function callInitSiteObject(attempt) { // wait for dual_map
 		let siteObject = initSiteObject("");
 
 		// Not available here since async in initSiteObject()
-		//showThumbMenu(siteObject);
+		//showThumbMenu(hash.show, siteObject);
 		return siteObject; // Not always returning yet
 	} else if (attempt < 100) {
 		setTimeout( function() {
