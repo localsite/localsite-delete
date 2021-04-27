@@ -1332,11 +1332,11 @@ function displayHexagonMenu(layerName,siteObject) {
 function thumbClick(show,path) {
 	let hash = getHash();
 	hash.show = show;
-
 	delete hiddenhash.show;
 	delete param.show;
-	delete params.show;
-
+	if (typeof params != 'undefined') {
+		delete params.show;
+	}
 	delete hash.naics;
 	delete hash.m; // Birdseye view
 	if (path && !window.location.pathname.includes(path)) {
@@ -1471,7 +1471,9 @@ function displayBigThumbnails(activeLayer, layerName,siteObject) {
     if (activeLayer) {
     	$(".bigThumbMenuContent[show='" + activeLayer +"']").addClass("bigThumbActive");
     	let activeTitle = $(".bigThumbMenuContent[show='" + activeLayer +"'] .bigThumbText").text();
-    	$("#showAppsText").attr("title",activeTitle);
+    	if (activeTitle) { // Keep prior if activeLayer is not among app list.
+    		$("#showAppsText").attr("title",activeTitle);
+    	}
     }
 }
 function getDirectLink(livedomain,directlink,rootfolder,hashStr) {
@@ -1697,6 +1699,7 @@ let siteObject = callInitSiteObject(1);
 
 
 function googlePlacesApiLoaded(count) {
+
 	if (typeof google === 'object' && typeof google.maps === 'object') {
 		console.log('FOUND google.maps.places. count:' + count)
 	} else if (count<100) { // Wait a 100th of a second and try again
@@ -1708,6 +1711,7 @@ function googlePlacesApiLoaded(count) {
 		console.log("ERROR: googlePlacesApiLoaded exceeded 100 attempts.");
 	}
 }
+
 googlePlacesApiLoaded(1);
 
 
@@ -1776,7 +1780,7 @@ if(typeof hiddenhash == 'undefined') {
     var hiddenhash = {};
 }
 function getNaics_setHiddenHash(go) {
-    let showtitle, showtab;
+	let showtitle, showtab;
     let cat_filter = [];
     
     // NAICS FROM community/projects/biotech
@@ -1908,7 +1912,8 @@ function refreshWidgets() {
 
 
 	let reloadedMap = false;
-	param = loadParams(location.search,location.hash); // param is declared in localsite.js
+	param = mix(param,loadParams(location.search,location.hash)); // param is declared in localsite.js. Give priority to param updates within code.
+
 	let hash = getHash();
 	console.log("refreshWidgets from prior geo: " + priorHash.geo + " to " + hash.geo);
 	

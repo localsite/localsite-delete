@@ -48,7 +48,7 @@ var dual_map = dual_map || (function(){
 }());
 
 // USE params (plural) to isolate within functions when creating embedable widgets.
-// USE param for any html page using common.js.
+// USE param for any html page using localsite.js.
 if(typeof param == 'undefined') {
     var param = {};
     param = loadParams(location.search,location.hash);
@@ -69,7 +69,7 @@ function loadParams(paramStr,hashStr) {
   // NOTE: Hardcoded to pull params from last script, else 'embed-map.js' only
   // Get Script - https://stackoverflow.com/questions/403967/how-may-i-reference-the-script-tag-that-loaded-the-currently-executing-script
   let scripts = document.getElementsByTagName('script'); 
-  let myScript = scripts[ scripts.length - 1 ]; // Last script on page, typically the current script common.js
+  let myScript = scripts[ scripts.length - 1 ]; // Last script on page, typically the current script localsite.js
   //let myScript = null;
   // Now try to find one containging embed-map
   for (var i = 0; i < scripts.length; ++i) {

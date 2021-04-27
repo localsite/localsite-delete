@@ -96,14 +96,16 @@ $(document).ready(function(){
 	 		// To do: fetch the existing background-image.
 	 		if (param.startTitle == "Code for America" ||  location.host.indexOf('codeforamerica') >= 0) {
 	  			param.titleArray = []
-	  			param.headerLogo = "<img src='../localsite/img/logo/codeforamerica.png' style='width:140px;'>";
+	  			param.headerLogo = "<img src='/localsite/img/logo/codeforamerica.png' style='width:140px;'>";
 		 		document.title = "Code for America - " + document.title
-		 		changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
+		 		// BUGBUG - error in console
+		 		//changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
 		 	} else if (param.startTitle == "Code for Atlanta" ||  location.host.indexOf('atlanta') >= 0) {
 	  			param.titleArray = []
 	  			param.headerLogo = "<img src='https://scienceatl.org/wp-content/uploads/2020/04/code.png' style='width:150px;'>";
 		 		document.title = "Code for Atlanta - " + document.title
-		 		changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
+		 		// BUGBUG - error in console
+		 		//changeFavicon("https://lh3.googleusercontent.com/HPVBBuNWulVbWxHAT3Nk_kIhJPFpFObwNt4gU2ZtT4m89tqjLheeRst_cMnO8mSrVt7FOSlWXCdg6MGcGV6kwSyjBVxk5-efdw")
 		 	} else if (param.startTitle == "Georgia.org" || location.host.indexOf('georgia') >= 0) {
 		 		$(".siteTitleShort").text("Model Georgia");
 		 		param.titleArray = [];
