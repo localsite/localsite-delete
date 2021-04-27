@@ -21,6 +21,20 @@
 <link rel="stylesheet" type="text/css" href="../../input-output/build/widgets.css">
 <script src="../../input-output/build/lib/useeio_widgets.js"></script>
 -->
+<script>
+	// Used by script that follow, including naics.js
+	let hash = getHash();
+	if (!hash.state && !hash.geo) {
+		hiddenhash.state = "GA"; // Temp until triggered by domains and map prompt.
+	}
+	if (!hiddenhash.show) {
+		hiddenhash.show = "industries";
+	}
+	if (!hiddenhash.indicators) {
+		//hiddenhash.indicators = "GCC";
+	}
+	//hiddenhash.debug = true;
+</script>
 
 <script type="text/javascript" src="/localsite/js/map-filters.js" id="/localsite/js/map-filters.js"></script>
 
@@ -321,20 +335,16 @@ To do: make the links below an optional widget
 	<a href="https://data.nal.usda.gov/life-cycle-assessment" target="USDA">USDA</a><br><br>
 	-->
 
-	
-
 	<!-- two columns -->
 	<div class="pageColumns">
 		<div style="display:table-row">
 
-			<!--
-			<div id="infoColumn" class="mainColumn mainColumn1" style="font-size: 15px; position: relative">
+			<div id="infoColumn" class="mainColumn mainColumn1" style="display:none; font-size: 15px; position: relative">
 				
 				<div id="aboutToolsDiv" style="position: relative;"></div>
 				
 			</div>
-			-->
-
+			
 			<div class="mainColumn mainColumn2 input-output">
 			
 				<div style="float:right; font-size: 11px">
@@ -1056,12 +1066,14 @@ function updateText(go) {
 	if (go == "bioeconomy") {
 		loadMarkdown("https://model.earth/io/tools/bioeconomy-planner/hook.md", "aboutToolsDiv", "_parent");
 		//loadMarkdown("https://model.earth/io/tools/bioeconomy-planner/bioenergy/README.md", "bioenergySummaryDiv", "_parent");
+		$("#infoColumn").show();
 	} else if (go == "dataprep") {
 		loadMarkdown("../../localsite/info/data/README.md", "aboutToolsDiv", "_parent");
+		$("#infoColumn").show();
 	} else if (go == "parts") {
 		//loadMarkdown("https://model.earth/io/tools/localized-economy/about.md", "aboutToolsDiv", "_parent");
 	} else {
-		loadMarkdown("https://model.earth/io/tools/industry-impact/hook.md", "aboutToolsDiv", "_parent");
+		//loadMarkdown("https://model.earth/io/tools/industry-impact/hook.md", "aboutToolsDiv", "_parent");
 	}
 
 }
@@ -1071,17 +1083,6 @@ if (!param["go"]) {
 
 // INIT
 var priorHashLocal = {};
-
-let hash = getHash();
-if (!hash.state && !hash.geo) {
-	hiddenhash.state = "GA"; // Temp until triggered by domains and map prompt.
-}
-if (!hiddenhash.show) {
-	hiddenhash.show = "industries";
-}
-if (!hiddenhash.indicators) {
-	//hiddenhash.indicators = "GCC";
-}
 
 /* Allows map to remove selected shapes when backing up. */
 document.addEventListener('hashChangeEvent', function (elem) {

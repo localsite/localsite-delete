@@ -72,17 +72,22 @@ $(document).ready(function(){
 	 		// Move headerOffset2 and filterEmbedHolder immediately after body tag start.
 	 		// Allows map embed to reside below intro text and additional navigation on page.
 	 		$("#filterEmbedHolder").insertAfter("#headeroffset");
-	 		$(".headerOffset2").insertAfter("#headeroffset");
+	 		//$(".headerOffset2").insertAfter("#headeroffset");
+	 		$(".headerOffset2").insertAfter("#headerFixed");
+	 		
+	 		//$(".headerOffset2").hide();
 
 	 		// Make paths relative to current page
 	 		$("#header a[href]").each(function() {
-	 			if($(this).attr("href").toLowerCase().indexOf("http") < 0){
+	 			if($(this).attr("href").toLowerCase().indexOf("http") < 0) {
 		      		$(this).attr("href", modelpath + $(this).attr('href'));
 		  		}
 		    })
-	 		$("#header img[src]").each(function() {
-	 		  if($(this).attr("src").toLowerCase().indexOf("http") < 0){
-		      	$(this).attr("src", modelpath + $(this).attr('src')); // Was climbpath
+		    $("#header img[src]").each(function() {
+	 		  if($(this).attr("src").toLowerCase().indexOf("http") < 0) {
+	 		  	if($(this).attr("src").indexOf("/") != 0) { // Don't append if starts with /
+		      		$(this).attr("src", modelpath + $(this).attr('src')); // Was climbpath
+		      	}
 		  	  }
 		    })
 

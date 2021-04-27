@@ -11,6 +11,20 @@
 
 <title>Community Map</title>
 
+<!-- For Goole Sheets, since CORS blocks CSV loading on some sheets. -->
+<script type="text/javascript" src="/localsite/map/neighborhood/js/tabletop.js" id="/localsite/map/neighborhood/js/tabletop.js"></script>
+
+<script type="text/javascript" src="../js/showdown.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/localsite.js"></script>
+
+<script>
+  let hash = getHash();
+  if (!hash.show) {
+    hiddenhash.show = "farmfresh"; // Used by loadFromSheet which is called by loadMap1
+  }
+</script>
+
 <link type="text/css" rel="stylesheet" href="../css/base.css" />
 <link rel="stylesheet" href="../css/search-filters.css" />
 <link rel="stylesheet" href="../css/map-display.css" />
@@ -18,12 +32,7 @@
 <link rel="stylesheet" href="../css/hexagons.css">
 -->
 
-<!-- For Goole Sheets, since CORS blocks CSV loading on some sheets. -->
-<script type="text/javascript" src="/localsite/map/neighborhood/js/tabletop.js" id="/localsite/map/neighborhood/js/tabletop.js"></script>
 
-<script type="text/javascript" src="../js/showdown.min.js"></script>
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/localsite.js"></script>
 
 <!-- Activate to include site navigation-->
 <script type="text/javascript" src="../js/navigation.js"></script>
@@ -123,6 +132,10 @@
 
   
   <div class="hideWhenPop">
+    
+  <!-- Matches filterFields and headerFixed height -->
+  <div class="headerOffset2" style="height:56px;"></div>
+
   <div id="filterFieldsHolder" class="contentfull noprint" style="margin:0 auto; padding-top:0px; float:left; width:100%">
 
     <!-- Displayed on scroll up -->
@@ -496,9 +509,6 @@
 </div>
 <!-- END FILTERS -->
 
-
-<!-- Matches filterFields and headerFixed height -->
-<div class="headerOffset2" style="height:56px"></div>
 
 <!-- Settings Panel -->
 <div class="settingsPanel topMenuOffset floater" style="display:none; position:fixed">
@@ -1042,9 +1052,6 @@ Displayed by refreshWidgets() in map-filters.js
     <div style="float:right; padding: 12px 0px 10px 0" class="noprint hideMobile">
       <a href="https://model.earth/io/charts/">About Widgets</a>
     </div>
-    <!--
-      class="mainColumn mainColumn1" 
-    -->
      <div id="pageLinksInsert" style="displayX:none; float:left; font-size: 15px; padding: 12px 30px 10px 0">
           <a onClick="go({}); return false;"  href="./">Overview</a> | 
           <a onClick="goHash({'go':'bioeconomy','show':''}); return false;" href="./#go=bioeconomy">Bioeconomy</a> | 
@@ -1533,19 +1540,15 @@ function loadScript(url, callback)
   // Nested calls are described here: https://books.google.com/books?id=ZOtVCgAAQBAJ&pg=PA6&lpg=PA6
 }
 
+// INIT
+hash = getHash(); // Allows hiddenhash set above to be included.
 
 dual_map.init(["somevalue", 1, "controlId"]); // Used by link to feedback form
 //dual_map.helloWorld();
 //dual_map.community_root();
 
-console.log("Call loadMap1() in map.js but we need dp. Also below.");
-if (!param.show) {
-  param.show = "farmfresh"; // Used by loadFromSheet which is called by loadMap1
-  updateHash({"show":"farmfresh"}); // Update with triggering. Allow map clicks to 
-}
-
 //var localmap = 
-loadMap1("map/index.html 2", param["show"], dp);
+loadMap1("map/index.html 2", hash.show, dp);
 if (param["show"] != "suppliers") {
   // Additional layer
   //loadMap1("suppliers", dp);

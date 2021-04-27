@@ -89,6 +89,10 @@ console.log("dataObject.stateshown" + dataObject.stateshown)
 
 
 function loadIndustryData() {
+    stateAbbr = params.state || defaultState;
+    dataObject.stateshown=stateID[stateAbbr];
+    //alert("stateAbbr " + stateAbbr)
+
     console.log("No function " + stateAbbr + " " + dataObject.stateshown + " Promises");
 
     var promises = [
@@ -112,15 +116,15 @@ let priorHash_naicspage = {};
 refreshNaicsWidget();
 
 document.addEventListener('hashChangeEvent', function (elem) {
-    let params = loadParams(location.search,location.hash);
+    if (hiddenhash.debug && location.host.indexOf('localhost') >= 0) {
+        alert('Localhost Alert: hashChangeEvent invoked by naics.js'); // Invoked twice by iogrid inflow-outflow chart
+    }
+    //let params = loadParams(location.search,location.hash);
     refreshNaicsWidget();                    
  }, false);
 
 function refreshNaicsWidget() {
-    let reloadedMap = false;
-    //param = loadParams(location.search,location.hash); // param is declared in localsite.js
     let hash = getHash(); // Includes hiddenhash
-    
     params = loadParams(location.search,location.hash); // Also used by loadIndustryData()
     if (!params.catsort) {
         params.catsort = "payann";
@@ -132,11 +136,11 @@ function refreshNaicsWidget() {
        params.census_scope = 'state';
     }
 
-    // NOTE: params after ? are not included, just the hash.
-    if (!params.state || params.state != priorHash_naicspage.state) {
-        stateAbbr = params.state || defaultState;
-        dataObject.stateshown=stateID[stateAbbr];
+    if (priorHash_naicspage.state != hash.state) {
         loadIndustryData(); // Occurs on INIT
+    } else if (priorHash_naicspage.geo != hash.geo) {
+        //alert("hash.geo " + hash.geo);
+        loadIndustryData();
     } else if (priorHash_naicspage.naics != hash.naics) {
         //alert("hash.naics " + hash.naics);
         loadIndustryData();
@@ -235,12 +239,13 @@ function promisesReady(values) {
 
 $(document).ready(function() {
 
+    /*
     // `hashChangeEvent` event reside in multiple widgets. 
     // Called by goHash within localsite.js
     //alert("Add addEventListener"); // Confirms only added once, but why does this occur twice?
     document.addEventListener('hashChangeEvent', function (elem) {
         if (location.host.indexOf('localhost') >= 0) {
-            console.log('Localhost Alert: BUGBUG hashChangeEvent invoked 2 times by info/index.html'); // Invoked twice by iogrid inflow-outflow chart
+            alert('Localhost Alert: BUGBUG hashChangeEvent invoked 2 times by naics.js'); // Invoked twice by iogrid inflow-outflow chart
         }
         console.log("The hash: " + location.hash);
         let params = loadParams(location.search,location.hash);
@@ -254,7 +259,7 @@ $(document).ready(function() {
         }
 
     }, false);
-    
+    */
 
     if (document.getElementById("clearButton")) {
         document.getElementById("clearButton").addEventListener("click", function(){
@@ -1308,9 +1313,9 @@ function applyIO(naics) { // Called from naics.js
 
     // Probably not working, using config.update below instead.
 
-    hiddenhash.naics = naicsCodes;
-    hiddenhash.indicators = indicatorCodes;
-    hiddenhash.count = 10;
+    //hiddenhash.naics = naicsCodes;
+    //hiddenhash.indicators = indicatorCodes;
+    //hiddenhash.count = 10;
 
     console.log("hiddenhash.naics set in naics.js " + hiddenhash.naics);
 
@@ -1417,14 +1422,6 @@ function applyIO(naics) { // Called from naics.js
     // TEMP - Remove NAICS from has manually
     //updateHash({'naics':''});
 
-    //alert("HEATMAP")
-    // HEATMAP
-    // Copied from sector_list.html - uses hiddenhash.naics set above.
-
-    //delete hiddenhash.indicators;
-    //hiddenhash.view = mosaic;
-    //hiddenhash.count = 10;
-    //hiddenhash.naics = "2122,213"
     var sectorList = useeio.sectorList({
         model: model,
         selector: '.sector-list',
