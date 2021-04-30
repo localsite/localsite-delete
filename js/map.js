@@ -39,7 +39,7 @@ var mbAttr = '<a href="https://www.mapbox.com/">Mapbox</a>', mbUrl = 'https://ap
 // options for scales:
 // "scaleThreshold", "scaleOrdinal", "scaleOrdinal" or "scaleQuantile"
 //
-// refreshWidgets() resides within map-filters.js. In the index.html pages, any hash change invokes loadMap1
+// hashChanged() resides within map-filters.js. In the index.html pages, any hash change invokes loadMap1
 //////////////////////////////////////////////////////////////////
 
 /////////// LOAD FROM HTML ///////////

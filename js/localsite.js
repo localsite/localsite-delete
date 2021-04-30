@@ -186,6 +186,9 @@ $(window).on('hashchange', function() { // Avoid window.onhashchange since overr
   delete hiddenhash.cat; // Not sure where this is set.
   triggerHashChangeEvent();
 });
+//MutationObserver.observe(hiddenhash, triggerHashChangeEvent);
+
+
 function clearHash(toClear) {
   let hash = getHashOnly(); // Include all existing
   let clearArray = toClear.split(/\s*,\s*/);

@@ -1,5 +1,5 @@
 /* Localsite Filters */
-// refreshWidgets() responds to hash changes
+// hashChanged() responds to hash changes
 
 // For autocomplete - Vue could be removed - Source: https://cdn.jsdelivr.net/npm/vue
 /*!
@@ -1229,7 +1229,10 @@ $(document).ready(function () {
       document.querySelector('#map1')._leaflet_map.invalidateSize(); 
       document.querySelector('#map2')._leaflet_map.invalidateSize(); 
   });
-
+  $('.hashTest').click(function(event) {
+  	alert("hash test");
+  	hiddenhash.show = "brigades"
+  });
   if (window.self == window.top && param["show"] == "suppliers") {
       $("#suppliers_noiframe").show();
   }
@@ -1772,8 +1775,12 @@ if(typeof priorHash == 'undefined') {
 
 /* Allows map to remove selected shapes when backing up. */
 document.addEventListener('hashChangeEvent', function (elem) {
-	console.log("map-filters.js detects hashChangeEvent");
- 	refreshWidgets();
+	console.log("map-filters.js detects URL hashChangeEvent");
+ 	hashChanged();
+}, false);
+document.addEventListener('hiddenhashChangeEvent', function (elem) {
+	console.log("map-filters.js detects hiddenhashChangeEvent");
+ 	hashChanged();
 }, false);
 
 if(typeof hiddenhash == 'undefined') {
@@ -1907,7 +1914,7 @@ function getNaics_setHiddenHash(go) {
 }
 
 
-function refreshWidgets() {
+function hashChanged() {
   	// This function does NOT invoke loadMap1. Only updates display of map filter widgets
 
 
@@ -1915,7 +1922,7 @@ function refreshWidgets() {
 	param = mix(param,loadParams(location.search,location.hash)); // param is declared in localsite.js. Give priority to param updates within code.
 
 	let hash = getHash();
-	console.log("refreshWidgets from prior geo: " + priorHash.geo + " to " + hash.geo);
+	console.log("hashChanged from prior geo: " + priorHash.geo + " to " + hash.geo);
 	
 
 	// NOTE: params after ? are not included, just the hash.
@@ -1929,7 +1936,7 @@ function refreshWidgets() {
 		getNaics_setHiddenHash(hash.show); // Sets hiddenhash.naics for use by other widgets.
 
 		//hash.naics = ""; // Since go value invokes hiddenhash
-		// Then we call applyIO at end of this refreshWidgets function
+		// Then we call applyIO at end of this hashChanged function
 	}
 	if (hash.geomap) {
 		$("#infoColumn").show();
@@ -2564,7 +2571,7 @@ $(document).ready(function () {
 		$("#state_select").val(hash.state)
 		//$("#state_select option[value='NV']").prop('selected', true);
 	}
-	refreshWidgets();
+	hashChanged();
 	/*
 	if (hiddenhash.showtitle) {
     	$("#showAppsText").text(hiddenhash.showtitle);

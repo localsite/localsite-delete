@@ -1087,20 +1087,20 @@ var priorHashLocal = {};
 /* Allows map to remove selected shapes when backing up. */
 document.addEventListener('hashChangeEvent', function (elem) {
 	console.log("local page detects hashChangeEvent");
- 	refreshWidgetsLocal();
+ 	hashChangedLocal();
 }, false);
 
-function refreshWidgetsLocal() {
+function hashChangedLocal() {
   	
 	let reloadedMap = false;
 	param = loadParams(location.search,location.hash); // param is declared in localsite.js
 	let hash = getHash();
-	//alert("refreshWidgets from prior geo: " + priorHash.geo + " to " + hash.geo);
+	//alert("hashChanged from prior geo: " + priorHash.geo + " to " + hash.geo);
 	
 	// NOTE: params after ? are not included, just the hash.
 	if (hash.go != priorHash.go) {
 		if (hash.show == priorHash.show) {
-			console.log("Clear hash.show, but not actual hash. Call updateText from refreshWidgetsLocal since hash has changed.")
+			console.log("Clear hash.show, but not actual hash. Call updateText from hashChangedLocal since hash has changed.")
 			hash.show = ""; // Clear the suppliers display
 		}
 		updateText(hash.go);
@@ -1240,7 +1240,7 @@ function loadIOWidgets(param) {
 }
 
 
-if (!param.geo) { // Others gets called by refreshWidgets on init.
+if (!param.geo) { // Others gets called by hashChanged on init.
 	//renderMapShapes("geomap", param);
 }
 

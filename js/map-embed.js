@@ -943,7 +943,7 @@ strVar += "<!-- \/LOCATION SEARCH -->";
 strVar += "";
 strVar += "";
 strVar += "<!-- ";
-strVar += "Displayed by refreshWidgets() in map-filters.js";
+strVar += "Displayed by hashChanged() in map-filters.js";
 strVar += "-->";
 strVar += "<div class=\"content contentpadding\" style=\"background-color:rgb(246, 246, 246); max-width:1500px; padding-top:0; padding-bottom:0\">";
 strVar += "  <iframe id=\"introframe\" style=\"display:none\" width=\"100%\" height=\"900px\" src=\"\" frameborder=\"0\" ><\/iframe>";
