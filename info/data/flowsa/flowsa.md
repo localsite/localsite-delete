@@ -1,10 +1,10 @@
-[Data Commons](../)  
+[Data Setup](../)  
 
 # State and County Industry Lists - Data Prep  
 
 The following documents how to generate a CSV file containing BLS data pulled from the [EPA's Flowsa API](https://github.com/USEPA/flowsa). You may also opt to pull from static json files generated for the [USEEIO widgets](../../../../io/charts/).  
 
-The following verified that holes resided in Automotive Manufacturing at the county level.  To resolve, a [Google Sheet](https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit#gid=0) provides [auto manufacturing employment levels](../../../info/#show=vehicles) exported from state DOL data.  And/or PUMA data may allow for comparison.
+The following confirmed that gaps resided in Automotive Manufacturing at the county level.  To resolve, a [Google Sheet](https://docs.google.com/spreadsheets/d/1OX8TsLby-Ddn8WHa7yLKNpEERYN_RlScMrC0sbnT1Zs/edit#gid=0) provides [auto manufacturing employment levels](../../../info/#show=vehicles) exported from state DOL data.  And/or PUMA data may allow for comparison.
 
 ## BLS Data Preparation 
 

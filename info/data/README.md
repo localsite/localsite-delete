@@ -1,9 +1,12 @@
 # Data Setup
 
+Our summer 2021 Georgia Tech intern is pulling U.S. Bureau of Labor Statistics (BLS) data from the EPA's Flowsa API for use in calculations of county-level 6-digit naics industry projections. The algorithms developed will be shared in the Fall 2021 edition of Applied Science.  
+
+<!--
 We're aiming to provide the EPA impact data through Google Data Commons and DataUSA.io.  
 
-We'll start by displaying with Data Commons standardized chart syntax using YAML.
-<br><br>
+We'll start by displaying with Data Commons standardized chart syntax using YAML.  
+-->
 
 [EPA Flowsa Setup](flowsa) - U.S. Bureau of Labor Statistics (BLS) industry data  
 
@@ -11,17 +14,11 @@ We'll start by displaying with Data Commons standardized chart syntax using YAML
 
 [DataUSA.io Setup](datausa)  
 
----
-<br>
 
-Help us pull Commute Times from the Google Data Commons API.  
-And generate csv files with Walkability data from one of the free API's available.  
-
-Here are API’s that provide a free Walk Score, Transit Score and Bike Score.  
-[RapidAPI.com](https://rapidapi.com/theapiguy/api/walk-score/details)  
-[WalkScore.com](https://www.walkscore.com/professional/api.php)
-
+<!--
 ---
 <br>
 Are any maps or navigation standards using YAML for layer lists (instead of [json](ga-layers.json)?)  
 [YAML Sample](https://nodeca.github.io/js-yaml/) - [Source](https://github.com/nodeca/js-yaml)
+
+-->
