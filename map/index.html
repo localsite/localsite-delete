@@ -38,8 +38,10 @@
     if(typeof param == 'undefined') {
       var param = {};
     }
-    param.titleArray = ["code","for","america"]
-    param.startTitle = "Code for America"
+    if (location.host.indexOf('georgia') < 0) {
+      param.titleArray = ["code","for","america"]
+      param.startTitle = "Code for America"
+    }
 </script>
 
 <!-- Activate to include site navigation-->
