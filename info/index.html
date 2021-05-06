@@ -31,7 +31,7 @@
 		hiddenhash.show = "industries";
 	}
 	if (!hiddenhash.indicators) {
-		//hiddenhash.indicators = "GCC";
+		hiddenhash.indicators = "GHG";
 	}
 	//hiddenhash.debug = true;
 </script>
@@ -672,9 +672,9 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 			<option value="ETOX" title="Freshwater Aquatic Ecotoxicity (ETOX): 
 			Like humans, wildlife can be harmed by exposure to toxic chemicals and substances. An ever-expanding list of common chemicals have been assessed for their tendency to cause ecological damage when released in to the air, water, or soil. In this indicator, emissions are expressed in terms of their contribution to ecological damage in the water column of freshwater bodies. A standardized Comparative Toxicity Unit is used. The source of the factors for this indicator is TRACI 2.1 (Bare 2012) which uses USETox 1.0 (Rosenbaum et al. 2008).">&nbsp; &nbsp;Freshwater Aquatic Ecotoxicity (ETOX)</option>
 
-			<!-- hiddenhash.indicators = "GCC" is also set below on page init. -->
-			<option value="GCC" selectedX title="Greenhouse Gases (GCC): 
-			Greenhouse gases are the primary driver of climate change. These gases absorb infrared radiation emitted by the sun at a higher rate than standard atmospheric gases. The result is that, when these gases are emitted, the atmosphere absorbs and stores more heat, causing it to warm up. Carbon dioxide is the most commonly known greenhouse gas, but other gases such as methane, nitrous oxide, and even water vapor are all major contributors to the warming of the atmosphere. In this indicator, emissions are expressed as their equivalent in carbon dioxide (CO2), based on the amount of heat they can absorb and their average life span in the atmosphere. The source of the factors for this indicator is TRACI 2.1 (Bare 2012).">&nbsp; &nbsp;Greenhouse Gases (GCC)</option>
+			<!-- hiddenhash.indicators = "GHG" is also set above on page init. -->
+			<option value="GHG" selectedX title="Greenhouse Gases (GHG): 
+			Greenhouse gases are the primary driver of climate change. These gases absorb infrared radiation emitted by the sun at a higher rate than standard atmospheric gases. The result is that, when these gases are emitted, the atmosphere absorbs and stores more heat, causing it to warm up. Carbon dioxide is the most commonly known greenhouse gas, but other gases such as methane, nitrous oxide, and even water vapor are all major contributors to the warming of the atmosphere. In this indicator, emissions are expressed as their equivalent in carbon dioxide (CO2), based on the amount of heat they can absorb and their average life span in the atmosphere. The source of the factors for this indicator is TRACI 2.1 (Bare 2012).">&nbsp; &nbsp;Greenhouse Gases (GHG)</option>
 
 			<option value="HRSP" title="Human Health - Respiratory Effects (HRSP): 
 			Particulates can be nearly any ingestible material ground down to a fine enough size. Even otherwise harmless substances, when suspended as a dust and inhaled in to the lungs, can clog airways and irritate the sensitive tissues of the lungs. Over time, exposure to these particulates can lead to a variety of harmful respiratory and cardiac diseases and a general loss of cardiopulmonary function that significantly lowers both lifespan and productive years. In this indicator, emissions are expressed in terms of their effect on human respiratory health in PM2.5 equivalents. The source of the factors for this indicator is TRACI 2.1 (Bare 2012).">&nbsp; &nbsp;Human Health - Respiratory Effects (HRSP)</option>
@@ -744,7 +744,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 <script>
 // Not used - Delete
 function updateMosic(naics) {
-	
+	alert("updateMosic");
     var config = useeio.urlConfig();
     var modelID = config.get().model || 'GAUSEEIO';
 
@@ -771,8 +771,11 @@ function updateMosic(naics) {
     config.join(sectorListMosaic);
 }
 
+// 'USEEIOv2.0'; // GAUSEEIO returned Wild-caught fish and game outflow 
+
 // Not used - Delete
 function updateMosicNew(naics) {
+	alert("updateMosicNew");
 	// Might not use this, unless it can be revised to allow the hash to trigger when indicators dropdown changes. Remove location.reload() above.
 	var modelID = 'USEEIO';
 
@@ -965,6 +968,7 @@ config.join(sectorList);
 </div>
 
 <script>
+	/*
     var config = useeio.urlConfig();
     var modelID = config.get().model || 'GAUSEEIO';
     var model = useeio.model({
@@ -986,7 +990,9 @@ config.join(sectorList);
     impactChart.update({
         sectors: [selected_sector],
     });
+	*/
 
+	
     //update the chart if the sector-list changes.
     /*
     var element = document.querySelector('#sector-list');

@@ -1101,7 +1101,8 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
 
                         // BUGBUG - causes naics to appear in hash
                         // Used by bubble.js
-                        hiddenhash.naics = naicshash;
+                        //hiddenhash.naics = naicshash;
+                        updateHiddenhash({"naics":naicshash});
 
                         // Send to USEEIO Widget
                         //$('#industry-list').attr('data-naics', naicshash);
@@ -1363,7 +1364,9 @@ function applyIO(naics) { // Called from naics.js
      
 
     var config = useeio.urlConfig();
-    var modelID = config.get().model || 'USEEIO'; // USEEIOv1.2 shows incorrect bars. $300.043 input per $1 for agriculture.
+    var modelID = config.get().model || 'USEEIOv2.0'; 
+    // USEEIOv1.2 shows incorrect bars. $300.043 input per $1 for agriculture.
+    // USEEIO showed fish for colleges
 
     //config.update({naics: ['11', '22']}) // filters the sectors
     //config.update({sectors: useeio.toBEA('336411','481000')})  // selects all these sectors

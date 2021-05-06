@@ -213,6 +213,22 @@ function clearHash(toClear) {
 //var str = jQuery.param( params );
 //alert( str ); // Returns:  width=1680&height=1050
 
+function updateHiddenhash(hashObject) {
+
+  for (var key in hashObject) {
+    if (hashObject.hasOwnProperty(key)) {
+        //alert(key + " -> " + hashObject[key]);
+
+        // Currently needed for heatmap, else coal appears first
+        hiddenhash[key] = hashObject[key];
+
+        // To Do: Populate hiddenhash div instead.
+        
+    }
+  }
+  return;
+}
+
 function consoleLog(text,value) {
 
   $("#log_display").show();
