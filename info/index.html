@@ -927,6 +927,10 @@ config.join(sectorList);
 
   	</div>
 
+  	<br><br>
+  	NOTE: Indicators like Greenhouse Gases are not currently working in the bubble chart since we 
+	need to regenerate the <a href="https://github.com/modelearth/community-data/tree/master/us/indicators">indicators-sectors</a> file for USEEEIOv2.0.<br><br>
+
   	<!-- Reactivate following improvements to industry spotlight below
   	<button onclick="clearBubbleSelection()">Clear Selection</button>
   	-->
@@ -943,6 +947,7 @@ config.join(sectorList);
 	<div id="impactTextIntro" class="noprint">Click bubbles above to display a bar chart below for comparison.</div>
 	<div id="impactText" style="float:left"></div>
 	<div style="clear:both"></div>
+
 
 	<!-- BUBBUG: Currently must be placed after HTML above -->
 	<script type="text/javascript" src="../../io/charts/bubble/js/bubble.js"></script>
@@ -967,77 +972,7 @@ config.join(sectorList);
 	<div id="sector-listXX" class="sector-listXX"></div>
 </div>
 
-<script>
-	/*
-    var config = useeio.urlConfig();
-    var modelID = config.get().model || 'GAUSEEIO';
-    var model = useeio.model({
-      endpoint: '/io/build/api',
-      model: modelID,
-      asJsonFiles: true,
-    });
-     var svg3 = d3.select("#impact-chart")
-      .append("div")
-      .attr('id', 'imp');
-    var impactChart = useeio.impactChart({
-      model: model,
-      selector: '#impt',
-      columns: 3,
-      width: 800,
-      height: 300,
-    });
-    selected_sector=""
-    impactChart.update({
-        sectors: [selected_sector],
-    });
-	*/
-
-	
-    //update the chart if the sector-list changes.
-    /*
-    var element = document.querySelector('#sector-list');
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type == "attributes") {
-          selected_sector1=document.getElementById('sector-list').getAttribute('sector')
-          if(typeof selected_sector1 == "undefined" || selected_sector1==null){
-            selected_sector1=[]
-            selected_sector=[]
-          }else{
-            selected_sector=selected_sector1.split(',')
-          }
-          selected_model=document.getElementById('sector-list').getAttribute('area')
-          d3.select("#imp").remove();
-          var svg3 = d3.select("#impact-chart")
-            .append("div")
-            .attr('id', 'imp');
-          var config = useeio.urlConfig();
-          var modelID = config.get().model || selected_model;
-          var model = useeio.model({
-            endpoint: '/io/build/api',
-            model: modelID,
-            asJsonFiles: true,
-          });
-          var impactChart = useeio.impactChart({
-            model: model,
-            selector: '#imp',
-            columns: 3,
-            width: 800,
-            height: 300,
-          });
-          impactChart.update({
-            sectors: selected_sector,  
-          });
-        }
-      });
-    });
-
-    observer.observe(element, {
-      attributes: true //configure it to listen to attribute changes
-    });
-    */
-</script>
-<br><br><br><br>
+<br><br><br>
 
 
 
