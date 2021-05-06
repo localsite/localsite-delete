@@ -920,6 +920,7 @@ config.join(sectorList);
 
       </div>
 
+      <div id="impactText" style="clear:both"></div> 
 
   	</div>
 
@@ -942,6 +943,12 @@ config.join(sectorList);
 
 	<!-- BUBBUG: Currently must be placed after HTML above -->
 	<script type="text/javascript" src="../../io/charts/bubble/js/bubble.js"></script>
+	<script>
+	  $(document).ready(function () {
+	    // HACK - call a second time so rollovers work.
+	    displayImpactBubbles();
+	  });
+	</script>
 
 	<div class="io" style=" max-width: 850px; margin: auto;">
 	        <h1 class="text-center">Impact chart</h1>

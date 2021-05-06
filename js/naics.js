@@ -178,11 +178,16 @@ function promisesReady(values) {
                     industryDataState = {
                         'ActualRate': formatIndustryData(values[5],dataObject.subsetKeys_state)
                     }
-                }else if(params.catsize==4){
+                }else if (params.catsize==4){
                     industryDataState = {
                         'ActualRate': formatIndustryData(values[6],dataObject.subsetKeys_state)
                     }
-                }else if(params.catsize==6){
+                }else if (params.catsize==6){
+                    industryDataState = {
+                        'ActualRate': formatIndustryData(values[7],dataObject.subsetKeys_state)
+                    }
+                } else {
+                    // Default to 6-digit naics
                     industryDataState = {
                         'ActualRate': formatIndustryData(values[7],dataObject.subsetKeys_state)
                     }
@@ -200,6 +205,11 @@ function promisesReady(values) {
                         'ActualRate': formatIndustryData(values[6],dataObject.subsetKeys_state_api)
                     }
                 }else if(params.catsize==6){
+                    industryDataStateApi = {
+                        'ActualRate': formatIndustryData(values[7],dataObject.subsetKeys_state_api)
+                    }
+                } else {
+                    // Default to 6-digit naics
                     industryDataStateApi = {
                         'ActualRate': formatIndustryData(values[7],dataObject.subsetKeys_state_api)
                     }
@@ -802,7 +812,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                     }
                 }
 
-                console.log(top_data_list);
+                //console.log("naics.js top_data_list: " + top_data_list);
 
                 let icon = "";
                 let rightCol = "";
@@ -1088,6 +1098,10 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         
 
                         console.log('send naics to #industry-list data-naics attribute: ' + naicshash)
+
+                        // BUGBUG - causes naics to appear in hash
+                        // Used by bubble.js
+                        hiddenhash.naics = naicshash;
 
                         // Send to USEEIO Widget
                         //$('#industry-list').attr('data-naics', naicshash);

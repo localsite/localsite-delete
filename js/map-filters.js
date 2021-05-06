@@ -718,6 +718,11 @@ function showCounties(attempts) {
 		if (hash.state) {
 			theState = hash.state;
 		}
+		if (theState.length <= 0) {
+			// BUGBUG Hack - Need to set the state from geo value(s)
+			theState = "GA"
+			$("#state_select").val(theState);
+		}
 		if ($(".output_table > table").length) {
 			if (theState == priorHash.state || (theState == "GA" && !priorHash.state)) {
 				//alert("cancel showCounties: " + theState + " prior: " + priorHash.state);
