@@ -1446,7 +1446,7 @@ function applyIO(naics) { // Called from naics.js
     config.join(sectorList);
     config.update({
         view: ["mosaic"],
-        count: 10,
+        count: 50,
     });
     // End Copied from sector_list.html
 
