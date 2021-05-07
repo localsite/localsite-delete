@@ -408,7 +408,7 @@ To do: make the links below an optional widget
 
 				
 				
-				<div id="econ_list"></div>
+				<div id="econ_list"><img src='/localsite/img/icon/loading.gif' style='margin:40px; width:120px'></div>
 				<br>
 				<div class="mock-up" style="display:none">
 					Change scales to view the impact of different industry mixes. (Not yet activated)<br>
@@ -615,8 +615,8 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 	<div class="io" style="overflow-x: scroll">
         <div style="margin: 0 auto;">
         	<div style="float:right;margin-bottom:16px" class="noprint">
-				<a href="https://model.earth/io/charts/">About Widgets</a> - 
-				Data source: U.S. Bureau of Economic Analysis commodities combined with EPA indicators.
+				Data source: U.S. Bureau of Economic Analysis commodities combined with EPA indicators. 
+				- <a href="https://model.earth/io/charts/">About Widgets</a>
 			</div>
 
             <div class="matrix-title">Supply Chain</div>
@@ -706,7 +706,7 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 	<span style="font-size:14px">
 	Select an impact area above and move sliders below view impacts of different production levels and green tech.<br>
 	Use the commodities sort menu to choose multiple impact areas. (Center column below, upper right)<br>
-	Values are currently national rather than state-specific.<br><br>
+	<span style='color:red'>Values are currently national rather than state-specific.</span><br><br>
 	</span>
 	<div id="iogrid"></div>
 
@@ -721,7 +721,8 @@ Georgia-specific input-output dataset is being developed by the EPA.<br><br>
 
 	<br><br><br><br><br><br>
 	<div style="padding-left:23px">
-		<h1>Impact Levels</h1>
+		<h1 style="margin-bottom: 0px">Impact Levels</h1>
+		<span>National impact of <span class="regiontitle"></span></span><br>
 		<div class="sector-list"></div>
 	</div>
 </div>
@@ -928,7 +929,7 @@ config.join(sectorList);
   	</div>
 
   	<br><br>
-  	NOTE: Indicators like Greenhouse Gases are not currently working in the bubble chart since we 
+  	NOTE: Indicators like Greenhouse Gases are not currently working in the bubble chart above since we 
 	need to regenerate the <a href="https://github.com/modelearth/community-data/tree/master/us/indicators">indicators-sectors</a> file for USEEEIOv2.0.<br><br>
 
   	<!-- Reactivate following improvements to industry spotlight below

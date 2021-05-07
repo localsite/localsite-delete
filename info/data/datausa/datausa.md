@@ -1,6 +1,10 @@
 [Data Commons](../)  
 
-# Local DataUSA.io
+# DataUSA.io
+
+Investigate using [D3Plus](https://d3plus.org/examples/) charts in tandom with [Datausa.io API](https://github.com/DataUSA/datausa-site) which uses [Mondrian REST](https://github.com/ojbc/mondrian-rest#api-usage).  Example: [Automotive Parts](https://datausa.io/profile/naics/automotive-parts-accessories-tire-stores-)
+
+## DataUSA.io - Local Setup
 
 We have not yet figured out how to hit the DataUSA API rather than local postgresql database.
 

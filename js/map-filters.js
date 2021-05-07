@@ -1861,9 +1861,11 @@ function getNaics_setHiddenHash(go) {
         	showtab = "Landfills";
         	showtitle = "Landfills";
         	cat_filter = (recycling).split(',');
-        } else if(go=="manufacturing") {
+        } else if (go=="manufacturing") {
         	showtitle = "Manufacturing";
         	cat_filter=["manufacturing placeholder"];
+        } else if (go=="industries") {
+        	showtitle = "Top Industries";
         } else if (param.naics) {
         	showtitle = go.charAt(0).toUpperCase() + go.substr(1).replace(/\_/g," ");
     	    cat_filter = param.naics.split(',');

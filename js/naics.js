@@ -89,6 +89,7 @@ console.log("dataObject.stateshown" + dataObject.stateshown)
 
 
 function loadIndustryData() {
+    $("#econ_list").html("<img src='/localsite/img/icon/loading.gif' style='margin:40px; width:120px'><br>");
     stateAbbr = params.state || defaultState;
     dataObject.stateshown=stateID[stateAbbr];
     //alert("stateAbbr " + stateAbbr)
@@ -543,7 +544,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
         }
     }
 
-    $("#econ_list").html("");
+    //$("#econ_list").html("");
     console.log("topRatesInFips")
     //alert(String(dataObject.stateshown))
 
@@ -1073,8 +1074,7 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             text += rightCol + "</div>";
                             
                             // use GoHash()
-                            let topMessage = "<p class='mapinfo'><b>Industry Comparison Tools</b> - List does not yet include data for industries without state-level payroll reporting by BLS or BEA. <a href='/localsite/info/data/'>Learn&nbsp;more&nbsp;and&nbsp;get&nbsp;involved</a></p>";
-                            $("#topMessage").html(topMessage);
+                            
 
                             if(i<=20){
                                 if(i==0){
@@ -1092,16 +1092,16 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         if (!param.naics) {
                             lowerMessage += "Click NAICS number above to view industry's supply chain. ";
                         }
-                        lowerMessage += "Purple&nbsp;text&nbsp;indicates approximated values.";
+                        lowerMessage += "Purple&nbsp;text&nbsp;indicates approximated values. List does not yet include data for industries without state-level payroll reporting by BLS or BEA. - <a href='/localsite/info/data/'>More&nbsp;Details</a>";
 
-                        $("#econ_list").html("<div id='sector_list'>" + text + "</div><br><p class='mapinfo'>" + lowerMessage + "</p>");
+                        $("#econ_list").html("<div id='sector_list'>" + text + "</div><br><p style='font-size:13px'>" + lowerMessage + "</p>");
                         
 
                         console.log('send naics to #industry-list data-naics attribute: ' + naicshash)
 
                         // BUGBUG - causes naics to appear in hash
                         // Used by bubble.js
-                        //hiddenhash.naics = naicshash;
+                        hiddenhash.naics = naicshash;
                         updateHiddenhash({"naics":naicshash});
 
                         // Send to USEEIO Widget
@@ -1147,7 +1147,6 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                             //    $(".regiontitle").text(d["county"] + " - " + gotext);
                             //} else 
                             if (params.show) {
-
                                 $(".regiontitle").text(gotext + " within "+ fips.length + " counties");
                             } else {
                                 $(".regiontitle").text("Industries within "+ fips.length + " counties");
@@ -1190,8 +1189,11 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         }
 
                     } else if (fips==dataObject.stateshown) {
+                        
+
+                        // NOW Resides in map-filters.js
+
                         /*
-                        // Resides in map-filters.js
                         if (params.show == "bioeconomy") {
                             $(".regiontitle").text("Bioeconomy and Petroleum Industries");
                         } else if (params.show == "parts") {
@@ -1220,7 +1222,6 @@ function topRatesInFips(dataSet, dataNames, fips, params) {
                         //$(".locationTabText").text("State"); // Temp
                         */
                     } else {
-
                         var filteredData = consdata.filter(function(d) {
                             if (params.show) {
                                 // Remove " County" from this .replace(" County","")

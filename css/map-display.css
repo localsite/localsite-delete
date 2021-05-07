@@ -214,9 +214,6 @@ body {
 	border-radius: 7px;
 	max-height: 14px;
 }
-.detailbutton:hover {
-	background-color: #efefef;
-}
 #dataList {
 	overflow: auto;
 	position: relative;

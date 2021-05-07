@@ -916,7 +916,7 @@ strVar += "                    <div style=\"float:left; min-height:30px; padding
 strVar += "                      Choose counties above or click on map.";
 strVar += "                    <\/div>";
 strVar += "                    <div style=\"displayX: table-cell; padding:3px 7px 7px 7px;\">";
-strVar += "                      <div class=\"detailbutton hideAdvanced\" style=\"float:left\">Done<\/div>";
+strVar += "                      <div class=\"detailbutton hideAdvanced greenbutton\" style=\"float:left\">Done<\/div>";
 strVar += "                    <\/div>";
 strVar += "                  <\/div>";
 strVar += "";
