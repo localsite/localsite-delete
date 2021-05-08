@@ -45,6 +45,7 @@ If you change BLS_QCEW.py, do so in our [FLOWSA fork](https://github.com/modelea
 Check for 6-digit 336111 automobile industry NAICS when outputting using FLOWSA.  
 Note that only 4-digit NAICS resides in "By-Industry" in [BLS downloadable files](https://www.bls.gov/cew/downloadable-data-files.htm).  
 
+<br>
 
 
 # FLOWSA FlowByActivity
@@ -209,7 +210,7 @@ TO DO - Explore options for <a href="../../../../community/industries/">zip code
 
 # BEA GDP by county
 
-[BEA GDP by county](https://www.bea.gov/system/files/2019-12/One_Page_Methodology_v6.pdf) - could help reconcile Census CBP data with BEA IO data.  
+[BEA GDP by county](https://www.bea.gov/system/files/2019-12/One_Page_Methodology_v6.pdf) - Could help reconcile Census CBP data with BEA IO data.  
 
 [Detailed methodology](https://apps.bea.gov/scb/2020/03-march/0320-county-level-gdp.htm)  
 
