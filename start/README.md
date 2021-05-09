@@ -1,5 +1,9 @@
 # Getting Started  
 
+<!--
+	https://github.com/ModelGeorgia/io/compare/master...modelearth:master
+	https://github.com/modelearth/localsite/compare/master...localsite:master
+-->
 ### Create a website using markdown with free GitHub hosting  
 
 The Localsite Framework is designed to allow multiple Github repos (using JQuery, React,&nbsp;Vue, etc.) to communicate using hash values.  
